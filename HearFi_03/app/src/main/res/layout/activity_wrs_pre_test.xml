@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.WRS.WrsPreTestActivity"
+    android:background="@color/white">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="-1dp">
+                <ImageButton
+                    android:id="@+id/imgBtnBack"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="0"
+                    android:background="@color/white"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/backbtn" />
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textAlignment="center"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:textColor="@color/blue"
+                        android:textSize="25dp"
+                        android:text="HearFi"></TextView>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/imgBtnHome"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="0"
+                    android:background="@color/white"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/homebtn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/preTestText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="적합한 음량 조절"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:textAlignment="center"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/preTestText1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="· 소리가 잘 들리면 적합 버튼 터치"
+                        android:fontFamily="@font/pretendardsemibold"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/preTestText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="· 소리가 너무 작으면 음량 증가 버튼 터치"
+                        android:fontFamily="@font/pretendardsemibold"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/preTestText3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="· 소리가 너무 크면 음량 감소 버튼 터치"
+                        android:fontFamily="@font/pretendardsemibold"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/sideCheckText"
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:text="오른쪽"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textSize="25dp"
+                        android:textStyle="bold"></TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/headset_icon"></ImageView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/soundDown"
+                                android:layout_width="69dp"
+                                android:layout_height="69dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/btn_volume_down_states"
+                                app:srcCompat="@drawable/sounddown_btn_s"
+                                android:background="@drawable/sounddown_btn_s"></ImageButton>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <ImageButton
+                                android:id="@+id/soundUp"
+                                android:layout_width="69dp"
+                                android:layout_height="69dp"
+                                android:src="@drawable/btn_volume_up_states"
+                                app:srcCompat="@drawable/soundup_icon_s"
+                                android:background="@drawable/soundup_icon">
+                            </ImageButton>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#FF0000"
+                                android:text="음량 감소"
+                                android:textSize="17dp"
+                                android:fontFamily="@font/pretendardsemibold"
+                                android:textStyle="bold"></TextView>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#1DB85E"
+                                android:fontFamily="@font/pretendardsemibold"
+                                android:textSize="17dp"
+                                android:text="음량 증가"
+                                android:textStyle="bold"></TextView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="90dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/imgBtnWrsPreTestStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/blue_button"
+                    android:text="적합"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints"></androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
