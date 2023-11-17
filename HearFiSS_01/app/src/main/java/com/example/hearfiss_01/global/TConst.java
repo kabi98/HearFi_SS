@@ -33,7 +33,7 @@ public final class TConst {
     public static final int WRS_SCORE_BOUNDARY []   = {96,          86,     80,     70,     50,     0};
     public static final String WRS_SCORE_STR []     = {"매우 우수",  "우수",  "좋음",  "보통", "저조",  "매우 저조"};
 
-    public static final int T_PTT = 21;
+    public static final int T_SRT = 21;
     public static final int T_WRS = 22;
 
     public static final String STR_PTT_TYPE = "PTA";

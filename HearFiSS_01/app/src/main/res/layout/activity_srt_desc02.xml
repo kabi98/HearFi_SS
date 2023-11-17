@@ -246,7 +246,7 @@
                 android:layout_marginEnd="16dp"
                 >
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/imgBtnPttDesc02Next"
+                    android:id="@+id/imgBtnSrtDesc02Next"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/gray_button"

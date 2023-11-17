@@ -43,7 +43,7 @@ public class PttDesc02Activity extends AppCompatActivity
         m_ImgBtnNext.setOnClickListener(this);
         m_ImgBtnNext.setClickable(false);
 
-        GlobalVar.g_TestType = TConst.T_PTT;
+//        GlobalVar.g_TestType = TConst.T_PTT;
         GlobalVar.g_TestSide = TConst.T_RIGHT;
 
         changeTextColorFromStartToEnd(R.id.textView, "#0181F8", 9, 14);
