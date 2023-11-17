@@ -29,7 +29,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     AppCompatButton historyStartBtn;
 
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
-    LinearLayout HomeLayout,PtaLayout,WrsLayout,TestLayout;
+    LinearLayout HomeLayout,SrtLayout,SrsLayout,TestLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         m_TextUser.setText(strUser);
 
 
-        pttStartBtn = findViewById(R.id.imgBtnStartPtt);
+        pttStartBtn = findViewById(R.id.imgBtnStartSrt);
         pttStartBtn.setOnClickListener(this);
 
         wrsStartBtn = findViewById(R.id.imgBtnStartSpeech);
@@ -67,10 +67,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        if (view.getId() == R.id.imgBtnStartPtt) {
-//            Intent intent = new Intent(getApplicationContext(), PttDesc01Activity.class);
-//            startActivity(intent);
-//            finish();
+        if (view.getId() == R.id.imgBtnStartSrt) {
+
             Intent intent = new Intent(getApplicationContext(), SrtDesc01Activity.class);
             startActivity(intent);
             finish();
@@ -99,13 +97,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     private void findAndSetNavigationBar(){
         HomeLayout = findViewById(R.id.HomeLayout);
-        PtaLayout = findViewById(R.id.PtaLayout);
-        WrsLayout = findViewById(R.id.WrsLayout);
+        SrtLayout = findViewById(R.id.SrtLayout);
+        SrsLayout = findViewById(R.id.SrsLayout);
         TestLayout = findViewById(R.id.TestLayout);
 
         HomeLayout.setOnClickListener(this);
-        PtaLayout.setOnClickListener(this);
-        WrsLayout.setOnClickListener(this);
+        SrtLayout.setOnClickListener(this);
+        SrsLayout.setOnClickListener(this);
         TestLayout.setOnClickListener(this);
 
     }
@@ -130,12 +128,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 //            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
 //            startActivity(intent);
 
-        }else if (view.getId() == R.id.PtaLayout) {
-            Intent intent = new Intent(getApplicationContext(), PttDesc01Activity.class);
+        }else if (view.getId() == R.id.SrtLayout) {
+            Intent intent = new Intent(getApplicationContext(), SrtDesc01Activity.class);
             startActivity(intent);
             finish();
 
-        }else if (view.getId() == R.id.WrsLayout) {
+        }else if (view.getId() == R.id.SrsLayout) {
             Intent intent = new Intent(getApplicationContext(), WrsDesc01Activity.class);
             startActivity(intent);
             finish();
