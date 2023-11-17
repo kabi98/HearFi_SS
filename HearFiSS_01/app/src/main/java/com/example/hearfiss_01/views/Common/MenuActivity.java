@@ -15,6 +15,7 @@ import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
 import com.example.hearfiss_01.views.PTT.PttDesc01Activity;
+import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
 import com.example.hearfiss_01.views.WRS.WrsDesc01Activity;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
@@ -67,7 +68,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         if (view.getId() == R.id.imgBtnStartPtt) {
-            Intent intent = new Intent(getApplicationContext(), PttDesc01Activity.class);
+//            Intent intent = new Intent(getApplicationContext(), PttDesc01Activity.class);
+//            startActivity(intent);
+//            finish();
+            Intent intent = new Intent(getApplicationContext(), SrtDesc01Activity.class);
             startActivity(intent);
             finish();
         } else if (view.getId() == R.id.imgBtnStartSpeech) {
