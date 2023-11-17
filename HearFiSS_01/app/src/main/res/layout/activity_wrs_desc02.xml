@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.WRS.SrtDesc02Activity"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="-1dp">
+                <ImageButton
+                    android:id="@+id/imgBtnBack"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="0"
+                    android:background="@color/white"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/backbtn" />
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textAlignment="center"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:textColor="@color/blue"
+                        android:textSize="25dp"
+                        android:text="HearFi"></TextView>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/imgBtnHome"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="0"
+                    android:background="@color/white"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/homebtn" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_edittext"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendardextrabold"
+                            android:textAlignment="center"
+                            android:text="테스트 시작 전 사전 체크"
+                            android:textSize="30dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/pretendardmedium"
+                        android:text="정확한 테스트 결과와 난청 여부를 파악하기 위해서,\n테스트 시작 전에 적합한 환경이 조성되었는지
+\n확인해 주세요."
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_edittext"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/check_icon"></ImageView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:text="아래 내용 확인 후, 버튼 터치"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp">
+                        <androidx.appcompat.widget.AppCompatToggleButton
+                            android:id="@+id/check1Btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendardmedium"
+                            android:background="@drawable/toggle_btn_custom"
+                            android:textOn="주변이 조용해요!"
+                            android:textOff="주변이 조용한가요?"
+                            android:textColor="@color/gray"
+                            android:textSize="18dp"
+                            android:textStyle="bold"
+                            tools:ignore="MissingConstraints"></androidx.appcompat.widget.AppCompatToggleButton>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp">
+                        <androidx.appcompat.widget.AppCompatToggleButton
+                            android:id="@+id/check2Btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendardmedium"
+                            android:background="@drawable/toggle_btn_custom"
+                            android:textOn="이어폰 또는 헤드폰을 착용했어요!"
+                            android:textOff="이어폰 또는 헤드폰을 착용했나요?"
+                            android:textColor="@color/gray"
+                            android:textSize="18dp"
+                            android:textStyle="bold"
+                            tools:ignore="MissingConstraints"></androidx.appcompat.widget.AppCompatToggleButton>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        >
+                        <androidx.appcompat.widget.AppCompatToggleButton
+                            android:id="@+id/check3Btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/toggle_btn_custom"
+                            android:textOn="10분의 시간이 있어요!"
+                            android:textOff="10분의 시간이 있나요?"
+                            android:fontFamily="@font/pretendardmedium"
+                            android:textColor="@color/gray"
+                            android:textSize="18dp"
+                            android:textStyle="bold"
+                            tools:ignore="MissingConstraints"></androidx.appcompat.widget.AppCompatToggleButton>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="67dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/imgBtnWrsDesc02Next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gray_button"
+                    android:text="계속"
+                    android:fontFamily="@font/pretendardmedium"
+                    android:clickable="false"
+                    android:textColor="@color/white"
+                    android:textSize="19dp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints"></androidx.appcompat.widget.AppCompatButton>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
