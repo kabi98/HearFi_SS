@@ -21,7 +21,6 @@ import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
-import com.example.hearfiss_01.views.PTT.PttDesc01Activity;
 
 public class SrtDesc02Activity extends AppCompatActivity
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -31,7 +30,7 @@ public class SrtDesc02Activity extends AppCompatActivity
     AppCompatButton m_ImgBtnNext;
 
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
-    String m_packname;
+    String m_packName;
 
     ToggleButton m_CheckBtnOne, m_CheckBtnTwo_1,m_CheckBtnTwo_2, m_CheckBtnThree;
 
@@ -40,7 +39,7 @@ public class SrtDesc02Activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_srt_desc02);
-        m_packname = getPackageName();
+        m_packName = getPackageName();
 
         m_ImgBtnNext = findViewById(R.id.imgBtnSrtDesc02Next);
         m_ImgBtnNext.setOnClickListener(this);
@@ -84,15 +83,14 @@ public class SrtDesc02Activity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.imgBtnBack) {
-            Log.d(m_TAG, "onClick - imgBtnBack");
-            startActivityAndFinish(PttDesc01Activity.class);
+        if (view.getId() == R.id.imgBtnSrtDesc02Next) {
+            startActivityAndFinish(SrtPreTestActivity.class);
 
-        } else if (view.getId() == R.id.imgBtnHome) {
-            Log.d(m_TAG, "onClick - imgBtnHome");
-            startActivityAndFinish(MenuActivity.class);
         }
+        onClickHomeBack(view);
     }
+
+
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -130,16 +128,27 @@ public class SrtDesc02Activity extends AppCompatActivity
                 & (m_CheckBtnThree.isChecked())){
 
             m_ImgBtnNext.setClickable(true);
-            m_ImgBtnNext.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packname));
+            m_ImgBtnNext.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packName));
             m_ImgBtnNext.setOnClickListener(this);
 
         }else{
             m_ImgBtnNext.setClickable(false);
-            m_ImgBtnNext.setBackgroundResource(getResources().getIdentifier("gray_button","drawable", m_packname));
+            m_ImgBtnNext.setBackgroundResource(getResources().getIdentifier("gray_button","drawable", m_packName));
 
         }
     }
 
+    private void onClickHomeBack(View view) {
+        if (view.getId() == R.id.imgBtnBack) {
+            Log.d(m_TAG, "onClick - imgBtnBack");
+            startActivityAndFinish(SrtDesc01Activity.class);
+
+        } else if (view.getId() == R.id.imgBtnHome) {
+            Log.d(m_TAG, "onClick - imgBtnHome");
+            startActivityAndFinish(MenuActivity.class);
+
+        }
+    }
 
     private void changeTextColorFromStartToEnd(int idRes, String strColor, int iStart, int iEnd) {
         TextView tvText = findViewById(idRes);
