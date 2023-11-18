@@ -29,6 +29,8 @@ public class GlobalVar {
 
     public static int g_wrsNumber = 0;
 
+    public static int g_srsNumber = 0;
+
     public static Account g_AccLogin = new Account();
     public static Account g_AccJoin = new Account();
 
