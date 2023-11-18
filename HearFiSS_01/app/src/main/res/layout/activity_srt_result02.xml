@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.SRT.SrtResult02Activity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="-1dp">
+                <ImageButton
+                    android:id="@+id/imgBtnBack"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="0"
+                    android:background="@color/white"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/backbtn" />
+                <LinearLayout
+                    android:layout_weight="0.5"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textAlignment="center"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:textColor="@color/blue"
+                        android:textSize="25dp"
+                        android:text="HearFi"></TextView>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/imgBtnHome"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="0"
+                    android:background="@color/white"
+                    android:padding="13dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/homebtn" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/chartTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="oo님의 오디오그램"
+                android:textAlignment="center"
+                android:fontFamily="@font/pretendardbold"
+                android:textSize="21dp"
+                android:layout_marginTop="10dp"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/custom_blue_radius_background"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textAccountName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:textAlignment="center"
+                    android:text="김연우 님의 테스트 결과"></TextView>
+                <TextView
+                    android:id="@+id/textDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="24dp"
+                    android:fontFamily="@font/pretendardbold"
+                    android:textAlignment="center"
+                    android:text="날짜 : 23. 11. 18"></TextView>
+                <TextView
+                    android:id="@+id/textTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="24dp"
+                    android:fontFamily="@font/pretendardbold"
+                    android:textAlignment="center"
+                    android:text="총 출제 횟수 : 6"></TextView>
+                <TextView
+                    android:id="@+id/textCorrect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="21dp"
+                    android:layout_margin="10dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:textAlignment="center"
+                    android:text="정답 횟수 : 5"></TextView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="2dp"
+                    android:background="@color/white">
+                </View>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+
+                    android:fontFamily="@font/pretendardbold"
+                    android:textAlignment="center"
+                    android:text="향후, 가까운 이비인후과 병원을 방문하여\n정확한 난청 진단을 받아보시기 바랍니다."></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/hlinfoBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/blue_button"
+                    android:text="난청 정보 알아보기"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:textStyle="bold">
+                </androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
