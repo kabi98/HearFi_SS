@@ -33,5 +33,7 @@ public class GlobalVar {
     public static Account g_AccJoin = new Account();
 
     public static int g_wrsUserVolume = 0;
+
+
 }
 
