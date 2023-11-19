@@ -117,10 +117,10 @@ public class SrsDesc01Activity extends AppCompatActivity implements View.OnClick
     private void onClickNavigationBar(View view) {
         if (view.getId() == R.id.HomeLayout) {
             startActivityAndFinish(MenuActivity.class);
-
-        }else if (view.getId() == R.id.PtaLayout) {
+        }else if (view.getId() == R.id.SrtLayout){
             startActivityAndFinish(SrtDesc01Activity.class);
-
+        }else if (view.getId() == R.id.SrsLayout) {
+            startActivityAndFinish(SrsDesc01Activity.class);
         }else if (view.getId() == R.id.TestLayout) {
             startActivityAndFinish(HistoryListActivity.class);
 

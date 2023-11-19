@@ -15,6 +15,7 @@ import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
 import com.example.hearfiss_01.views.PTT.PttDesc01Activity;
+import com.example.hearfiss_01.views.SRS.SrsDesc01Activity;
 import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
 import com.example.hearfiss_01.views.WRS.WrsDesc01Activity;
 
@@ -24,8 +25,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    AppCompatButton pttStartBtn;
-    AppCompatButton wrsStartBtn;
+
+
+    AppCompatButton srtStartBtn;
+
+
+    AppCompatButton srsStartBtn;
     AppCompatButton historyStartBtn;
 
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
@@ -42,11 +47,11 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         m_TextUser.setText(strUser);
 
 
-        pttStartBtn = findViewById(R.id.imgBtnStartSrt);
-        pttStartBtn.setOnClickListener(this);
+        srtStartBtn = findViewById(R.id.imgBtnStartSrt);
+        srtStartBtn.setOnClickListener(this);
 
-        wrsStartBtn = findViewById(R.id.imgBtnStartSpeech);
-        wrsStartBtn.setOnClickListener(this);
+        srsStartBtn = findViewById(R.id.imgBtnStartSrs);
+        srsStartBtn.setOnClickListener(this);
 
         historyStartBtn = findViewById(R.id.imgBtnStartHistory);
         historyStartBtn.setOnClickListener(this);
@@ -72,8 +77,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(getApplicationContext(), SrtDesc01Activity.class);
             startActivity(intent);
             finish();
-        } else if (view.getId() == R.id.imgBtnStartSpeech) {
-            Intent intent = new Intent(getApplicationContext(), WrsDesc01Activity.class);
+        } else if (view.getId() == R.id.imgBtnStartSrs) {
+            Intent intent = new Intent(getApplicationContext(), SrsDesc01Activity.class);
             startActivity(intent);
             finish();
         } else if (view.getId() == R.id.imgBtnStartHistory) {
@@ -134,7 +139,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             finish();
 
         }else if (view.getId() == R.id.SrsLayout) {
-            Intent intent = new Intent(getApplicationContext(), WrsDesc01Activity.class);
+            Intent intent = new Intent(getApplicationContext(), SrsDesc01Activity.class);
             startActivity(intent);
             finish();
 

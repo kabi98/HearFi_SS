@@ -297,7 +297,7 @@
                             android:text="홈"></TextView>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/PtaLayout"
+                        android:id="@+id/SrtLayout"
                         android:background="@drawable/gray_layout"
                         android:layout_weight="0.25"
                         android:layout_width="match_parent"
@@ -318,10 +318,10 @@
                             android:fontFamily="@font/pretendardbold"
                             android:textColor="#A6A6A6"
                             android:textSize="14dp"
-                            android:text="PTA 테스트"></TextView>
+                            android:text="SRT 테스트"></TextView>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/WrsLayout"
+                        android:id="@+id/SrsLayout"
                         android:background="@drawable/gray_layout"
                         android:layout_weight="0.25"
                         android:layout_width="match_parent"
@@ -343,7 +343,7 @@
                             android:fontFamily="@font/pretendardbold"
                             android:textColor="#0181F8"
                             android:textSize="14dp"
-                            android:text="WRS 테스트"></TextView>
+                            android:text="SRS 테스트"></TextView>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/TestLayout"

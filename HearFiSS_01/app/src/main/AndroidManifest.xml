@@ -14,6 +14,15 @@
         android:theme="@style/Theme.HearFiSS_01"
         tools:targetApi="31">
         <activity
+            android:name=".views.SRS.SrsTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.SRS.SrsStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.SRS.SrsPreTestActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.SRS.SrsDesc02Activity"
             android:exported="false" />
         <activity
