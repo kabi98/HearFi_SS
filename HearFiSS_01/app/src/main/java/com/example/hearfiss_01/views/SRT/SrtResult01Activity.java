@@ -17,7 +17,7 @@ import com.example.hearfiss_01.views.PTT.PttResult02Activity;
 
 public class SrtResult01Activity extends AppCompatActivity implements View.OnClickListener {
 
-    String m_TAG = "PttResult01Activity";
+    String m_TAG = "SrtResult01Activity";
 
     AppCompatButton m_AppBtnSrtResult;
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
