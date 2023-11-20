@@ -5,8 +5,11 @@ import static com.example.hearfiss_01.global.ShareUtil.changeTextColorFromStartT
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -25,11 +28,13 @@ import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.PTT.PttDesc02Activity;
 import com.example.hearfiss_01.views.PTT.PttStartActivity;
 import com.example.hearfiss_01.views.PTT.PttTestActivity;
+import com.example.hearfiss_01.views.WRS.WrsPreTestActivity;
 
 public class SrtPreTestActivity  extends AppCompatActivity
         implements View.OnClickListener {
 
     String m_TAG = "SrtPreTestActivity";
+    Context m_Context;
 
     AppCompatButton m_BtnStart;
 
@@ -37,7 +42,6 @@ public class SrtPreTestActivity  extends AppCompatActivity
 
     ImageButton m_ImgBtnSoundDown, m_ImgBtnSoundUp;
 
-//    PureTonePlayer m_PTPlayer;
 
     String m_packname;
 
@@ -45,10 +49,15 @@ public class SrtPreTestActivity  extends AppCompatActivity
 
     TextView m_TextViewSideCheck;
 
+    AudioManager m_AudioMan= null;
+    MediaPlayer m_Player = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_srt_pre_test);
+        m_Context = SrtPreTestActivity.this;
 
         m_packname = getPackageName();
 
@@ -64,7 +73,21 @@ public class SrtPreTestActivity  extends AppCompatActivity
         }
         m_BtnStart.setOnClickListener(this);
 
+        int idTrack = getResources().getIdentifier("pre","raw", m_packname);
+        stopPlayer();
+        m_Player = MediaPlayer.create(m_Context,idTrack);
+        playStart(m_Player);
+
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        stopPlayer();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -129,13 +152,36 @@ public class SrtPreTestActivity  extends AppCompatActivity
         tvText.setText(ssbText);
     }
 
-
-
-
     private void startActivityAndFinish(Class<?> clsStart) {
         Intent intent = new Intent(getApplicationContext(), clsStart);
         startActivity(intent);
         finish();
     }
+
+
+    public void playStart(MediaPlayer m_player){
+        float lVolume = GlobalVar.g_TestSide == TConst.T_LEFT?1.0f:0.0f;
+        float rVolume = GlobalVar.g_TestSide == TConst.T_RIGHT?1.0f:0.0f;
+        if (m_player != null){
+            m_player.setVolume(lVolume,rVolume);
+            m_player.start();
+        }
+    }
+
+    public int stopPlayer(){
+        Log.v(m_TAG, "stopPlayer");
+        try {
+            if (m_Player != null) {
+                m_Player.stop();
+                m_Player.release();
+                m_Player = null;
+            }
+            return 1;
+        } catch (Exception e) {
+            Log.v(m_TAG, "stopPlayer Exception " + e);
+            return 0;
+        }
+    }
+
 
 }

@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
-import com.example.hearfiss_01.views.PTT.PttDesc02Activity;
-import com.example.hearfiss_01.views.WRS.WrsDesc01Activity;
 
 public class SrtDesc01Activity extends AppCompatActivity
         implements View.OnClickListener {

@@ -32,12 +32,13 @@ public class SrtDesc02Activity extends AppCompatActivity
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
     String m_packName;
 
-    ToggleButton m_CheckBtnOne, m_CheckBtnTwo_1,m_CheckBtnTwo_2, m_CheckBtnThree;
+    ToggleButton m_CheckBtnOne, m_CheckBtnTwo, m_CheckBtnThree;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_srt_desc02);
         m_packName = getPackageName();
 
@@ -53,11 +54,8 @@ public class SrtDesc02Activity extends AppCompatActivity
         m_CheckBtnOne = findViewById(R.id.check1Btn);
         m_CheckBtnOne.setOnCheckedChangeListener(this);
 
-        m_CheckBtnTwo_1 = findViewById(R.id.check2_1Btn);
-        m_CheckBtnTwo_1.setOnCheckedChangeListener(this);
-
-        m_CheckBtnTwo_2 = findViewById(R.id.check2_2Btn);
-        m_CheckBtnTwo_2.setOnCheckedChangeListener(this);
+        m_CheckBtnTwo = findViewById(R.id.check2Btn);
+        m_CheckBtnTwo.setOnCheckedChangeListener(this);
 
         m_CheckBtnThree = findViewById(R.id.check3Btn);
         m_CheckBtnThree.setOnCheckedChangeListener(this);
@@ -90,13 +88,10 @@ public class SrtDesc02Activity extends AppCompatActivity
         onClickHomeBack(view);
     }
 
-
-
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         if (isChecked) {
             compoundButton.setTextColor(getColor(R.color.white));
-            onCheckedToggleEarHead(compoundButton);
 
         } else {
             compoundButton.setTextColor(getColor(R.color.gray));
@@ -106,25 +101,9 @@ public class SrtDesc02Activity extends AppCompatActivity
     }
 
 
-    private void onCheckedToggleEarHead(CompoundButton compoundButton) {
-        if(compoundButton.getId() == R.id.check2_1Btn){
-
-            GlobalVar.g_PttStrPhone = TConst.DEFAULT_PHONE;
-            GlobalVar.g_PttStrDevice = TConst.DEFAULT_EARPHONE;
-
-            m_CheckBtnTwo_2.setChecked(false);
-
-        } else if(compoundButton.getId() == R.id.check2_2Btn){
-
-            GlobalVar.g_PttStrPhone = TConst.DEFAULT_PHONE;
-            GlobalVar.g_PttStrDevice = TConst.DEFAULT_HEADPHONE;
-            m_CheckBtnTwo_1.setChecked(false);
-
-        }
-    }
     private void CheckCheck() {
         if((m_CheckBtnOne.isChecked())
-                & ((m_CheckBtnTwo_1.isChecked())|(m_CheckBtnTwo_2.isChecked()))
+                & (m_CheckBtnTwo.isChecked())
                 & (m_CheckBtnThree.isChecked())){
 
             m_ImgBtnNext.setClickable(true);

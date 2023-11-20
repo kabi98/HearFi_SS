@@ -608,7 +608,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         >
-                        0<androidx.appcompat.widget.AppCompatButton
+                        <androidx.appcompat.widget.AppCompatButton
                             android:layout_marginBottom="65dp"
                             android:id="@+id/ResultToHomeBtn"
                             android:layout_width="match_parent"
@@ -659,7 +659,7 @@
                             android:text="홈"></TextView>
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/PtaLayout"
+                        android:id="@+id/SrtLayout"
                         android:background="@drawable/gray_layout"
                         android:layout_weight="0.25"
                         android:layout_width="match_parent"

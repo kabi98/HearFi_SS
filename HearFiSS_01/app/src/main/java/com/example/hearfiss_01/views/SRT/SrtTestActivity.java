@@ -65,7 +65,7 @@ public class SrtTestActivity extends AppCompatActivity
 
         m_AppBtnReplay = findViewById(R.id.srtReplayBtn);
         m_AppBtnReplay.setOnClickListener(this);
-        m_AppBtnReplay.setEnabled(false);
+//        m_AppBtnReplay.setEnabled(false);
 
         m_AppBtnNext = findViewById(R.id.srtnextBtn);
         m_AppBtnNext.setOnClickListener(this);
@@ -132,19 +132,25 @@ public class SrtTestActivity extends AppCompatActivity
 
     private void ClickedSrtNextBtn() {
         Log.v(m_TAG, "NextBtnClick - 어음 역치 청취 테스트");
-        if(m_isActChanging) {
-            return;
-        }
+        startActivityAndFinish(SrtResult01Activity.class);
 
-        String strAnswer = m_EditSRT.getText().toString();
-        m_EditSRT.setText("");
 
+//        if(m_isActChanging) {
+//            return;
+//        }
+//
+//        String strAnswer = m_EditSRT.getText().toString();
+//        m_EditSRT.setText("");
+//
 //        m_SRT.SaveAnswer(strAnswer);
 //        int curPercent = m_SRT.getCurrentProgress();
 //        m_ProgressBar.setProgress(curPercent);
 //        Log.v(m_TAG, "NextBtnClick - progressbar value : " + curPercent);
 
 //        checkTestEndAndNextPlay();
+
+
+
     }
 
 //    private void checkTestEndAndNextPlay() {

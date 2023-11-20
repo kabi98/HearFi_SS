@@ -41,7 +41,7 @@ public class SrtResult01Activity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.srtresultBtn) {
-//            startActivityAndFinish(SrtResult02Activity.class);
+            startActivityAndFinish(SrtResult02Activity.class);
 
         }
 

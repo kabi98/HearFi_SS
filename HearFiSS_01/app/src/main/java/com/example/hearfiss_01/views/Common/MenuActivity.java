@@ -14,10 +14,8 @@ import android.widget.TextView;
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
-import com.example.hearfiss_01.views.PTT.PttDesc01Activity;
 import com.example.hearfiss_01.views.SRS.SrsDesc01Activity;
 import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
-import com.example.hearfiss_01.views.WRS.WrsDesc01Activity;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener{
     String m_TAG = "MenuActivity";

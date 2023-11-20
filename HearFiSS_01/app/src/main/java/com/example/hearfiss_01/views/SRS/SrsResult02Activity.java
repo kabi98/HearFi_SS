@@ -58,6 +58,7 @@ public class SrsResult02Activity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_srs_result02);
 
         m_Context = SrsResult02Activity.this;
@@ -69,10 +70,18 @@ public class SrsResult02Activity extends AppCompatActivity
         settingUserText();
         findToggleBtnAndSetListener();
 
+        Log.d(m_TAG, "onCreate - ResultToHomeBtn");
         ResultToHomeBtn = findViewById(R.id.ResultToHomeBtn);
+
+        Log.d(m_TAG, "onCreate - setOnClickListener");
         ResultToHomeBtn.setOnClickListener(this);
+
+        Log.d(m_TAG, "onCreate - findAndSetHomeBack");
         findAndSetHomeBack();
+
+        Log.d(m_TAG, "onCreate - findAndSetNavigationBar");
         findAndSetNavigationBar();
+
     }
 
     @Override
@@ -122,7 +131,8 @@ public class SrsResult02Activity extends AppCompatActivity
             startActivity(intent);
 
         }else if (view.getId() == R.id.SrsLayout) {
-            startActivityAndFinish(SrsDesc01Activity.class);
+            Intent intent = new Intent(getApplicationContext(), SrsDesc01Activity.class);
+            startActivity(intent);
 
         }else if (view.getId() == R.id.TestLayout) {
             startActivityAndFinish(HistoryListActivity.class);
