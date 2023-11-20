@@ -15,6 +15,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class SrtPreTestActivity  extends AppCompatActivity
 
     String m_packname;
 
-//    int m_iCurHz, m_iCurDBHL;
+   int m_iCurHz, m_iCurDBHL;
 
     TextView m_TextViewSideCheck;
 
@@ -95,6 +96,22 @@ public class SrtPreTestActivity  extends AppCompatActivity
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                Log.d(m_TAG, "onKeyDown - KEYCODE_VOLUME_DOWN");
+                return true;
+
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                Log.d(m_TAG, "onKeyDown - KEYCODE_VOLUME_UP");
+                return true;
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     public void onClick(View view) {
         if (view.getId() == R.id.appBtnSrtPreTestStart) {
             Log.d(m_TAG, "onClick - pttStartBtn");
@@ -125,6 +142,26 @@ public class SrtPreTestActivity  extends AppCompatActivity
             startActivityAndFinish(MenuActivity.class);
 
         }
+    }
+
+    private void onClickSoundUpDownButton(View view){
+        if(view.getId() == R.id.soundDown){
+            Log.v(m_TAG, "onClick - soundDown");
+            m_iCurDBHL -= 5;
+           //  checkAndPlayPureTone();
+            setStartBtnClickableAfterSoundUpDown();
+
+        } else if(view.getId() == R.id.soundUp){
+            Log.v(m_TAG, "onClick - soundUp");
+            m_iCurDBHL += 5;
+       //     checkAndPlayPureTone();
+            setStartBtnClickableAfterSoundUpDown();
+        }
+    }
+
+    private void setStartBtnClickableAfterSoundUpDown() {
+        m_BtnStart.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packname));
+        m_BtnStart.setTextColor(getColor(R.color.white));
     }
 
 
