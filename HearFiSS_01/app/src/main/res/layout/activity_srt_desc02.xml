@@ -64,7 +64,6 @@
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/homebtn" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,34 +183,17 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginBottom="16dp">
                         <androidx.appcompat.widget.AppCompatToggleButton
-                            android:layout_weight="0.5"
-                            android:id="@+id/check2_1Btn"
+                            android:id="@+id/check2Btn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendardmedium"
                             android:background="@drawable/toggle_btn_custom"
-                            android:textOn="이어폰을 착용했어요!"
-                            android:textOff="이어폰을 착용했나요?"
-                            android:layout_marginEnd="8dp"
+                            android:textOn="이어폰 또는 헤드폰을 착용했어요!"
+                            android:textOff="이어폰 또는 헤드폰을 착용했나요?"
                             android:textColor="@color/gray"
-                            android:textSize="17dp"
-                            android:textStyle="bold"
-                            tools:ignore="MissingConstraints"></androidx.appcompat.widget.AppCompatToggleButton>
-                        <androidx.appcompat.widget.AppCompatToggleButton
-                            android:layout_weight="0.5"
-                            android:id="@+id/check2_2Btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/pretendardmedium"
-                            android:background="@drawable/toggle_btn_custom"
-                            android:textOn="헤드폰을 착용했어요!"
-                            android:textOff="헤드폰을 착용했나요?"
-                            android:layout_marginStart="8dp"
-                            android:textColor="@color/gray"
-                            android:textSize="17dp"
+                            android:textSize="18dp"
                             android:textStyle="bold"
                             tools:ignore="MissingConstraints"></androidx.appcompat.widget.AppCompatToggleButton>
                     </LinearLayout>
