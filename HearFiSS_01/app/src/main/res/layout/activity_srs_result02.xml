@@ -608,7 +608,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         >
-                        <androidx.appcompat.widget.AppCompatButton
+                        0<androidx.appcompat.widget.AppCompatButton
                             android:layout_marginBottom="65dp"
                             android:id="@+id/ResultToHomeBtn"
                             android:layout_width="match_parent"

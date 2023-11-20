@@ -26,7 +26,7 @@
                 <ImageView
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:background="@drawable/circle_background"
+                    android:background="@drawable/hearfi_logo"
                     tools:ignore="MissingConstraints"></ImageView>
             </LinearLayout>
             <LinearLayout

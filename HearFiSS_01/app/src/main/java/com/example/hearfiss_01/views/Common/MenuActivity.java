@@ -73,7 +73,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         if (view.getId() == R.id.imgBtnStartSrt) {
-
             Intent intent = new Intent(getApplicationContext(), SrtDesc01Activity.class);
             startActivity(intent);
             finish();
@@ -121,17 +120,17 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             finish();
 
         } else if (view.getId() == R.id.imgBtnHome) {
-//           Log.d(m_TAG, "onClick - onClickHomeBack");
-//           Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-//            startActivity(intent);
+           Log.d(m_TAG, "onClick - onClickHomeBack");
+           Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+            startActivity(intent);
         }
 
     }
 
     private void onClickNavigationBar(View view) {
         if (view.getId() == R.id.HomeLayout) {
-//            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+            startActivity(intent);
 
         }else if (view.getId() == R.id.SrtLayout) {
             Intent intent = new Intent(getApplicationContext(), SrtDesc01Activity.class);
