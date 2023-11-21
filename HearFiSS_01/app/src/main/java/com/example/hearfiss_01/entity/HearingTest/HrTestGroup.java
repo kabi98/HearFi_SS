@@ -1,20 +1,18 @@
-package com.example.hearfiss_01.db.DTO;
+package com.example.hearfiss_01.entity.HearingTest;
 
-public class HrTestGroup extends com.example.hearfiss_01.entity.HearingTest.HrTestGroup {
+public class HrTestGroup {
     int     tg_id;
-    String  tg_Date;
+    String   tg_Date;
     String  tg_type;
-    String  tg_result;
-    int     acc_id;
+    int  acc_id;
 
     public HrTestGroup() {
     }
 
-    public HrTestGroup(int tg_id, String tg_Date, String tg_type, String tg_result, int acc_id) {
+    public HrTestGroup(int tg_id, String tg_Date, String tg_type, int acc_id) {
         this.tg_id = tg_id;
         this.tg_Date = tg_Date;
         this.tg_type = tg_type;
-        this.tg_result = tg_result;
         this.acc_id = acc_id;
     }
 
@@ -24,7 +22,6 @@ public class HrTestGroup extends com.example.hearfiss_01.entity.HearingTest.HrTe
                 "tg_id=" + tg_id +
                 ", tg_Date='" + tg_Date + '\'' +
                 ", tg_type='" + tg_type + '\'' +
-                ", tg_result='" + tg_result + '\'' +
                 ", acc_id=" + acc_id +
                 '}';
     }
@@ -59,14 +56,6 @@ public class HrTestGroup extends com.example.hearfiss_01.entity.HearingTest.HrTe
 
     public void setAcc_id(int acc_id) {
         this.acc_id = acc_id;
-    }
-
-    public String getTg_result() {
-        return tg_result;
-    }
-
-    public void setTg_result(String tg_result) {
-        this.tg_result = tg_result;
     }
 }
 

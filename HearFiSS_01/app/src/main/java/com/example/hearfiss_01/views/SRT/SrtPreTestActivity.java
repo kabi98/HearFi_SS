@@ -112,9 +112,25 @@ public class SrtPreTestActivity  extends AppCompatActivity
     }
 
     @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                Log.v(m_TAG, "onKeyUp - KEYCODE_VOLUME_DOWN");
+                return true;
+
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                Log.v(m_TAG, "onKeyUp - KEYCODE_VOLUME_UP");
+                return true;
+
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
     public void onClick(View view) {
         if (view.getId() == R.id.appBtnSrtPreTestStart) {
-            Log.d(m_TAG, "onClick - pttStartBtn");
+            Log.d(m_TAG, "onClick - srtStartBtn");
             startActivityAndFinish(SrtStartActivity.class);
 
         }

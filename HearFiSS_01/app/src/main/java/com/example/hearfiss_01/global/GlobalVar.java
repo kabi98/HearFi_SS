@@ -1,6 +1,8 @@
 package com.example.hearfiss_01.global;
 
+import com.example.hearfiss_01.audioTest.PTT.PttScore;
 import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
+import com.example.hearfiss_01.audioTest.SRT.SrtScore;
 import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.Account;
@@ -31,11 +33,20 @@ public class GlobalVar {
 
     public static int g_srsNumber = 0;
 
+    public static int g_srtNumber = 0;
+
+
     public static Account g_AccLogin = new Account();
     public static Account g_AccJoin = new Account();
 
     public static int g_wrsUserVolume = 0;
+    public static int g_srtUserVolume = 0;
 
+    public static String g_MenuType = "";
+    public static String g_MenuSide = "";
+
+    public static String g_RightResult = "";
+    public static String g_leftResult = "";
 
 }
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type_kr">
+        <item>어음 청취 역치 테스트</item>
+        <item>문장 인지도 테스트</item>
+    </string-array>
+
+    <string-array name="type_en">
+        <item>SRT</item>
+        <item>SRS</item>
+    </string-array>
+    <string name="RIGHT">오른쪽</string>
+    <string name="LEFT">왼쪽</string>
+
+
+
+
+    <string-array name="type_detail">
+        <item>어음 청취 역치 테스트란 이음절 단어를 들여주고 얼마나 작은 소리까지 들을 수 있는지 평가하는 테스트입니다.</item>
+        <item>문장 인지도 테스트란 문장을 듣고 얼마나 정확하게 인지하는지 정확도를 평가하는 테스트입니다.</item>
+    </string-array>
+
+
+
+    <string-array name="count">
+        <item>10</item>
+        <item>20</item>
+        <item>25</item>
+        <item>50</item>
+    </string-array>
+
+</resources>

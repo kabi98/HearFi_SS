@@ -91,7 +91,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="MissingConstraints"></ProgressBar>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,7 +145,6 @@
                     android:layout_marginBottom="16dp"
                     android:layout_gravity="center">
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -157,7 +155,6 @@
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
                 android:orientation="horizontal">
-
             </LinearLayout>
 
             <LinearLayout
@@ -184,24 +181,27 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/srtReplayBtn"
+                        android:id="@+id/srtVoiceAnswerBtn"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/blue_button"
-                        android:text="다시듣기"
-                        android:textStyle="bold"
+                        android:text="음성으로 답하기"
+                        android:textColor="@color/white"
                         android:textSize="18dp"
-                        android:textColor="@color/white"></androidx.appcompat.widget.AppCompatButton>
+                        android:textStyle="bold"></androidx.appcompat.widget.AppCompatButton>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,14 +219,137 @@
                         android:textSize="18dp"
                         android:textColor="@color/white"></androidx.appcompat.widget.AppCompatButton>
                 </LinearLayout>
-
             </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/login_form"
+                >
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/login_form"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/STTLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/pretendardextrabold"
+                                android:text="[ 답 ]"
+                                android:textAlignment="center"
+                                android:textColor="@color/blue_1"
+                                android:textSize="18dp"></TextView>
+                            <LinearLayout
+                                android:id="@+id/STTBtnLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="60dp"
+                                android:layout_marginEnd="60dp"
+                                android:background="@drawable/blue_white_button_10r"
+                                android:clickable="false"
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
+                                <ImageView
+                                    android:id="@+id/STTImage"
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="8dp"
+                                    android:background="@drawable/mic_icon"></ImageView>
 
+                                <TextView
+                                    android:id="@+id/STTText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:fontFamily="@font/pretendardextrabold"
+                                    android:text="정답"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/blue_1"
+                                    android:textSize="16dp"></TextView>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/STTActiveLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="@drawable/blue_white_button_10r"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/STTView"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_gravity="end|bottom"
+                    android:orientation="vertical"
+                    android:background="@drawable/black_form">
+                    <ImageView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/mic_icon"></ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:layout_marginTop="16dp"
+                        android:textSize="18dp"
+                        android:text="정답을 말한 후,\n완료 버튼을 누르세요."></TextView>
+
+                    <TextView
+                        android:id="@+id/sttTextView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/blue_1"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/pretendardextrabold"
+                        android:layout_marginTop="16dp"
+                        android:textSize="18dp"
+                        android:text="사용자 입력 칸입니다."></TextView>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/sttFinishBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/blue_button_10r"
+                        android:text="완료"
+                        android:textSize="21dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/pretendardextrabold"></androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
-
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
