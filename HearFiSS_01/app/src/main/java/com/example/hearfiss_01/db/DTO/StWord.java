@@ -1,4 +1,4 @@
-package com.example.hearfiss_01.db.entity.HearingTest;
+package com.example.hearfiss_01.db.DTO;
 
 public class StWord {
 

@@ -1,6 +1,6 @@
 package com.example.hearfiss_01.db.DTO;
 
-public class HrTestGroup extends com.example.hearfiss_01.db.entity.HearingTest.HrTestGroup {
+public class HrTestGroup {
     int     tg_id;
     String  tg_Date;
     String  tg_type;

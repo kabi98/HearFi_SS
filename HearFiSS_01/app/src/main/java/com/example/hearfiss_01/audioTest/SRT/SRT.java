@@ -7,13 +7,13 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.hearfiss_01.db.DTO.AmTrack;
+import com.example.hearfiss_01.db.DTO.HrTestGroup;
+import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
+import com.example.hearfiss_01.db.dao.RandomTrack;
 import com.example.hearfiss_01.db.sql.SQLiteControl;
 import com.example.hearfiss_01.db.sql.SQLiteHelper;
-import com.example.hearfiss_01.db.entity.HearingTest.HrTestGroup;
-import com.example.hearfiss_01.db.entity.HearingTest.HrTestSet;
-import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
-import com.example.hearfiss_01.db.entity.Utils.AmTrack;
-import com.example.hearfiss_01.db.entity.Utils.RandomTrack;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 
@@ -30,8 +30,6 @@ public class SRT {
     AudioManager m_AudioMan= null;
 
     MediaPlayer m_Player = null;
-
-    Context m_context = null;
 
     String m_PkgName = "";
 
@@ -61,11 +59,11 @@ public class SRT {
     public SRT(@Nullable Context context) {
         this.m_Context = context;
 
-        m_PkgName = m_context.getPackageName();
+        m_PkgName = m_Context.getPackageName();
 
-        m_randTrack = new RandomTrack(m_context);
+        m_randTrack = new RandomTrack(m_Context);
 
-        m_SqlHlp = new SQLiteHelper(m_context,  TConst.DB_FILE, null, TConst.DB_VER);
+        m_SqlHlp = new SQLiteHelper(m_Context,  TConst.DB_FILE, null, TConst.DB_VER);
 
         m_SqlCon = new SQLiteControl(m_SqlHlp);
 
@@ -99,27 +97,24 @@ public class SRT {
         setM_Type("bwl_a1");
 
         m_iCurDbHL = getDBHLFromVolume();
-
+/*
         Date dtNow = new Date();
         SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdFormatter.format(dtNow);
 
-        HrTestGroup tgIns = new HrTestGroup(0, strDate, GlobalVar.g_MenuType, GlobalVar.g_AccLogin.getAcc_id());
+        HrTestGroup tgIns = new HrTestGroup(0, strDate, GlobalVar.g_MenuType," ", GlobalVar.g_AccLogin.getAcc_id());
         if(GlobalVar.g_MenuSide.equals("RIGHT")) {
             m_SqlCon.insertTestGroup(tgIns);
             m_TestGroup = m_SqlCon.selectTestGroup(tgIns);
             m_TestGroup = GlobalVar.g_TestGroup;
         }
 
-        Log.v("SRT - startTest-1", m_TestGroup.toString());
-
 
         HrTestSet tsInsert = new HrTestSet(0, m_TestGroup.getTg_id(), GlobalVar.g_MenuSide, "", "");
         m_SqlCon.insertTestSet(tsInsert);
 
         m_TestSet = m_SqlCon.selectTestSet(tsInsert);
-        Log.v("SRT - starTest-2", m_TestSet.toString());
-
+*/
         m_SrtScore.clear();
     }
 
@@ -162,7 +157,7 @@ public class SRT {
         int IsCorrect = suTemp.get_Correct();
         m_iCurDbHL = suTemp.get_NextDb();
 
-        HrTestUnit tuInsert = new HrTestUnit(m_TestSet.getTs_id(), Question, Answer, IsCorrect, dBHL, 0);
+        HrTestUnit tuInsert = new HrTestUnit(m_TestSet.getTs_id(), Question, Answer, IsCorrect);
         m_SqlCon.insertTestUnit(tuInsert);
 
         Log.v("SRT SaveAnswer",
@@ -188,14 +183,14 @@ public class SRT {
     }
 
     private int playTrack() {
-        int idTrack = m_context.getResources().getIdentifier(m_atCur.getAt_file_name(), "raw", m_PkgName);
+        int idTrack = m_Context.getResources().getIdentifier(m_atCur.getAt_file_name(), "raw", m_PkgName);
 
         if (m_Player != null) {
             m_Player.stop();
             m_Player.release();
         }
 
-        m_Player = MediaPlayer.create(m_context, idTrack);
+        m_Player = MediaPlayer.create(m_Context, idTrack);
         m_Player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         setVolumeFromDBHL(m_iCurDbHL);

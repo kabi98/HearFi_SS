@@ -6,7 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.hearfiss_01.db.entity.Utils.TConst;
+
+import com.example.hearfiss_01.global.TConst;
 
 import java.io.File;
 import java.io.FileOutputStream;

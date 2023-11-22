@@ -4,12 +4,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.hearfiss_01.db.entity.HearingTest.HrTestGroup;
-import com.example.hearfiss_01.db.entity.HearingTest.HrTestSet;
-import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
-import com.example.hearfiss_01.db.entity.HearingTest.StWord;
-import com.example.hearfiss_01.db.entity.Utils.Account;
-import com.example.hearfiss_01.db.entity.Utils.AmTrack;
+import com.example.hearfiss_01.db.DTO.Account;
+import com.example.hearfiss_01.db.DTO.AmTrack;
+import com.example.hearfiss_01.db.DTO.HrTestGroup;
+import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
+import com.example.hearfiss_01.db.DTO.StWord;
 
 import java.util.ArrayList;
 
@@ -31,40 +31,41 @@ public class SQLiteControl {
         Log.v("SQLiteControl",
                 String.format("selectLogin Email %s, Pass %s", strEmail, strPwd));
 
-        try {
-            sqlite = helper.getReadableDatabase();
-
-            String strSQL = "  SELECT acc_id, acc_email, acc_name, acc_pwd, acc_gender, acc_birth "
-                    + " FROM account WHERE acc_email= ? and acc_pwd = ?; ";
-            String[] params = {strEmail, strPwd};
-            Cursor cursor = sqlite.rawQuery(strSQL, params);
-
-            Log.v("SQLiteControl",
-                    String.format("selectLogin Result = %d", cursor.getCount()));
-            if (cursor.getCount() > 0) {
-                cursor.moveToNext();
-
-                int     id      = cursor.getInt(0);
-                String  email   = cursor.getString(1);
-                String  name    = cursor.getString(2);
-                String  pwd     = cursor.getString(3);
-                String  gender  = cursor.getString(4);
-                String  birth   = cursor.getString(5);
-
-                Account accOne = new Account(id, email, name, pwd, gender, birth);
-
-                Log.v("SQLiteControl", accOne.toString());
-                cursor.close();
-
-                return accOne;
-            } else {
-                return null;
-            }
-
-        } catch (Exception e) {
-            Log.v("SQLiteControl", "selectLogin Exception " + e);
-            return null;
-        }
+//        try {
+//            sqlite = helper.getReadableDatabase();
+//
+//            String strSQL = "  SELECT acc_id, acc_email, acc_name, acc_pwd, acc_gender, acc_birth "
+//                    + " FROM account WHERE acc_email= ? and acc_pwd = ?; ";
+//            String[] params = {strEmail, strPwd};
+//            Cursor cursor = sqlite.rawQuery(strSQL, params);
+//
+//            Log.v("SQLiteControl",
+//                    String.format("selectLogin Result = %d", cursor.getCount()));
+//            if (cursor.getCount() > 0) {
+//                cursor.moveToNext();
+//
+//                int     id      = cursor.getInt(0);
+//                String  email   = cursor.getString(1);
+//                String  name    = cursor.getString(2);
+//                String  pwd     = cursor.getString(3);
+//                String  gender  = cursor.getString(4);
+//                String  birth   = cursor.getString(5);
+//
+//                Account accOne = new Account(id, email, name, pwd, gender, birth);
+//
+//                Log.v("SQLiteControl", accOne.toString());
+//                cursor.close();
+//
+//                return accOne;
+//            } else {
+//                return null;
+//            }
+//
+//        } catch (Exception e) {
+//            Log.v("SQLiteControl", "selectLogin Exception " + e);
+//            return null;
+//        }
+        return  null;
     }
 
     public ArrayList<AmTrack> selectTrackFromType(String _strType) {
@@ -110,65 +111,65 @@ public class SQLiteControl {
     }
 
     public int insertAccount(Account acInsert) {
-        Log.v("SQLiteControl",
-                String.format("insertAccount email:%s, pwd:%s, name:%s, birth:%s",
-                        acInsert.getAcc_email(), acInsert.getAcc_pwd(), acInsert.getAcc_name(),
-                        acInsert.getAcc_birth() ));
+//        Log.v("SQLiteControl",
+//                String.format("insertAccount email:%s, pwd:%s, name:%s, birth:%s",
+//                        acInsert.getAcc_email(), acInsert.getAcc_pwd(), acInsert.getAcc_name(),
+//                        acInsert.getAcc_birth() ));
 
-        try {
-            sqlite = helper.getWritableDatabase();
-
-            String strSQL = " INSERT INTO account (acc_email, acc_name, acc_pwd, acc_gender, acc_birth)  "
-                    + " VALUES (?, ?, ?, ?, ?) ";
-            Object[] params = { acInsert.getAcc_email(), acInsert.getAcc_name(), acInsert.getAcc_pwd(),
-                                acInsert.getAcc_gender(), acInsert.getAcc_birth()};
-
-
-            sqlite.execSQL(strSQL, params);
-        } catch (Exception e) {
-            Log.v("SQLiteControl", "insertAccount Exception " + e);
-            return -1;
-        }
+//        try {
+//            sqlite = helper.getWritableDatabase();
+//
+//            String strSQL = " INSERT INTO account (acc_email, acc_name, acc_pwd, acc_gender, acc_birth)  "
+//                    + " VALUES (?, ?, ?, ?, ?) ";
+//            Object[] params = { acInsert.getAcc_email(), acInsert.getAcc_name(), acInsert.getAcc_pwd(),
+//                                acInsert.getAcc_gender(), acInsert.getAcc_birth()};
+//
+//
+//            sqlite.execSQL(strSQL, params);
+//        } catch (Exception e) {
+//            Log.v("SQLiteControl", "insertAccount Exception " + e);
+//            return -1;
+//        }
 
         return 1;
     }
 
     public Account selectAccount(Account acInput) {
-        Log.v("SQLiteControl",
-                String.format("selectAccount email:%s, name:%s, id:%d",
-                        acInput.getAcc_email(), acInput.getAcc_name(), acInput.getAcc_id() ));
-
-        Account acSelect = null;
-        try {
-            sqlite = helper.getReadableDatabase();
-
-            String strSQL = " SELECT acc_id, acc_email, acc_name, acc_pwd, acc_gender, acc_birth "
-                    + " FROM account "
-                    + " WHERE acc_email = ? ";
-            String[] params = { acInput.getAcc_email() };
-            Cursor cursor = sqlite.rawQuery(strSQL, params);
-
-            if (cursor.getCount() <= 0) {
-                return null;
-            }
-
-            cursor.moveToNext();
-            int acc_id          = cursor.getInt(0);
-            String acc_email    = cursor.getString(1);
-            String acc_name     = cursor.getString(2);
-            String acc_pwd      = cursor.getString(3);
-            String acc_gender   = cursor.getString(4);
-            String acc_birth    = cursor.getString(5);
-            cursor.close();
-
-            acSelect = new Account(acc_id, acc_email, acc_name, acc_pwd, acc_gender, acc_birth);
-
-        } catch (Exception e) {
-            Log.v("SQLiteControl", "insertAccount Exception " + e);
-            return null;
-        }
-
-        return acSelect;
+//        Log.v("SQLiteControl",
+//                String.format("selectAccount email:%s, name:%s, id:%d",
+//                        acInput.getAcc_email(), acInput.getAcc_name(), acInput.getAcc_id() ));
+//
+//        Account acSelect = null;
+//        try {
+//            sqlite = helper.getReadableDatabase();
+//
+//            String strSQL = " SELECT acc_id, acc_email, acc_name, acc_pwd, acc_gender, acc_birth "
+//                    + " FROM account "
+//                    + " WHERE acc_email = ? ";
+//            String[] params = { acInput.getAcc_email() };
+//            Cursor cursor = sqlite.rawQuery(strSQL, params);
+//
+//            if (cursor.getCount() <= 0) {
+//                return null;
+//            }
+//
+//            cursor.moveToNext();
+//            int acc_id          = cursor.getInt(0);
+//            String acc_email    = cursor.getString(1);
+//            String acc_name     = cursor.getString(2);
+//            String acc_pwd      = cursor.getString(3);
+//            String acc_gender   = cursor.getString(4);
+//            String acc_birth    = cursor.getString(5);
+//            cursor.close();
+//
+//            acSelect = new Account(acc_id, acc_email, acc_name, acc_pwd, acc_gender, acc_birth);
+//
+//        } catch (Exception e) {
+//            Log.v("SQLiteControl", "insertAccount Exception " + e);
+//            return null;
+//        }
+          return null;
+//        return acSelect;
     }
 
     public ArrayList<StWord> selectWordFromId(int _atId) {
@@ -268,7 +269,7 @@ public class SQLiteControl {
                 String tg_date = cursor.getString(1);
                 String tg_type = cursor.getString(2);
                 int tgAcc_id = cursor.getInt(3);
-                HrTestGroup tgOne = new HrTestGroup(tg_id, tg_date, tg_type, tgAcc_id);
+                HrTestGroup tgOne = new HrTestGroup(tg_id, tg_date, tg_type, " ", tgAcc_id);
                 Log.v("SQLiteControl", tgOne.toString());
                 HrTestGroup.add(tgOne);
 
@@ -290,7 +291,7 @@ public class SQLiteControl {
         try {
             sqlite = helper.getReadableDatabase();
 
-            String strSQL = "  SELECT tg_id, tg_date, tg_type, acc_id "
+            String strSQL = "  SELECT tg_id, tg_date, tg_type, tg_result, acc_id "
                     + " FROM hrtest_group WHERE tg_date= ? and tg_type = ? and acc_id = ?; ";
             String[] params = { tgInput.getTg_Date(), tgInput.getTg_type(),
                     Integer.toString(tgInput.getAcc_id())};
@@ -304,9 +305,10 @@ public class SQLiteControl {
                 int     tg_id      = cursor.getInt(0);
                 String  tg_date    = cursor.getString(1);
                 String  tg_type    = cursor.getString(2);
-                int     acc_id     = cursor.getInt(3);
+                String  tg_result  = cursor.getString(3);
+                int     acc_id     = cursor.getInt(4);
 
-                HrTestGroup tgOne = new HrTestGroup(tg_id, tg_date, tg_type, acc_id);
+                HrTestGroup tgOne = new HrTestGroup(tg_id, tg_date, tg_type, tg_result, acc_id);
 
                 Log.v("SQLiteControl", tgOne.toString());
                 cursor.close();
@@ -426,10 +428,10 @@ public class SQLiteControl {
         try {
 //            INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id) VALUES (1, '편지', '편지', 1, 60);
             sqlite = helper.getWritableDatabase();
-            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id) "
-                    + " VALUES (?, ?, ?, ?, ?, ?); ";
+            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                    + " VALUES (?, ?, ?, ?); ";
             Object[] params = { tuInsert.getTs_id(), tuInsert.getTu_Question(), tuInsert.getTu_Answer(),
-                    tuInsert.getTu_IsCorrect(), tuInsert.getTu_dBHL(), tuInsert.getTu_atId() };
+                    tuInsert.getTu_IsCorrect() };
 
             sqlite.execSQL(strSQL, params);
         } catch (Exception e) {
@@ -448,7 +450,7 @@ public class SQLiteControl {
         try {
             sqlite = helper.getReadableDatabase();
 
-            String strSQL = " SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id "
+            String strSQL = " SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect "
                     + " FROM hrtest_unit WHERE ts_id = ?; ";
             String[] params = {Integer.toString(_tsId)};
             Cursor cursor = sqlite.rawQuery(strSQL, params);
@@ -465,10 +467,9 @@ public class SQLiteControl {
                 String tu_question = cursor.getString(2);
                 String tu_answer = cursor.getString(3);
                 int tu_iscorrect = cursor.getInt(4);
-                int tu_dbHL = cursor.getInt(5);
-                int at_id = cursor.getInt(6);
 
-                HrTestUnit tuOne = new HrTestUnit(tu_id, ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id);
+
+                HrTestUnit tuOne = new HrTestUnit(tu_id, ts_id, tu_question, tu_answer, tu_iscorrect);
                 alTestUnit.add(tuOne);
 
                 Log.v("SQLiteControl", tuOne.toString());
@@ -490,7 +491,7 @@ public class SQLiteControl {
         try {
             sqlite = helper.getReadableDatabase();
 
-            String strSQL = " SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id "
+            String strSQL = " SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect "
                     + " FROM hrtest_unit WHERE ts_id = ? ORDER BY tu_iscorrect; ";
             String[] params = {Integer.toString(_tsId)};
             Cursor cursor = sqlite.rawQuery(strSQL, params);
@@ -507,10 +508,8 @@ public class SQLiteControl {
                 String tu_question = cursor.getString(2);
                 String tu_answer = cursor.getString(3);
                 int tu_iscorrect = cursor.getInt(4);
-                int tu_dbHL = cursor.getInt(5);
-                int at_id = cursor.getInt(6);
 
-                HrTestUnit tuOne = new HrTestUnit(tu_id, ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id);
+                HrTestUnit tuOne = new HrTestUnit(tu_id, ts_id, tu_question, tu_answer, tu_iscorrect);
                 alTestUnit.add(tuOne);
 
                 Log.v("SQLiteControl", tuOne.toString());

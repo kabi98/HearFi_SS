@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRT.SRT;
-import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 
@@ -91,10 +91,12 @@ public class SrtTestActivity extends AppCompatActivity
         m_AppBtnNext = (AppCompatButton) findViewById(R.id.srtnextBtn);
         m_AppBtnNext.setOnClickListener(this);
 
-/*
         m_SRT = new SRT(SrtTestActivity.this);
         m_SRT.startTest();
         m_SRT.playCurrent();
+
+/*
+
 
         //--------------------------------TEST TYPE CONMENT TEXTVIEW ---------------------------//
         String[] type_En = getResources().getStringArray(R.array.type_en);
@@ -225,13 +227,13 @@ public class SrtTestActivity extends AppCompatActivity
 //            STTView.setVisibility(View.GONE);
 
 
-//            if (m_SRT.isEnd()) {
-//                m_SRT.endTest();
-//                SideMessage(SrtTestActivity.this);
-//                SideChkNStart(SrtTestActivity.this);
-//            } else {
-//                m_SRT.playNext();
-//            }
+            if (m_SRT.isEnd()) {
+                m_SRT.endTest();
+                SideMessage(SrtTestActivity.this);
+                SideChkNStart(SrtTestActivity.this);
+            } else {
+                m_SRT.playNext();
+            }
         return 1;
     }
 
