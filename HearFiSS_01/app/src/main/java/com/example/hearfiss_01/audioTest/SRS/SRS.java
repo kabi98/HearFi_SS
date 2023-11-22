@@ -8,14 +8,14 @@ import androidx.annotation.Nullable;
 
 import com.example.hearfiss_01.db.sql.SQLiteControl;
 import com.example.hearfiss_01.db.sql.SQLiteHelper;
-import com.example.hearfiss_01.entity.HearingTest.HrTestGroup;
-import com.example.hearfiss_01.entity.HearingTest.HrTestSet;
-import com.example.hearfiss_01.entity.HearingTest.HrTestUnit;
-import com.example.hearfiss_01.entity.HearingTest.StWord;
-import com.example.hearfiss_01.entity.Utils.AmTrack;
-import com.example.hearfiss_01.entity.Utils.GlobalVar;
-import com.example.hearfiss_01.entity.Utils.RandomTrack;
-import com.example.hearfiss_01.entity.Utils.TConst;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestGroup;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestSet;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
+import com.example.hearfiss_01.db.entity.HearingTest.StWord;
+import com.example.hearfiss_01.db.entity.Utils.AmTrack;
+import com.example.hearfiss_01.db.entity.Utils.GlobalVar;
+import com.example.hearfiss_01.db.entity.Utils.RandomTrack;
+import com.example.hearfiss_01.db.entity.Utils.TConst;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

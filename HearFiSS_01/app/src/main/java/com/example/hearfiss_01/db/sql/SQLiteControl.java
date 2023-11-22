@@ -4,12 +4,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.hearfiss_01.entity.HearingTest.HrTestGroup;
-import com.example.hearfiss_01.entity.HearingTest.HrTestSet;
-import com.example.hearfiss_01.entity.HearingTest.HrTestUnit;
-import com.example.hearfiss_01.entity.HearingTest.StWord;
-import com.example.hearfiss_01.entity.Utils.Account;
-import com.example.hearfiss_01.entity.Utils.AmTrack;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestGroup;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestSet;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
+import com.example.hearfiss_01.db.entity.HearingTest.StWord;
+import com.example.hearfiss_01.db.entity.Utils.Account;
+import com.example.hearfiss_01.db.entity.Utils.AmTrack;
 
 import java.util.ArrayList;
 

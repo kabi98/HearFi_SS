@@ -7,15 +7,13 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.hearfiss_01.audioTest.PTT.PttScore;
-import com.example.hearfiss_01.audioTest.PTT.PureTonePlayer;
 import com.example.hearfiss_01.db.sql.SQLiteControl;
 import com.example.hearfiss_01.db.sql.SQLiteHelper;
-import com.example.hearfiss_01.entity.HearingTest.HrTestGroup;
-import com.example.hearfiss_01.entity.HearingTest.HrTestSet;
-import com.example.hearfiss_01.entity.HearingTest.HrTestUnit;
-import com.example.hearfiss_01.entity.Utils.AmTrack;
-import com.example.hearfiss_01.entity.Utils.RandomTrack;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestGroup;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestSet;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
+import com.example.hearfiss_01.db.entity.Utils.AmTrack;
+import com.example.hearfiss_01.db.entity.Utils.RandomTrack;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 

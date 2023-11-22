@@ -1,7 +1,7 @@
 package com.example.hearfiss_01.audioTest.SRS;
 
-import com.example.hearfiss_01.entity.HearingTest.HrTestUnit;
-import com.example.hearfiss_01.entity.HearingTest.StWord;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
+import com.example.hearfiss_01.db.entity.HearingTest.StWord;
 
 import java.util.ArrayList;
 

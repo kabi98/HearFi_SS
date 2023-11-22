@@ -1,38 +1,17 @@
 package com.example.hearfiss_01.views.SRT;
 
-import static android.content.DialogInterface.BUTTON_POSITIVE;
-
-import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.text.InputType;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -41,22 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hearfiss_01.R;
-import com.example.hearfiss_01.audioTest.PTT.PTT;
 import com.example.hearfiss_01.audioTest.SRT.SRT;
-import com.example.hearfiss_01.db.sql.SQLiteControl;
-import com.example.hearfiss_01.db.sql.SQLiteHelper;
-import com.example.hearfiss_01.entity.HearingTest.HrTestUnit;
+import com.example.hearfiss_01.db.entity.HearingTest.HrTestUnit;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
-import com.example.hearfiss_01.views.Common.ImageProgress;
-import com.example.hearfiss_01.views.Common.MenuActivity;
-import com.example.hearfiss_01.views.PTT.PttDesc01Activity;
-import com.example.hearfiss_01.views.WRS.WrsPreTestActivity;
-import com.example.hearfiss_01.views.WRS.WrsResult01Activity;
-import com.example.hearfiss_01.views.WRS.WrsTestActivity;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
 public class SrtTestActivity extends AppCompatActivity
         implements View.OnClickListener, View.OnKeyListener {
