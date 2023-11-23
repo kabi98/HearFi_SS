@@ -137,8 +137,6 @@ public class SrtTestActivity extends AppCompatActivity
         m_SRT.setM_tsLimit(GlobalVar.g_srtNumber);
         m_SRT.setUserVolume(GlobalVar.g_srtUserVolume);
         m_SRT.startTest();
-        // m_SRT.setM_Type("bwl_a1");
-        m_SRT.playCurrent();
     }
 
     private void finalAct() {
@@ -155,6 +153,7 @@ public class SrtTestActivity extends AppCompatActivity
     public void onClick(View view) {
         if(view.getId() == R.id.srtnextBtn) {
             Log.v(m_TAG, "onClick - nextBtnClick");
+            m_AppBtnNext.setText("다음 문제");
             ClickedSrtNextBtn();
 
         } /*else if(view.getId() == R.id.srtVoiceAnswerBtn){
@@ -167,8 +166,10 @@ public class SrtTestActivity extends AppCompatActivity
     }
     private void ClickedSrtNextBtn() {
         Log.v(m_TAG, "onClick - sound play");
-        initAct();
-        m_AppBtnNext.setText("다음 문제");
+        if (m_AppBtnNext.isSelected()) {
+            m_SRT.playCurrent();
+            initAct();
+        }
         if(m_isActChanging) {
             return;
         }

@@ -247,7 +247,8 @@ public class SRT {
             return 0;
         }
 
-        if(GlobalVar.g_MenuSide.equals("RIGHT")){
+        if(GlobalVar.g_TestSide == TConst.T_RIGHT){
+            Log.v("SRT test side", "side : " + GlobalVar.g_TestSide);
             m_Player.setVolume(0.0f, 1.0f); // Right Only
         } else {
             m_Player.setVolume(1.0f, 0.0f); // Left Only
