@@ -3,6 +3,7 @@ package com.example.hearfiss_01.global;
 import com.example.hearfiss_01.audioTest.PTT.PttScore;
 import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
 import com.example.hearfiss_01.audioTest.SRT.SrtScore;
+import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.Account;
@@ -28,6 +29,11 @@ public class GlobalVar {
 
     public static ArrayList<WordUnit> g_alWrsRight = new ArrayList<>();
     public static ArrayList<WordUnit> g_alWrsLeft = new ArrayList<>();
+
+    public static ArrayList<SrtUnit> g_alSrtLeft = new ArrayList<>();
+
+    public static ArrayList<SrtUnit> g_alSrtRight = new ArrayList<>();
+
 
     public static int g_wrsNumber = 0;
 

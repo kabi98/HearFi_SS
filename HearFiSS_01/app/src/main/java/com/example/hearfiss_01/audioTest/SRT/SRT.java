@@ -43,6 +43,10 @@ public class SRT {
 
     HrTestGroup m_TestGroup = null;
 
+    int m_tsLimit = 10;
+
+    int userVolume = 0;
+
     HrTestSet m_TestSet = null;
 
     int m_iThreshold = 0;
@@ -54,6 +58,13 @@ public class SRT {
     Context     m_Context = null;
 //    String[] arrQuestion =  {"편지", "땅콩", "저녁", "안개", "달걀", "노래", "시간", "욕심", "육군", "허리", "신발", "마음"};
 
+    public void setUserVolume(int userVolume) {
+        this.userVolume = userVolume;
+    }
+
+    public void setM_tsLimit(int m_tsLimit) {
+        this.m_tsLimit = m_tsLimit;
+    }
 
 
     public SRT(@Nullable Context context) {

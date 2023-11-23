@@ -53,6 +53,8 @@ public class SrtPreTestActivity  extends AppCompatActivity
     AudioManager m_AudioMan= null;
     MediaPlayer m_Player = null;
 
+    int m_iCurVolume = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,21 +64,37 @@ public class SrtPreTestActivity  extends AppCompatActivity
 
         m_packname = getPackageName();
 
-        findBtnAndSetClickListener();
-        findAndSetHomeBack();
+        m_BtnStart = findViewById(R.id.appBtnSrtPreTestStart);
+        m_BtnStart.setOnClickListener(this);
+
+        m_ImgBtnSoundDown = findViewById(R.id.soundDown);
+        m_ImgBtnSoundDown.setOnClickListener(this);
+
+        m_ImgBtnSoundUp = findViewById(R.id.soundUp);
+        m_ImgBtnSoundUp.setOnClickListener(this);
+
         setTextColor();
 
+
         m_TextViewSideCheck = findViewById(R.id.sideCheckText);
+
         if(GlobalVar.g_TestSide == TConst.T_RIGHT){
             m_TextViewSideCheck.setText("오른쪽 듣기");
         }else{
             m_TextViewSideCheck.setText("왼쪽 듣기");
         }
-        m_BtnStart.setOnClickListener(this);
+        findAndSetHomeBack();
+
+        m_iCurVolume = 0;
+        m_AudioMan = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        m_AudioMan.setStreamVolume(AudioManager.STREAM_MUSIC, 7,0);
 
         int idTrack = getResources().getIdentifier("pre","raw", m_packname);
         stopPlayer();
         m_Player = MediaPlayer.create(m_Context,idTrack);
+
+        setVolumeFromDBHL(50);
+        m_Player.setLooping(true);
         playStart(m_Player);
 
 
@@ -89,136 +107,12 @@ public class SrtPreTestActivity  extends AppCompatActivity
         stopPlayer();
     }
 
-
-    @Override
-    public void onBackPressed() {
-        startActivityAndFinish(SrtDesc02Activity.class);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                Log.d(m_TAG, "onKeyDown - KEYCODE_VOLUME_DOWN");
-                return true;
-
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                Log.d(m_TAG, "onKeyDown - KEYCODE_VOLUME_UP");
-                return true;
-
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                Log.v(m_TAG, "onKeyUp - KEYCODE_VOLUME_DOWN");
-                return true;
-
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                Log.v(m_TAG, "onKeyUp - KEYCODE_VOLUME_UP");
-                return true;
-
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.appBtnSrtPreTestStart) {
-            Log.d(m_TAG, "onClick - srtStartBtn");
-            startActivityAndFinish(SrtStartActivity.class);
-
-        }
-        onClickHomeBack(view);
-    }
-
     private void findAndSetHomeBack() {
         m_ImgBtnBack = findViewById(R.id.imgBtnBack);
         m_ImgBtnBack.setOnClickListener(this);
 
         m_ImgBtnHome = findViewById(R.id.imgBtnHome);
         m_ImgBtnHome.setOnClickListener(this);
-    }
-
-    private void onClickHomeBack(View view) {
-        if (view.getId() == R.id.imgBtnBack) {
-            Log.d(m_TAG, "onClick - imgBtnBack");
-//            m_PTPlayer.closeAll();
-
-            startActivityAndFinish(SrtDesc02Activity.class);
-
-        } else if (view.getId() == R.id.imgBtnHome) {
-            Log.d(m_TAG, "onClick - imgBtnHome");
-//            m_PTPlayer.closeAll();
-            startActivityAndFinish(MenuActivity.class);
-
-        }
-    }
-
-    private void onClickSoundUpDownButton(View view){
-        if(view.getId() == R.id.soundDown){
-            Log.v(m_TAG, "onClick - soundDown");
-            m_iCurDBHL -= 5;
-           //  checkAndPlayPureTone();
-            setStartBtnClickableAfterSoundUpDown();
-
-        } else if(view.getId() == R.id.soundUp){
-            Log.v(m_TAG, "onClick - soundUp");
-            m_iCurDBHL += 5;
-       //     checkAndPlayPureTone();
-            setStartBtnClickableAfterSoundUpDown();
-        }
-    }
-
-    private void setStartBtnClickableAfterSoundUpDown() {
-        m_BtnStart.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packname));
-        m_BtnStart.setTextColor(getColor(R.color.white));
-    }
-
-
-    private void findBtnAndSetClickListener() {
-        m_BtnStart = findViewById(R.id.appBtnSrtPreTestStart);
-        m_ImgBtnSoundDown = findViewById(R.id.soundDown);
-        m_ImgBtnSoundDown.setOnClickListener(this);
-
-        m_ImgBtnSoundUp = findViewById(R.id.soundUp);
-        m_ImgBtnSoundUp.setOnClickListener(this);
-    }
-
-    private void setTextColor() {
-        changeTextColorFromStartToEnd(R.id.preTestText, "#0181F8", 4, 9);
-        changeTextColorFromStartToEnd(R.id.preTestText1, "#0181F8", 5, 15);
-        changeTextColorFromStartToEnd(R.id.preTestText2, "#1DB85E", 5, 18);
-        changeTextColorFromStartToEnd(R.id.preTestText3, "#FF0000", 5, 18);
-    }
-
-    private void changeTextColorFromStartToEnd(int idRes, String strColor, int iStart, int iEnd){
-        TextView tvText = findViewById(idRes);
-        String strText = tvText.getText().toString();
-        SpannableStringBuilder ssbText = new SpannableStringBuilder(strText);
-        ssbText.setSpan(new ForegroundColorSpan(Color.parseColor(strColor)),iStart,iEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvText.setText(ssbText);
-    }
-
-    private void startActivityAndFinish(Class<?> clsStart) {
-        Intent intent = new Intent(getApplicationContext(), clsStart);
-        startActivity(intent);
-        finish();
-    }
-
-
-    public void playStart(MediaPlayer m_player){
-        float lVolume = GlobalVar.g_TestSide == TConst.T_LEFT?1.0f:0.0f;
-        float rVolume = GlobalVar.g_TestSide == TConst.T_RIGHT?1.0f:0.0f;
-        if (m_player != null){
-            m_player.setVolume(lVolume,rVolume);
-            m_player.start();
-        }
     }
 
     public int stopPlayer(){
@@ -235,6 +129,139 @@ public class SrtPreTestActivity  extends AppCompatActivity
             return 0;
         }
     }
+
+    private void setTextColor() {
+        changeTextColorFromStartToEnd(R.id.preTestText, "#0181F8", 4, 9);
+        changeTextColorFromStartToEnd(R.id.preTestText1, "#0181F8", 5, 15);
+        changeTextColorFromStartToEnd(R.id.preTestText2, "#1DB85E", 5, 18);
+        changeTextColorFromStartToEnd(R.id.preTestText3, "#FF0000", 5, 18);
+    }
+
+    private void changeTextColorFromStartToEnd(int idRes, String strColor, int iStart, int iEnd){
+        TextView tvText = findViewById(idRes);
+        String strText = tvText.getText().toString();
+        SpannableStringBuilder ssbText = new SpannableStringBuilder(strText);
+        ssbText.setSpan(new ForegroundColorSpan(Color.parseColor(strColor)),iStart,iEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvText.setText(ssbText);
+    }
+    @Override
+    public void onBackPressed() {
+        startActivityAndFinish(SrtDesc02Activity.class);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.appBtnSrtPreTestStart) {
+            Log.d(m_TAG, "onClick - srtStartBtn");
+            startActivityAndFinish(SrtStartActivity.class);
+
+        }
+        if(view.getId() == R.id.soundDown){
+
+            m_iCurVolume = adjustVolume(-1);
+
+        }else if(view.getId() == R.id.soundUp){
+
+            m_iCurVolume = adjustVolume(+1);
+        }
+        onClickHomeBack(view);
+    }
+
+    private void onClickHomeBack(View view) {
+        if (view.getId() == R.id.imgBtnBack) {
+            Log.d(m_TAG, "onClick - imgBtnBack");
+
+            startActivityAndFinish(SrtDesc02Activity.class);
+
+        } else if (view.getId() == R.id.imgBtnHome) {
+            Log.d(m_TAG, "onClick - imgBtnHome");
+            startActivityAndFinish(MenuActivity.class);
+
+        }
+    }
+
+    private void startActivityAndFinish(Class<?> clsStart) {
+        Intent intent = new Intent(getApplicationContext(), clsStart);
+        startActivity(intent);
+        finish();
+    }
+
+    private int setVolumeFromDBHL(int iDBHL){
+        Log.v(m_TAG, String.format("setVolumeFromDBHL Vol = %d ", iDBHL) );
+        if(m_Player == null){
+            return 0;
+        }
+
+        if(GlobalVar.g_TestSide == TConst.T_RIGHT){
+            m_Player.setVolume(0.0f, 1.0f); // Right Only
+        } else {
+            m_Player.setVolume(1.0f, 0.0f); // Left Only
+        }
+
+        int iCalcVol = calculteVolumeFromDBHL(iDBHL);
+        int iCheckVol = getVolumeAfterMinMaxCheck(iCalcVol);
+
+        m_AudioMan.setStreamVolume(AudioManager.STREAM_MUSIC, iCheckVol,0);
+        return iCheckVol;
+    }
+
+    public int adjustVolume(int delta){
+        if(m_Player == null || !m_Player.isPlaying()){
+            return 0;
+        }
+
+        int CurVol = m_AudioMan.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int NewVol = getVolumeAfterMinMaxCheck(CurVol + delta);
+
+        //Log.v(aName,"current V : " + nVolume);
+        m_AudioMan.setStreamVolume(AudioManager.STREAM_MUSIC, NewVol,0);
+        return NewVol;
+    }
+
+    private int calculteVolumeFromDBHL(int iDBHL) {
+        int MaxVol = m_AudioMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int MinVol = m_AudioMan.getStreamMinVolume(AudioManager.STREAM_MUSIC);
+        int CalcVol = (int)(iDBHL * ((float)(MaxVol - MinVol) / 100.));
+
+        Log.v(m_TAG, String.format(" setVolumeFromDBHL DBHL = %d , Max : %d, Min : %d, Calc : %d ",
+                iDBHL, MaxVol, MinVol, CalcVol) );
+        return CalcVol;
+    }
+
+    private int getVolumeAfterMinMaxCheck(int iVol){
+        int MaxVol = m_AudioMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int MinVol = m_AudioMan.getStreamMinVolume(AudioManager.STREAM_MUSIC);
+
+        if(iVol > MaxVol){
+            iVol = MaxVol;
+        }
+        if(iVol < MinVol){
+            iVol = MinVol;
+        }
+
+        return iVol;
+    }
+
+    private void checkbtnClickable(){
+
+        m_BtnStart.setClickable(true);
+        m_BtnStart.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packname));
+        m_BtnStart.setTextColor(getColor(R.color.white));
+        m_BtnStart.setOnClickListener(this);
+    }
+
+
+
+    public void playStart(MediaPlayer m_player){
+        float lVolume = GlobalVar.g_TestSide == TConst.T_LEFT?1.0f:0.0f;
+        float rVolume = GlobalVar.g_TestSide == TConst.T_RIGHT?1.0f:0.0f;
+        if (m_player != null){
+            m_player.setVolume(lVolume,rVolume);
+            m_player.start();
+        }
+    }
+
+
 
 
 }
