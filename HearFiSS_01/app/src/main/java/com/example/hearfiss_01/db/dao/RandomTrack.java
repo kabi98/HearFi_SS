@@ -8,6 +8,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.hearfiss_01.db.DTO.AmTrack;
+import com.example.hearfiss_01.db.sql.SQLiteControl;
+import com.example.hearfiss_01.db.sql.SQLiteHelper;
 import com.example.hearfiss_01.global.RandomBag;
 import com.example.hearfiss_01.global.TConst;
 
@@ -17,8 +19,10 @@ public class RandomTrack {
     String m_TAG = "RandomTrack";
 
     Context m_Context;
+
+    SQLiteControl m_sqlcon = null;
     SQLiteDatabase m_database;
-    SQLiteHelper m_helper = null;
+    com.example.hearfiss_01.db.sql.SQLiteHelper m_helper = null;
     ArrayList<AmTrack> m_alTrack = null;
     String m_Type = "";
 
@@ -28,7 +32,8 @@ public class RandomTrack {
         m_Context = context;
 
         m_helper = new SQLiteHelper(m_Context,  TConst.DB_FILE, null, TConst.DB_VER);
-        m_alTrack = new ArrayList<>();
+        m_sqlcon = new SQLiteControl(m_helper);
+        m_alTrack = new ArrayList<AmTrack>();
     }
 
     public void releaseAndClose() {
@@ -58,6 +63,10 @@ public class RandomTrack {
     public void filling(){
 
         ArrayList<AmTrack> alTemp = selectTrackFromType(m_Type);
+
+        if(alTemp!= null){
+            Log.v("TEST LOG","selectTrackFromType : " + alTemp.size());
+        }
 
         RandomBag rbTemp = new RandomBag();
         rbTemp.setiLimit(alTemp.size());
@@ -105,6 +114,49 @@ public class RandomTrack {
         }
     }
 
+    public ArrayList<AmTrack> testSql(String _strType) {
+        ArrayList<AmTrack> alTrack = new ArrayList<>();
+        try {
+            m_database = m_helper.getReadableDatabase();
+
+            String strSQL = "  SELECT at_id, at_file_name, at_file_ext, at_type, at_content "
+                    + " FROM audiometry_track "
+                    + " WHERE at_type = 'bwl_a1' ; ";
+            Log.v("TEST LOG", "params : " + _strType);
+            String[] params = {_strType};
+
+            //Cursor cursor = m_database.rawQuery(strSQL, params);
+            Cursor cursor = m_database.rawQuery(strSQL, null);
+            Log.v("TEST LOG", "cursor : " + cursor);
+
+            Log.v(m_TAG,
+                    String.format("selectTrackFromType Result = %d", cursor.getCount()));
+            if (cursor.getCount() <= 0)
+                return null;
+
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String ext = cursor.getString(2);
+                String type = cursor.getString(3);
+                String content = cursor.getString(4);
+
+                AmTrack atOne = new AmTrack(id, name, ext, type, content);
+                alTrack.add(atOne);
+
+                Log.v(m_TAG,
+                        String.format("  selectTrackFromType \n name %s, ext %s, type %s, content %s ",
+                                name, ext, type, content));
+
+            }
+            cursor.close();
+            return alTrack;
+        }catch (Exception e){
+            Log.v("TEST LOG", "SQL ERROR" + e);
+            return  null;
+        }
+    }
     public ArrayList<AmTrack> trySelectTrackFromType(String _strType) {
         ArrayList<AmTrack> alTrack = new ArrayList<>();
         m_database = m_helper.getReadableDatabase();

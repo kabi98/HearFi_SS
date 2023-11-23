@@ -136,7 +136,8 @@ public class SrtTestActivity extends AppCompatActivity
         m_SRT = new SRT(m_Context);
         m_SRT.setM_tsLimit(GlobalVar.g_srtNumber);
         m_SRT.setUserVolume(GlobalVar.g_srtUserVolume);
-        m_SRT.setM_Type("mwl_a1");
+        m_SRT.startTest();
+        // m_SRT.setM_Type("bwl_a1");
         m_SRT.playCurrent();
     }
 
@@ -172,6 +173,7 @@ public class SrtTestActivity extends AppCompatActivity
             return;
         }
 
+        Log.v(m_TAG, "onClick - inputText");
         String strAnswer = m_EditSRT.getText().toString();
         m_EditSRT.setText("");
 
@@ -183,6 +185,7 @@ public class SrtTestActivity extends AppCompatActivity
     }
 
     private void checkTestEndAndNextPlay() {
+        Log.v(m_TAG, "onClick - Text");
         if(m_SRT.isEnd()){
             // m_ProgressBar.setProgress(100);
             m_AppBtnNext.setClickable(false);
@@ -246,7 +249,9 @@ public class SrtTestActivity extends AppCompatActivity
         for (SrtUnit resultOne : alSrtResult) {
             Log.v(m_TAG, String.format("result RIGHT Q:%s, A:%s, C:%d",
                     resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
-        }*/
+        }
+
+        */
     }
 
     private void saveSrtResultToGlobalVar() {

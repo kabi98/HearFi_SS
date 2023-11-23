@@ -1,7 +1,7 @@
 package com.example.hearfiss_01.global;
 
 public final class TConst {
-    public static final String DB_FILE = "AudioMetry.db";
+    public static final String DB_FILE = "AudioMetry_1.db";
     public static final int DB_VER = 1;
 
     public static final String COPY_FILE = "HearFi.db";

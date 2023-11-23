@@ -108,7 +108,7 @@ public class SRT {
         setM_Type("bwl_a1");
 
         m_iCurDbHL = getDBHLFromVolume();
-/*
+/*==
         Date dtNow = new Date();
         SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdFormatter.format(dtNow);
@@ -194,6 +194,7 @@ public class SRT {
     }
 
     private int playTrack() {
+        Log.v("SRT", "play sound");
         int idTrack = m_Context.getResources().getIdentifier(m_atCur.getAt_file_name(), "raw", m_PkgName);
 
         if (m_Player != null) {
