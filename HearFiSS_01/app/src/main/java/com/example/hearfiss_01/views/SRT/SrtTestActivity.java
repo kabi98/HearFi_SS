@@ -2,12 +2,18 @@ package com.example.hearfiss_01.views.SRT;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -40,7 +46,7 @@ public class SrtTestActivity extends AppCompatActivity
 
     AppCompatButton m_AppBtnNext, m_AppBtnAnswerVoice, sttFinishBtn;
 
-    LinearLayout STTView;
+    LinearLayout STTView, STTActiveLayout;
 
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
 
@@ -50,7 +56,7 @@ public class SrtTestActivity extends AppCompatActivity
 
     Intent stt_intent;
 
-    final int PERMISSION = 1;
+
 
     TextView m_TextViewTestSide, sttTextView1, sttTextView2;
 
@@ -68,9 +74,11 @@ public class SrtTestActivity extends AppCompatActivity
 
     SRT m_SRT = null;
 
+    final int PERMISSION = 1;
 
 
     InputMethodManager imm = null;
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -78,6 +86,11 @@ public class SrtTestActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_srt_test);
+
+        if ( Build.VERSION.SDK_INT >= 23 ){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,Manifest.permission.RECORD_AUDIO}, PERMISSION);
+        }
+
         m_Context = SrtTestActivity.this;
 
         m_iLimit = GlobalVar.g_srtNumber;
@@ -90,10 +103,44 @@ public class SrtTestActivity extends AppCompatActivity
         }
 
         m_AppBtnAnswerVoice = findViewById(R.id.srtVoiceAnswerBtn);
-        m_AppBtnAnswerVoice.setOnClickListener(this);
 
         m_AppBtnNext = findViewById(R.id.srtnextBtn);
         m_AppBtnNext.setOnClickListener(this);
+
+        stt_intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        stt_intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName());
+        stt_intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR");
+
+        STTActiveLayout = findViewById(R.id.STTActiveLayout);
+        STTView = findViewById(R.id.STTView);
+        sttTextView1 = findViewById(R.id.sttTextView1);
+        sttTextView2 = findViewById(R.id.sttTextView2);
+        sttFinishBtn = findViewById(R.id.sttFinishBtn);
+
+
+        m_AppBtnAnswerVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                STTView.setVisibility(View.VISIBLE);
+                m_AppBtnAnswerVoice.setVisibility(View.GONE);
+                sttFinishBtn.setClickable(true);
+                STTActiveLayout.setVisibility(View.VISIBLE);
+                imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(m_EditSRT.getWindowToken(), 0);
+                sttTextView2.setText("");
+                user_Answer = "";
+                sttTextView1.setText(user_Answer);
+                sttTest();
+            }
+        });
+
+        sttFinishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                m_AppBtnAnswerVoice.setVisibility(View.VISIBLE);
+                STTView.setVisibility(View.GONE);
+            }
+        });
 
         setSideTextAndProgressBar();
 
@@ -104,6 +151,7 @@ public class SrtTestActivity extends AppCompatActivity
         initAct();
 
     }
+
 
 
     @Override
@@ -153,13 +201,16 @@ public class SrtTestActivity extends AppCompatActivity
     public void onClick(View view) {
         if(view.getId() == R.id.srtnextBtn) {
             Log.v(m_TAG, "onClick - nextBtnClick");
+            m_AppBtnAnswerVoice.setVisibility(View.VISIBLE);
             m_AppBtnNext.setText("다음 문제");
             ClickedSrtNextBtn();
 
-        } /*else if(view.getId() == R.id.srtVoiceAnswerBtn){
+        } else if(m_AppBtnAnswerVoice.isSelected()){
             Log.v(m_TAG, "onClick - srtVoiceAnswerBtn");
             // 음성 인식 기능 활성화
-        }*/
+            STTView.setVisibility(View.VISIBLE);
+            Log.v(m_TAG, "STTView set Visible");
+        }
 
         onClickHomeBack(view);
 
@@ -362,6 +413,86 @@ public class SrtTestActivity extends AppCompatActivity
         startActivity(intent);
         finish();
     }
+    private void sttTest() {
+        SpeechRecognizer mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        mRecognizer.setRecognitionListener(listener);
+        mRecognizer.startListening(stt_intent);
+    }
+    private RecognitionListener listener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle params) {
+            Toast.makeText(getApplicationContext(),"음성인식을 시작합니다.",Toast.LENGTH_SHORT).show();
+        }
 
+        @Override
+        public void onBeginningOfSpeech() {}
+
+        @Override
+        public void onRmsChanged(float rmsdB) {}
+
+        @Override
+        public void onBufferReceived(byte[] buffer) {}
+
+        @Override
+        public void onEndOfSpeech() {}
+
+        @Override
+        public void onError(int error) {
+            String message;
+
+            switch (error) {
+                case SpeechRecognizer.ERROR_AUDIO:
+                    message = "오디오 에러";
+                    break;
+                case SpeechRecognizer.ERROR_CLIENT:
+                    message = "클라이언트 에러";
+                    break;
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                    message = "퍼미션 없음";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK:
+                    message = "네트워크 에러";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                    message = "네트웍 타임아웃";
+                    break;
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                    message = "찾을 수 없음";
+                    break;
+                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                    message = "RECOGNIZER가 바쁨";
+                    break;
+                case SpeechRecognizer.ERROR_SERVER:
+                    message = "서버가 이상함";
+                    break;
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                    message = "말하는 시간초과";
+                    break;
+                default:
+                    message = "알 수 없는 오류임";
+                    break;
+            }
+
+            Toast.makeText(getApplicationContext(), "에러가 발생하였습니다. : " + message,Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        public void onResults(Bundle results) {
+            // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어준다.
+            ArrayList<String> matches =
+                    results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+
+            for(int i = 0; i < matches.size() ; i++){
+                sttTextView2.setText(matches.get(i));
+                user_Answer = sttTextView2.getText().toString();
+                sttTextView1.setText(user_Answer);
+            }
+        }
+
+        @Override
+        public void onPartialResults(Bundle partialResults) {}
+
+        @Override
+        public void onEvent(int eventType, Bundle params) {}
+    };
 
 }

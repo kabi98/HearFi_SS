@@ -1,12 +1,18 @@
 package com.example.hearfiss_01.audioTest.SRT;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 
+import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.db.DTO.AmTrack;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
@@ -56,7 +62,7 @@ public class SRT {
     SrtScore m_SrtScore = null;
     String m_TAG = "SRT";
     Context     m_Context = null;
-//    String[] arrQuestion =  {"편지", "땅콩", "저녁", "안개", "달걀", "노래", "시간", "욕심", "육군", "허리", "신발", "마음"};
+
 
     public void setUserVolume(int userVolume) {
         this.userVolume = userVolume;
@@ -201,12 +207,10 @@ public class SRT {
             m_Player.stop();
             m_Player.release();
         }
-
         m_Player = MediaPlayer.create(m_Context, idTrack);
         m_Player.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         setVolumeFromDBHL(m_iCurDbHL);
-
         m_Player.start();
         return m_iCount;
     }
