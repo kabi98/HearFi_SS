@@ -28,6 +28,12 @@ public class SrtThreshold implements Comparable<SrtThreshold>{
 
     @Override
     public int compareTo(SrtThreshold srtThreshold) {
-        return 0;
+        if(this.m_DBHL > srtThreshold.get_DBHL()){
+            return 1;
+        } else if(this.m_DBHL < srtThreshold.get_DBHL()){
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

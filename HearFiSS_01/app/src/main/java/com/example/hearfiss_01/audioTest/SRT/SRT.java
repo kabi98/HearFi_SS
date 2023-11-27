@@ -25,6 +25,7 @@ import com.example.hearfiss_01.global.TConst;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class SRT {
@@ -298,5 +299,15 @@ public class SRT {
         return CalcDBHL;
     }
 
+    public ArrayList<SrtThreshold> getResultList(){
+        return m_SrtScore.getThresholdList();
+    }
+
+    public ArrayList<SrtThreshold> getSortedResultList(){
+        ArrayList<SrtThreshold> alSortedResult = m_SrtScore.getThresholdList();
+        Collections.sort(alSortedResult);
+
+        return alSortedResult;
+    }
 }
 

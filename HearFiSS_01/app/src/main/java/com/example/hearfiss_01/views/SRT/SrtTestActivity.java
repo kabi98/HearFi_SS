@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRT.SRT;
 import com.example.hearfiss_01.audioTest.SRT.SrtScore;
+import com.example.hearfiss_01.audioTest.SRT.SrtThreshold;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.db.sql.SQLiteControl;
@@ -50,8 +51,6 @@ public class SrtTestActivity extends AppCompatActivity
     LinearLayout STTView, STTActiveLayout;
 
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
-
-    ProgressBar m_ProgressBar = null;
 
     EditText m_EditSRT;
 
@@ -259,18 +258,19 @@ public class SrtTestActivity extends AppCompatActivity
 
         Log.v( m_TAG, String.format("****** saveResultAndChangeAct Side :%d", GlobalVar.g_TestSide) );
         if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-            saveSrtResultToGlobalVar();
+            sortAndSaveResultToGlobalVar();
+
             m_SRT.endTest();
 
         } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-            saveSrtResultToGlobalVar();
+            sortAndSaveResultToGlobalVar();
+
             if(m_SRT.isEnd()){
                 saveSrtResultToDatabase();
             }
             m_SRT.endTest();
         }
 
-        sortAndSaveResultToGlobalVar();
         showChangeSideMessage();
         checkSideAndStartActivity();
 
@@ -329,6 +329,22 @@ public class SrtTestActivity extends AppCompatActivity
     }
 
     private void sortAndSaveResultToGlobalVar() {
+        Log.v(m_TAG, String.format("sortAndSaveResultToGlobalVar") );
+
+        ArrayList<SrtThreshold> alSrtResultSort = m_SRT.getSortedResultList();
+
+        for(SrtThreshold resultOne : alSrtResultSort){
+            Log.v(m_TAG, String.format("result Side:%d  dB:%d",
+                    GlobalVar.g_TestSide, resultOne.get_DBHL()) );
+        }
+
+        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
+            GlobalVar.g_alSrtRightThreshold = alSrtResultSort;
+
+        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
+            GlobalVar.g_alSrtLeftThreshold = alSrtResultSort;
+
+        }
     }
     private void saveSrtResultToDatabase() {
         // not yet
@@ -363,25 +379,7 @@ public class SrtTestActivity extends AppCompatActivity
         */
     }
 
-    private void saveSrtResultToGlobalVar() {
-        // not yet
-        Log.v(m_TAG, String.format("saveSrtResultToGlobalVar") );
-/*
-        ArrayList<SrtUnit> alSrtResult = m_SrtScore.getM_alSrtUnit();
 
-        for(SrtUnit resultOne : alSrtResult){
-            Log.v(m_TAG, String.format("result Side:%d Q:%s, A:%s, C:%d",
-                    GlobalVar.g_TestSide, resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()) );        }
-
-        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-            GlobalVar.g_alSrtRight = alSrtResult;
-
-        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-            GlobalVar.g_alSrtLeft = alSrtResult;
-
-        }
-  */
-    }
 
     private void setSideTextAndProgressBar() {
         //----------------------------------SIDE TEXT SETTING-------------------------------------//
