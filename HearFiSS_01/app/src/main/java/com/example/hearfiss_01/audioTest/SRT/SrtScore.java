@@ -10,8 +10,6 @@ public class SrtScore {
     int m_iCntTurnUp, m_iPrevDb, m_iCurDb;
     boolean m_isEnd;
 
-    ArrayList<SrtThreshold> m_alThreshold = null;
-
     public SrtScore()
     {
         m_alSrtUnit = new ArrayList<>();
@@ -26,10 +24,6 @@ public class SrtScore {
 
         m_isEnd = false;
     }
-    public ArrayList<SrtThreshold> getThresholdList(){
-        return m_alThreshold;
-    }
-
     public int getM_iCurDb() {
         return m_iCurDb;
     }

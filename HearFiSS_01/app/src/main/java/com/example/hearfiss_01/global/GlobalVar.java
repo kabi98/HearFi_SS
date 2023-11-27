@@ -1,9 +1,6 @@
 package com.example.hearfiss_01.global;
 
-import com.example.hearfiss_01.audioTest.PTT.PttScore;
 import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
-import com.example.hearfiss_01.audioTest.SRT.SrtScore;
-import com.example.hearfiss_01.audioTest.SRT.SrtThreshold;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
@@ -24,10 +21,6 @@ public class GlobalVar {
 
     public static ArrayList<PttThreshold> g_alPttRightThreshold = new ArrayList<>();
     public static ArrayList<PttThreshold> g_alPttLeftThreshold = new ArrayList<>();
-
-    public static ArrayList<SrtThreshold> g_alSrtRightThreshold = new ArrayList<>();
-
-    public static ArrayList<SrtThreshold> g_alSrtLeftThreshold = new ArrayList<>();
 
     public static HrTestGroup g_TestGroup = new HrTestGroup();
 

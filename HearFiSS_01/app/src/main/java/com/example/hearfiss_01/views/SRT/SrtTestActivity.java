@@ -23,17 +23,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRT.SRT;
 import com.example.hearfiss_01.audioTest.SRT.SrtScore;
-import com.example.hearfiss_01.audioTest.SRT.SrtThreshold;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.db.DTO.HrTestUnit;
-import com.example.hearfiss_01.db.sql.SQLiteControl;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
@@ -175,8 +172,8 @@ public class SrtTestActivity extends AppCompatActivity
 
     private void initAct() {
         if(TConst.T_RIGHT == GlobalVar.g_TestSide) {
-            GlobalVar.g_alPttRightThreshold.clear();
-            GlobalVar.g_alSrtLeftThreshold.clear();
+            GlobalVar.g_alSrtRight.clear();
+            GlobalVar.g_alSrtLeft.clear();
         }
 
         checkTestSideAndSetText();
@@ -222,10 +219,13 @@ public class SrtTestActivity extends AppCompatActivity
     }
     private void ClickedSrtNextBtn() {
         Log.v(m_TAG, "onClick - sound play");
+/*
         if (m_AppBtnNext.isSelected()) {
             m_SRT.playCurrent();
             initAct();
         }
+ */
+
         if(m_isActChanging) {
             return;
         }
@@ -329,21 +329,6 @@ public class SrtTestActivity extends AppCompatActivity
 
     private void sortAndSaveResultToGlobalVar() {
         Log.v(m_TAG, String.format("sortAndSaveResultToGlobalVar") );
-
-        ArrayList<SrtThreshold> alSrtResultSort = m_SRT.getSortedResultList();
-
-        for(SrtThreshold resultOne : alSrtResultSort){
-            Log.v(m_TAG, String.format("result Side:%d  dB:%d",
-                    GlobalVar.g_TestSide, resultOne.get_DBHL()) );
-        }
-
-        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-            GlobalVar.g_alSrtRightThreshold = alSrtResultSort;
-
-        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-            GlobalVar.g_alSrtLeftThreshold = alSrtResultSort;
-
-        }
     }
 
     private  void checkTestSideAndSetText(){

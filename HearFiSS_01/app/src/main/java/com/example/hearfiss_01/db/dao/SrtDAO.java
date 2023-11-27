@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.hearfiss_01.audioTest.SRT.SrtThreshold;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
@@ -40,10 +39,6 @@ public class SrtDAO {
 
     HrTestSet m_TestSetRight;
 
-    ArrayList<SrtThreshold> m_alRightThreshold;
-
-    ArrayList<SrtThreshold> m_alLeftThreshold;
-
     public SrtDAO(@Nullable Context _context){
 
         m_Context = _context;
@@ -53,8 +48,6 @@ public class SrtDAO {
         m_strDevice = TConst.DEFAULT_EARPHONE;
 
         m_Account = new Account();
-        m_alRightThreshold = new ArrayList<>();
-        m_alLeftThreshold = new ArrayList<>();
 
         m_strTestType = TConst.STR_SRT_TYPE;
     }
@@ -63,8 +56,6 @@ public class SrtDAO {
         Log.v(m_TAG,
                 String.format("releaseAndClose"));
         try {
-            m_alRightThreshold = new ArrayList<>();
-            m_alLeftThreshold = new ArrayList<>();
 
             m_database.close();
             m_helper.close();
@@ -93,20 +84,6 @@ public class SrtDAO {
         this.m_Account = _Account;
     }
 
-    public void setResultThreshold(ArrayList<SrtThreshold> _alLeftThreshold,
-                                   ArrayList<SrtThreshold> _alRightThreshold) {
-
-        this.m_alLeftThreshold = _alLeftThreshold;
-        this.m_alRightThreshold = _alRightThreshold;
-    }
-
-    public ArrayList<SrtThreshold> getRightThresholdList() {
-        return m_alRightThreshold;
-    }
-
-    public ArrayList<SrtThreshold> getLeftThresholdList() {
-        return m_alLeftThreshold;
-    }
 
     public void setStrPhone(String _strPhone) {
         this.m_strPhone = _strPhone;

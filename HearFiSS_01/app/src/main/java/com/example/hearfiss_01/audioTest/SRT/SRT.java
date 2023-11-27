@@ -145,14 +145,36 @@ public class SRT {
         String strComment
                 = String.format("Count: %d, UnitSize:%d, Cur:%d, Prev:%d", m_iCount, m_SrtScore.getM_alSrtUnit().size(), m_SrtScore.getM_iCurDb(), m_SrtScore.getM_iPrevDb());
 
+
+
         m_TestSet.setTs_Result(strResult);
         m_TestSet.setTs_Comment(strComment);
         m_SqlCon.updateTestSetFromTsid(m_TestSet);
 
-        if(GlobalVar.g_MenuSide.equals("RIGHT")) {
+  //      GlobalVar.g_TestSide == TConst.T_RIGHT
+//        if(GlobalVar.g_MenuSide.equals("RIGHT")) {
+        if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
+
             GlobalVar.g_RightResult = Integer.toString(m_iThreshold) + "dB HL";
+            GlobalVar.g_alSrtRight = m_SrtScore.getM_alSrtUnit();
+
+            for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
+                Log.v(m_TAG,
+                        String.format(" SRT RESULT Right : %d, %s ",
+                                i , GlobalVar.g_alSrtRight.get(i).toString() ) );
+            }
+
+
         } else {
             GlobalVar.g_leftResult = Integer.toString(m_iThreshold) + "dB HL";
+            GlobalVar.g_alSrtLeft = m_SrtScore.getM_alSrtUnit();
+
+            for(int i=0; i< GlobalVar.g_alSrtLeft.size(); i++){
+                Log.v(m_TAG,
+                        String.format(" SRT RESULT Left : %d, %s ",
+                                i , GlobalVar.g_alSrtLeft.get(i).toString() ) );
+            }
+
         }
 
     }
@@ -174,10 +196,10 @@ public class SRT {
 
         int IsCorrect = suTemp.get_Correct();
         m_iCurDbHL = suTemp.get_NextDb();
-
+/*
         HrTestUnit tuInsert = new HrTestUnit(m_TestSet.getTs_id(), Question, Answer, IsCorrect);
         m_SqlCon.insertTestUnit(tuInsert);
-
+*/
         Log.v("SRT SaveAnswer",
                 String.format("cnt:%d, dB:%d, Q:%s, A:%s, C:%d Next:%d, Pass:%d, End:%b",
                         m_iCount, dBHL, Question, Answer, IsCorrect,
@@ -299,15 +321,5 @@ public class SRT {
         return CalcDBHL;
     }
 
-    public ArrayList<SrtThreshold> getResultList(){
-        return m_SrtScore.getThresholdList();
-    }
-
-    public ArrayList<SrtThreshold> getSortedResultList(){
-        ArrayList<SrtThreshold> alSortedResult = m_SrtScore.getThresholdList();
-        Collections.sort(alSortedResult);
-
-        return alSortedResult;
-    }
 }
 

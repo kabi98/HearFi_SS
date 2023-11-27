@@ -80,6 +80,18 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         findAndSetHomeBack();
         findAndSetNavigationBar();
 
+        for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
+            Log.v(m_TAG,
+                    String.format(" SRT RESULT Right : %d, %s ",
+                            i , GlobalVar.g_alSrtRight.get(i).toString() ) );
+        }
+
+        for(int i=0; i< GlobalVar.g_alSrtLeft.size(); i++){
+            Log.v(m_TAG,
+                    String.format(" SRT RESULT Left : %d, %s ",
+                            i , GlobalVar.g_alSrtLeft.get(i).toString() ) );
+        }
+
     }
 
     @Override
