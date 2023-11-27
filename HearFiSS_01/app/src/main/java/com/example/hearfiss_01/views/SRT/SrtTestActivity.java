@@ -488,9 +488,9 @@ public class SrtTestActivity extends AppCompatActivity
                     results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
             for(int i = 0; i < matches.size() ; i++){
-                sttTextView2.setText(matches.get(i));
-                user_Answer = sttTextView2.getText().toString();
-                sttTextView1.setText(user_Answer);
+                m_EditSRT.setText(matches.get(i));
+                user_Answer = m_EditSRT.getText().toString();
+                m_EditSRT.setText(user_Answer);
             }
         }
 
