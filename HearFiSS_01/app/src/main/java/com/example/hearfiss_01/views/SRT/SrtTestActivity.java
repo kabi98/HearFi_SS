@@ -142,7 +142,6 @@ public class SrtTestActivity extends AppCompatActivity
             }
         });
 
-        setSideTextAndProgressBar();
 
         findAndSetHomeBack();
 
@@ -176,11 +175,12 @@ public class SrtTestActivity extends AppCompatActivity
 
     private void initAct() {
         if(TConst.T_RIGHT == GlobalVar.g_TestSide) {
-            GlobalVar.g_alSrtRight.clear();
-            GlobalVar.g_alSrtLeft.clear();
+            GlobalVar.g_alPttRightThreshold.clear();
+            GlobalVar.g_alSrtLeftThreshold.clear();
         }
 
-        m_isActChanging = false;
+        checkTestSideAndSetText();
+
         m_SRT = new SRT(m_Context);
         m_SRT.setM_tsLimit(GlobalVar.g_srtNumber);
         m_SRT.setUserVolume(GlobalVar.g_srtUserVolume);
@@ -188,7 +188,12 @@ public class SrtTestActivity extends AppCompatActivity
     }
 
     private void finalAct() {
-        m_SRT.endTest();
+        try {
+            m_SRT.endTest();
+        }catch (Exception e){
+            Log.v(m_TAG, "finalAct Exception " + e);
+            m_SRT.endTest();
+        }
         m_AppBtnNext.setClickable(false);
         m_AppBtnAnswerVoice.setClickable(false);
 
@@ -254,27 +259,13 @@ public class SrtTestActivity extends AppCompatActivity
 
     }
     private void saveResultAndChangeAct() {
-        m_isActChanging = true;
-
-        Log.v( m_TAG, String.format("****** saveResultAndChangeAct Side :%d", GlobalVar.g_TestSide) );
-        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-            sortAndSaveResultToGlobalVar();
-
-            m_SRT.endTest();
-
-        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-            sortAndSaveResultToGlobalVar();
-
-            if(m_SRT.isEnd()){
-                saveSrtResultToDatabase();
-            }
-            m_SRT.endTest();
-        }
-
+        sortAndSaveResultToGlobalVar();
         showChangeSideMessage();
         checkSideAndStartActivity();
 
     }
+
+
 
     public void showChangeSideMessage(){
         if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
@@ -289,6 +280,10 @@ public class SrtTestActivity extends AppCompatActivity
             toast.show();
         }
     }
+    public void checkSideAndStartActivity() {
+        Handler handler = new Handler();
+        handler.postDelayed(new RunCheckAndStartActivity(), 2000);
+    }
 
 
     private void onClickHomeBack(View view) {
@@ -302,11 +297,6 @@ public class SrtTestActivity extends AppCompatActivity
 
         }
 
-    }
-
-    private void checkSideAndStartActivity() {
-        Handler handler = new Handler();
-        handler.postDelayed(new RunCheckAndStartActivity(), 2000);
     }
 
 
@@ -328,6 +318,15 @@ public class SrtTestActivity extends AppCompatActivity
         }
     }
 
+    private void saveSrtResultToDatabase() {
+        // not yet
+
+    }
+    private void trySaveSrtResultToDatabase() {
+
+    }
+
+
     private void sortAndSaveResultToGlobalVar() {
         Log.v(m_TAG, String.format("sortAndSaveResultToGlobalVar") );
 
@@ -346,56 +345,18 @@ public class SrtTestActivity extends AppCompatActivity
 
         }
     }
-    private void saveSrtResultToDatabase() {
-        // not yet
-        try{
-            trySaveSrtResultToDatabase();
 
-        }catch (Exception e) {
-            Log.v(m_TAG, "saveSrtResultToDatabase Exception " + e);
-            m_SRT.endTest();
+    private  void checkTestSideAndSetText(){
+        if(TConst.T_LEFT == GlobalVar.g_TestSide){
+            m_TextViewTestSide.setText("왼쪽 테스트");
+
+        } else if(TConst.T_RIGHT == GlobalVar.g_TestSide) {
+            m_TextViewTestSide.setText("오른쪽 테스트");
         }
     }
 
-    private void trySaveSrtResultToDatabase() {
-
-    }
-
-    private void printBothResult() {
-       /*
-        ArrayList<SrtUnit> alSrtResult;
-        alSrtResult = GlobalVar.g_alSrtLeft;
-        for (SrtUnit resultOne : alSrtResult) {
-            Log.v(m_TAG, String.format("result LEFT Q:%s, A:%s, C:%d",
-                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
-        }
-
-        alSrtResult = GlobalVar.g_alSrtRight;
-        for (SrtUnit resultOne : alSrtResult) {
-            Log.v(m_TAG, String.format("result RIGHT Q:%s, A:%s, C:%d",
-                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
-        }
-
-        */
-    }
 
 
-
-    private void setSideTextAndProgressBar() {
-        //----------------------------------SIDE TEXT SETTING-------------------------------------//
-        m_TextViewTestSide = findViewById(R.id.srtTestSideTitle);
-        if(GlobalVar.g_TestSide == TConst.T_LEFT){
-            m_TextViewTestSide.setText("왼쪽 귀 테스트 중입니다.");
-        } else {
-            m_TextViewTestSide.setText("오른쪽 귀 테스트 중입니다.");
-        }
-        //----------------------------------PROGRESS BAR SETTING----------------------------------//
-       /*
-        m_ProgressBar = findViewById(R.id.progress_bar);
-        m_ProgressBar.setIndeterminate(false);
-        m_ProgressBar.setProgress(0);
-*/
-    }
 
     private boolean isEnterKeyUp(int keyCode, KeyEvent keyEvent){
         return( (keyCode == keyEvent.KEYCODE_ENTER)
@@ -422,16 +383,6 @@ public class SrtTestActivity extends AppCompatActivity
         m_EditSRT.requestFocus();
         imm.showSoftInput(m_EditSRT,0);
     }
-
-
-
-
-
-
-
-
-
-
 
     private void startActivityAndFinish(Class<?> clsStart) {
         Intent intent = new Intent(getApplicationContext(), clsStart);
