@@ -229,7 +229,10 @@ public class SrtTestActivity extends AppCompatActivity
         String strAnswer = m_EditSRT.getText().toString();
         m_EditSRT.setText("");
 
-        // m_SRT.saveAnswer(strAnswer);
+        Log.v( m_TAG, String.format("onClick - Pre save Answer %s", strAnswer) );
+
+        m_SRT.saveAnswer(strAnswer);
+        // 진행바 생략 여부 -------------
         // int curPercent = m_SRT.getCurrentProgress();
         // m_ProgressBar.setProgress(curPercent);
 
@@ -237,7 +240,7 @@ public class SrtTestActivity extends AppCompatActivity
     }
 
     private void checkTestEndAndNextPlay() {
-        Log.v(m_TAG, "onClick - Text");
+        Log.v( m_TAG, String.format("****** checkTestEndAndNextPlay isEnd :%s", m_SRT.isEnd()) );
         if(m_SRT.isEnd()){
             // m_ProgressBar.setProgress(100);
             m_AppBtnNext.setClickable(false);
@@ -252,6 +255,8 @@ public class SrtTestActivity extends AppCompatActivity
     }
     private void saveResultAndChangeAct() {
         m_isActChanging = true;
+
+        Log.v( m_TAG, String.format("****** saveResultAndChangeAct Side :%d", GlobalVar.g_TestSide) );
         if(TConst.T_RIGHT == GlobalVar.g_TestSide){
             saveSrtResultToGlobalVar();
             m_SRT.endTest();
@@ -309,7 +314,7 @@ public class SrtTestActivity extends AppCompatActivity
     private void saveSrtResultToGlobalVar() {
         // not yet
         Log.v(m_TAG, String.format("saveSrtResultToGlobalVar") );
-
+/*
         ArrayList<SrtUnit> alSrtResult = m_SrtScore.getM_alSrtUnit();
 
         for(SrtUnit resultOne : alSrtResult){
@@ -323,6 +328,7 @@ public class SrtTestActivity extends AppCompatActivity
             GlobalVar.g_alSrtLeft = alSrtResult;
 
         }
+  */
     }
 
     private void setSideTextAndProgressBar() {
