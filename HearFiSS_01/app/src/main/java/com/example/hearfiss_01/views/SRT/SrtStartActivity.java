@@ -58,7 +58,7 @@ public class SrtStartActivity extends AppCompatActivity
     public void onClick(View view) {
         if (view.getId() == R.id.srtStartBtn) {
             Log.d(m_TAG, "onClick - srtStartBtn");
-            startActivityAndFinish(SoundTestActivity.class);
+            startActivityAndFinish(SrtTestActivity.class);
 
         }
         onClickHomeBack(view);

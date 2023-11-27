@@ -490,7 +490,7 @@ public class SrtTestActivity extends AppCompatActivity
             for(int i = 0; i < matches.size() ; i++){
                 m_EditSRT.setText(matches.get(i));
                 user_Answer = m_EditSRT.getText().toString();
-                m_EditSRT.setText(user_Answer);
+                sttTextView2.setText(user_Answer);
             }
         }
 
