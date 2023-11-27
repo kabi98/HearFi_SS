@@ -32,6 +32,7 @@ import com.example.hearfiss_01.audioTest.SRT.SRT;
 import com.example.hearfiss_01.audioTest.SRT.SrtScore;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.db.DTO.HrTestUnit;
+import com.example.hearfiss_01.db.sql.SQLiteControl;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
@@ -269,10 +270,24 @@ public class SrtTestActivity extends AppCompatActivity
             m_SRT.endTest();
         }
 
-
+        sortAndSaveResultToGlobalVar();
         showChangeSideMessage();
         checkSideAndStartActivity();
 
+    }
+
+    public void showChangeSideMessage(){
+        if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
+            String info = "오른쪽 테스트 종료되었습니다.\n" +
+                    "왼쪽 테스트 진행하겠습니다.\n";
+            Toast toast = Toast.makeText(m_Context,info,Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            String info = "왼쪽 테스트 종료되었습니다.\n" +
+                    "결과 화면으로 넘어가겠습니다.\n";
+            Toast toast = Toast.makeText(m_Context,info,Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
 
@@ -289,8 +304,45 @@ public class SrtTestActivity extends AppCompatActivity
 
     }
 
+    private void checkSideAndStartActivity() {
+        Handler handler = new Handler();
+        handler.postDelayed(new RunCheckAndStartActivity(), 2000);
+    }
+
+
+    public class RunCheckAndStartActivity implements Runnable {
+
+        @Override
+        public void run() {
+
+            if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
+                GlobalVar.g_TestSide = TConst.T_LEFT;
+                startActivityAndFinish(SrtPreTestActivity.class);
+
+            } else {
+                saveSrtResultToDatabase();
+                startActivityAndFinish(SrtResult01Activity.class);
+
+            }
+
+        }
+    }
+
+    private void sortAndSaveResultToGlobalVar() {
+    }
     private void saveSrtResultToDatabase() {
         // not yet
+        try{
+            trySaveSrtResultToDatabase();
+
+        }catch (Exception e) {
+            Log.v(m_TAG, "saveSrtResultToDatabase Exception " + e);
+            m_SRT.endTest();
+        }
+    }
+
+    private void trySaveSrtResultToDatabase() {
+
     }
 
     private void printBothResult() {
@@ -375,42 +427,11 @@ public class SrtTestActivity extends AppCompatActivity
 
 
 
-    public void showChangeSideMessage(){
-        if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
-            String info = "오른쪽 테스트 종료되었습니다.\n" +
-                    "왼쪽 테스트 진행하겠습니다.\n";
-            Toast toast = Toast.makeText(m_Context,info,Toast.LENGTH_SHORT);
-            toast.show();
-        }else{
-            String info = "왼쪽 테스트 종료되었습니다.\n" +
-                    "결과 화면으로 넘어가겠습니다.\n";
-            Toast toast = Toast.makeText(m_Context,info,Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
-
-    private void checkSideAndStartActivity() {
-        Handler handler = new Handler();
-        handler.postDelayed(new RunCheckAndStartActivity(), 2000);
-    }
 
 
-    public class RunCheckAndStartActivity implements Runnable {
 
-        @Override
-        public void run() {
 
-            if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
-                GlobalVar.g_TestSide = TConst.T_LEFT;
-                startActivityAndFinish(SrtPreTestActivity.class);
 
-            } else {
-                startActivityAndFinish(SrtResult01Activity.class);
-
-            }
-
-        }
-    }
 
 
 

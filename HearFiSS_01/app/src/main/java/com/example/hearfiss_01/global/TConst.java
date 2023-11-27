@@ -39,6 +39,8 @@ public final class TConst {
     public static final String STR_PTT_TYPE = "PTA";
     public static final String STR_WRS_TYPE = "WRS";
 
+    public static final String STR_SRT_TYPE = "SRT";
+
     public static final String STR_LEFT_SIDE = "LEFT";
     public static final String STR_RIGHT_SIDE = "RIGHT";
 
