@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.hearfiss_01.audioTest.PTT.PtaCalculator;
 import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
+import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
@@ -19,6 +20,8 @@ import org.jetbrains.annotations.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import kotlin.Unit;
 
 public class SrtDAO {
 
@@ -84,7 +87,7 @@ public class SrtDAO {
         caculateTestSetAndGroupResult();
         insertAndSelectTestGroup();
         insertAndSelectTestSet();
-//        InsertPttTestUnitList();
+        insertTestUnitList();
     }
 
     private void caculateTestSetAndGroupResult() {
@@ -132,6 +135,54 @@ public class SrtDAO {
         m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
         hrTestDAO.insertTestSet(m_TestSetRight);
         m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
+
+        Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
+        Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
     }
 
+    private void insertTestUnitList(){
+        try{
+            tryInsertSrtTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
+            tryInsertSrtTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
+        } catch (Exception e) {
+            Log.v(m_TAG, "insertTestUnitList Exception " + e);
+        }
+    }
+
+    private void tryInsertSrtTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit){
+        Log.v(m_TAG, "*********** tryInsertSrtTestUnitList ********** ");
+        int i = 0;
+        for(SrtUnit unitOne : alSrtUnit) {
+            Log.v(m_TAG, i++ + unitOne.toString());
+        }
+
+        m_database = m_helper.getWritableDatabase();
+        for(SrtUnit unitOne : alSrtUnit){
+            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q:%s, A:%s, C:%d",
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()) );
+
+            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                    + " VALUES (?, ?, ?, ?); ";
+            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
+
+            m_database.execSQL(strSQL, params);
+        }
+    }
+
+/*
+    private void insertTestUnitList(int iTsId, ArrayList<WordUnit> alWordUnit){
+        m_database = m_helper.getWritableDatabase();
+        for(WordUnit unitOne : alWordUnit){
+            Log.v(m_TAG, String.format("insertTestUnitList WordUnit Q:%s, A:%s, C:%d",
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()) );
+
+            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                    + " VALUES (?, ?, ?, ?); ";
+            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
+
+            m_database.execSQL(strSQL, params);
+        }
+    }
+
+*/
 }

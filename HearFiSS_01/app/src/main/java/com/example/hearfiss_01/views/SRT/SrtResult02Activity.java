@@ -17,11 +17,15 @@ import android.widget.TextView;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
+import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.audioTest.WRS.WordScore;
 import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
+import com.example.hearfiss_01.db.dao.PttDAO;
+import com.example.hearfiss_01.db.dao.SrtDAO;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
@@ -32,6 +36,8 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+
+import kotlin.Unit;
 
 public class SrtResult02Activity extends AppCompatActivity  implements View.OnClickListener, CompoundButton.OnCheckedChangeListener  {
 
@@ -54,11 +60,8 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
     HrTestGroup m_TestGroup;
     HrTestSet m_TestSetLeft;
     HrTestSet m_TestSetRight;
-    ArrayList<WordUnit> m_alRight;
-    ArrayList<WordUnit> m_alLeft;
-
-    WordScore m_ScoreLeft = new WordScore();
-    WordScore m_ScoreRight = new WordScore();
+    ArrayList<SrtUnit> m_alRight;
+    ArrayList<SrtUnit> m_alLeft;
 
 
     @Override
@@ -79,18 +82,6 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         ResultToHomeBtn.setOnClickListener(this);
         findAndSetHomeBack();
         findAndSetNavigationBar();
-
-        for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
-            Log.v(m_TAG,
-                    String.format(" SRT RESULT Right : %d, %s ",
-                            i , GlobalVar.g_alSrtRight.get(i).toString() ) );
-        }
-
-        for(int i=0; i< GlobalVar.g_alSrtLeft.size(); i++){
-            Log.v(m_TAG,
-                    String.format(" SRT RESULT Left : %d, %s ",
-                            i , GlobalVar.g_alSrtLeft.get(i).toString() ) );
-        }
 
     }
 
@@ -171,6 +162,47 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
     }
 
     private void getSrtResultFromDatabase() {
+
+//        for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
+//            Log.v(m_TAG,
+//                    String.format(" SRT RESULT Right : %d, %s ",
+//                            i , GlobalVar.g_alSrtRight.get(i).toString() ) );
+//        }
+//
+//        for(int i=0; i< GlobalVar.g_alSrtLeft.size(); i++){
+//            Log.v(m_TAG,
+//                    String.format(" SRT RESULT Left : %d, %s ",
+//                            i , GlobalVar.g_alSrtLeft.get(i).toString() ) );
+//        }
+        SrtDAO srtDAO = new SrtDAO(m_Context);
+
+        srtDAO.setAccount(m_Account);
+        Log.d(m_TAG, "getSrtResultFromDatabase Account " + m_Account.toString());
+        Log.d(m_TAG, "getSrtResultFromDatabase TGID " + m_TgId);
+
+/*
+        srtDAO.loadPttResultsFromTestGroupId(m_TgId);
+
+        m_TestGroup = srtDAO.getTestGroup();
+
+        m_TestSetLeft = srtDAO.getTestSetLeft();
+        m_TestSetRight = srtDAO.getTestSetRight();
+
+        m_alRight = srtDAO.getRightThresholdList();
+        m_alLeft = srtDAO.getLeftThresholdList();
+
+        srtDAO.releaseAndClose();
+
+        for(HrTestUnit unitOne: m_alRight){
+            Log.v(m_TAG, String.format("right Threshold Hz:%d, dB:%d",
+                    pttOne.get_Hz(), pttOne.get_DBHL()) );
+        }
+
+        for(PttThreshold pttOne: m_alLeftResult){
+            Log.v(m_TAG, String.format("left Threshold Hz:%d, dB:%d",
+                    pttOne.get_Hz(), pttOne.get_DBHL()) );
+        }
+*/
     }
 
     private void findToggleBtnAndSetListener() {
