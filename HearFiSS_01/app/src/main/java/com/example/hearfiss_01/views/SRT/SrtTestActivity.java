@@ -28,9 +28,6 @@ import android.widget.Toast;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRT.SRT;
-import com.example.hearfiss_01.audioTest.SRT.SrtScore;
-import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
-import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
@@ -58,12 +55,6 @@ public class SrtTestActivity extends AppCompatActivity
     TextView m_TextViewTestSide, sttTextView1, sttTextView2;
 
     String user_Answer = "";
-
-    ArrayList<HrTestUnit> user_lists= new ArrayList<HrTestUnit>();
-
-    ArrayList<SrtUnit> m_alSrtUnit = null;
-
-    SrtScore m_SrtScore = null;
 
     int m_iLimit = 0;
 
@@ -103,6 +94,7 @@ public class SrtTestActivity extends AppCompatActivity
 
         m_AppBtnNext = findViewById(R.id.srtnextBtn);
         m_AppBtnNext.setOnClickListener(this);
+
 
         stt_intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         stt_intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName());
@@ -179,16 +171,16 @@ public class SrtTestActivity extends AppCompatActivity
         checkTestSideAndSetText();
 
         m_SRT = new SRT(m_Context);
-        m_SRT.setM_tsLimit(GlobalVar.g_srtNumber);
         m_SRT.setUserVolume(GlobalVar.g_srtUserVolume);
         m_SRT.startTest();
     }
 
     private void finalAct() {
+        Log.v(m_TAG, "****** finalAct ****** ");
         try {
             m_SRT.endTest();
         }catch (Exception e){
-            Log.v(m_TAG, "finalAct Exception " + e);
+            Log.v(m_TAG, "****** finalAct Exception ****** " + e);
             m_SRT.endTest();
         }
         m_AppBtnNext.setClickable(false);
@@ -259,13 +251,11 @@ public class SrtTestActivity extends AppCompatActivity
 
     }
     private void saveResultAndChangeAct() {
-        sortAndSaveResultToGlobalVar();
+        saveResultToGlobalVar();
         showChangeSideMessage();
         checkSideAndStartActivity();
 
     }
-
-
 
     public void showChangeSideMessage(){
         if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
@@ -280,6 +270,7 @@ public class SrtTestActivity extends AppCompatActivity
             toast.show();
         }
     }
+
     public void checkSideAndStartActivity() {
         Handler handler = new Handler();
         handler.postDelayed(new RunCheckAndStartActivity(), 2000);
@@ -301,7 +292,6 @@ public class SrtTestActivity extends AppCompatActivity
 
 
     public class RunCheckAndStartActivity implements Runnable {
-
         @Override
         public void run() {
 
@@ -326,9 +316,25 @@ public class SrtTestActivity extends AppCompatActivity
 
     }
 
+    private void saveResultToGlobalVar() {
+        Log.v(m_TAG, String.format("saveResultToGlobalVar") );
+        if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
+            GlobalVar.g_alSrtRight = m_SRT.getScoreList();
+            for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
+                Log.v(m_TAG,
+                        String.format(" SRT RESULT Right : %d, %s ",
+                                i , GlobalVar.g_alSrtRight.get(i).toString() ) );
+            }
 
-    private void sortAndSaveResultToGlobalVar() {
-        Log.v(m_TAG, String.format("sortAndSaveResultToGlobalVar") );
+        } else  {
+            GlobalVar.g_alSrtLeft = m_SRT.getScoreList();
+            for(int i=0; i< GlobalVar.g_alSrtLeft.size(); i++){
+                Log.v(m_TAG,
+                        String.format(" SRT RESULT Left : %d, %s ",
+                                i , GlobalVar.g_alSrtLeft.get(i).toString() ) );
+            }
+
+        }
     }
 
     private  void checkTestSideAndSetText(){
@@ -339,9 +345,6 @@ public class SrtTestActivity extends AppCompatActivity
             m_TextViewTestSide.setText("오른쪽 테스트");
         }
     }
-
-
-
 
     private boolean isEnterKeyUp(int keyCode, KeyEvent keyEvent){
         return( (keyCode == keyEvent.KEYCODE_ENTER)

@@ -30,10 +30,6 @@ import java.util.Date;
 
 public class SRT {
 
-    SQLiteControl m_SqlCon = null;
-
-    SQLiteHelper m_SqlHlp = null;
-
     AudioManager m_AudioMan= null;
 
     MediaPlayer m_Player = null;
@@ -48,13 +44,8 @@ public class SRT {
 
     AmTrack m_atCur = null;
 
-    HrTestGroup m_TestGroup = null;
-
-    int m_tsLimit = 10;
 
     int userVolume = 0;
-
-    HrTestSet m_TestSet = null;
 
     int m_iThreshold = 0;
 
@@ -69,10 +60,6 @@ public class SRT {
         this.userVolume = userVolume;
     }
 
-    public void setM_tsLimit(int m_tsLimit) {
-        this.m_tsLimit = m_tsLimit;
-    }
-
 
     public SRT(@Nullable Context context) {
         this.m_Context = context;
@@ -80,10 +67,6 @@ public class SRT {
         m_PkgName = m_Context.getPackageName();
 
         m_randTrack = new RandomTrack(m_Context);
-
-        m_SqlHlp = new SQLiteHelper(m_Context,  TConst.DB_FILE, null, TConst.DB_VER);
-
-        m_SqlCon = new SQLiteControl(m_SqlHlp);
 
         m_SrtScore = new SrtScore();
 
@@ -111,48 +94,26 @@ public class SRT {
 
     public void startTest(){
         Log.v("SRT", "startTest");
-        m_TestSet = new HrTestSet();
         setM_Type("bwl_a1");
 
         m_iCurDbHL = getDBHLFromVolume();
-/*==
-        Date dtNow = new Date();
-        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = sdFormatter.format(dtNow);
-
-        HrTestGroup tgIns = new HrTestGroup(0, strDate, GlobalVar.g_MenuType," ", GlobalVar.g_AccLogin.getAcc_id());
-        if(GlobalVar.g_MenuSide.equals("RIGHT")) {
-            m_SqlCon.insertTestGroup(tgIns);
-            m_TestGroup = m_SqlCon.selectTestGroup(tgIns);
-            m_TestGroup = GlobalVar.g_TestGroup;
-        }
-
-
-        HrTestSet tsInsert = new HrTestSet(0, m_TestGroup.getTg_id(), GlobalVar.g_MenuSide, "", "");
-        m_SqlCon.insertTestSet(tsInsert);
-
-        m_TestSet = m_SqlCon.selectTestSet(tsInsert);
-*/
         m_SrtScore.clear();
     }
 
     public void endTest(){
-        Log.v("SRT", "endTest");
+        Log.v(m_TAG, "**** endTest ******");
+
         m_iThreshold = m_SrtScore.getM_iPassTrsd();
 
         String strResult
                 = String.format("어음역치 = %d dbHL", m_iThreshold);
         String strComment
                 = String.format("Count: %d, UnitSize:%d, Cur:%d, Prev:%d", m_iCount, m_SrtScore.getM_alSrtUnit().size(), m_SrtScore.getM_iCurDb(), m_SrtScore.getM_iPrevDb());
+/*
+        Log.v(m_TAG,
+                String.format(" SRT RESULT SIDE *** %d ",
+                        GlobalVar.g_TestSide ) );
 
-
-
-        m_TestSet.setTs_Result(strResult);
-        m_TestSet.setTs_Comment(strComment);
-        m_SqlCon.updateTestSetFromTsid(m_TestSet);
-
-  //      GlobalVar.g_TestSide == TConst.T_RIGHT
-//        if(GlobalVar.g_MenuSide.equals("RIGHT")) {
         if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
 
             GlobalVar.g_RightResult = Integer.toString(m_iThreshold) + "dB HL";
@@ -165,7 +126,7 @@ public class SRT {
             }
 
 
-        } else {
+        } else if(GlobalVar.g_TestSide == TConst.T_LEFT) {
             GlobalVar.g_leftResult = Integer.toString(m_iThreshold) + "dB HL";
             GlobalVar.g_alSrtLeft = m_SrtScore.getM_alSrtUnit();
 
@@ -176,7 +137,7 @@ public class SRT {
             }
 
         }
-
+*/
     }
 
     public boolean isEnd(){
@@ -196,10 +157,7 @@ public class SRT {
 
         int IsCorrect = suTemp.get_Correct();
         m_iCurDbHL = suTemp.get_NextDb();
-/*
-        HrTestUnit tuInsert = new HrTestUnit(m_TestSet.getTs_id(), Question, Answer, IsCorrect);
-        m_SqlCon.insertTestUnit(tuInsert);
-*/
+
         Log.v("SRT SaveAnswer",
                 String.format("cnt:%d, dB:%d, Q:%s, A:%s, C:%d Next:%d, Pass:%d, End:%b",
                         m_iCount, dBHL, Question, Answer, IsCorrect,
@@ -236,36 +194,6 @@ public class SRT {
         setVolumeFromDBHL(m_iCurDbHL);
         m_Player.start();
         return m_iCount;
-    }
-
-    void printTestUnits() {
-        Log.v("SRT printTestUnits", "num - question - answer - is_correct " );
-        ArrayList<HrTestUnit> alTestUnit = m_SqlCon.selectTestUnitFromTsId(m_TestSet.getTs_id());
-
-        for(HrTestUnit hrOne : alTestUnit) {
-            Log.v("SRT printTestUnits", hrOne.toString() );
-        }
-    }
-
-    public int adjustVolume(int delta){
-        if(m_Player == null || !m_Player.isPlaying()){
-            return 0;
-        }
-        int CurVol = m_AudioMan.getStreamVolume(AudioManager.STREAM_MUSIC);
-        int MaxVol = m_AudioMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int MinVol = m_AudioMan.getStreamMinVolume(AudioManager.STREAM_MUSIC);
-        int NewVol = CurVol + delta;
-
-        if(NewVol > MaxVol){
-            NewVol = MaxVol;
-        }
-        if(NewVol <= MinVol){
-            NewVol = MinVol;
-        }
-
-        //Log.v(aName,"current V : " + nVolume);
-        m_AudioMan.setStreamVolume(AudioManager.STREAM_MUSIC, NewVol,0);
-        return NewVol;
     }
 
     private int setVolumeFromDBHL(int iDBHL) {
@@ -321,5 +249,8 @@ public class SRT {
         return CalcDBHL;
     }
 
+    public ArrayList<SrtUnit> getScoreList(){
+        return m_SrtScore.getM_alSrtUnit();
+    }
 }
 

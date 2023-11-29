@@ -29,7 +29,6 @@ public class GlobalVar {
     public static ArrayList<WordUnit> g_alWrsLeft = new ArrayList<>();
 
     public static ArrayList<SrtUnit> g_alSrtLeft = new ArrayList<>();
-
     public static ArrayList<SrtUnit> g_alSrtRight = new ArrayList<>();
 
 
@@ -45,9 +44,6 @@ public class GlobalVar {
 
     public static int g_wrsUserVolume = 0;
     public static int g_srtUserVolume = 0;
-
-    public static String g_MenuType = "";
-    public static String g_MenuSide = "";
 
     public static String g_RightResult = "";
     public static String g_leftResult = "";

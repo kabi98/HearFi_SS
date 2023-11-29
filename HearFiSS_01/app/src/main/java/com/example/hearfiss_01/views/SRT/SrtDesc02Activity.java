@@ -49,6 +49,10 @@ public class SrtDesc02Activity extends AppCompatActivity
         GlobalVar.g_TestType = TConst.T_SRT;
         GlobalVar.g_TestSide = TConst.T_RIGHT;
 
+        GlobalVar.g_alSrtLeft.clear();
+        GlobalVar.g_alSrtRight.clear();
+
+
         changeTextColorFromStartToEnd(R.id.textView, "#0181F8", 9, 14);
 
         m_CheckBtnOne = findViewById(R.id.check1Btn);
