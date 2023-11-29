@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRT.SRT;
+import com.example.hearfiss_01.db.dao.PttDAO;
+import com.example.hearfiss_01.db.dao.SrtDAO;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
@@ -309,10 +311,33 @@ public class SrtTestActivity extends AppCompatActivity
     }
 
     private void saveSrtResultToDatabase() {
-        // not yet
+        try{
+            trySaveSrtResultToDatabase();
+
+        }catch (Exception e) {
+            Log.v(m_TAG, "saveSrtResultToDatabase Exception " + e);
+            m_SRT.endTest();
+        }
 
     }
+
     private void trySaveSrtResultToDatabase() {
+        Log.v(m_TAG, String.format("trySaveSrtResultToDatabase") );
+
+        if( !m_SRT.isEnd() ) {
+            Log.v(m_TAG, String.format("trySaveSrtResultToDatabase ---- return is not end PTT Test") );
+            return;
+        }
+
+        SrtDAO srtDAO = new SrtDAO(m_Context);
+
+        srtDAO.setAccount(GlobalVar.g_AccLogin);
+        srtDAO.setResultUnitList(GlobalVar.g_alSrtLeft, GlobalVar.g_alSrtRight);
+        srtDAO.saveResult();
+
+        GlobalVar.g_TestGroup = srtDAO.getTestGroup();
+
+        srtDAO.releaseAndClose();
 
     }
 
