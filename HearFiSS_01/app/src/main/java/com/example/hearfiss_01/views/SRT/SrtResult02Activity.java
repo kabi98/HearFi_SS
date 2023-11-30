@@ -74,6 +74,9 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_srt_result02);
 
+        Log.d(m_TAG,"SrtLeftResult initialized : " + (SrtLeftResult != null));
+        Log.d(m_TAG,"SrtRightResult initialized : " + (SrtRightResult != null));
+
         m_Context = SrtResult02Activity.this;
 
         m_Account = GlobalVar.g_AccLogin;
@@ -257,6 +260,7 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
     }
 
     private void settingUserText() {
+
         SrtLeftResult = findViewById(R.id.SrtLeftResult);
         SrtRightResult = findViewById(R.id.SrtRightResult);
         SrtLeftAnswer = findViewById(R.id.SrtLeftAnswer);
@@ -277,6 +281,8 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
                 , m_ScoreLeft.getM_iScore()
                 ,m_ScoreLeft.getM_iCorrect()
                 ,m_ScoreLeft.getM_iQuestion());
+        Log.d(m_TAG,"Result Left : " + ResultLeft);
+
 
         String ResultRight = String.format(
                 " %d %n%d %% (%d개/%d개)"
@@ -284,6 +290,8 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
                 , m_ScoreRight.getM_iScore()
                 , m_ScoreRight.getM_iCorrect()
                 , m_ScoreRight.getM_iQuestion());
+        Log.d(m_TAG,"Result Right : " + SrtRightResult);
+
 
         SrtLeftResult.setText(ResultLeft);
         SrtRightResult.setText(ResultRight);
@@ -292,6 +300,9 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         String r_answerNum = Integer.toString(m_ScoreRight.getM_iCorrect());
         SrtLeftAnswer.setText(l_answerNum);
         SrtRightAnswer.setText(r_answerNum);
+        Log.d(m_TAG,"Left Answer : " + l_answerNum);
+        Log.d(m_TAG,"Right Answer : " + r_answerNum);
+
 
 
         String l_wrongNum = Integer.toString(m_ScoreLeft.getM_iQuestion() - m_ScoreLeft.getM_iCorrect());
@@ -311,6 +322,10 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         SrtLeftWrongWord.setText(l_wrong);
         SrtRightWord.setText(r_answer);
         SrtRightWrongWord.setText(r_wrong);
+
+        Log.d(m_TAG, "Final Left Set Text : " + SrtLeftWord.getText().toString());
+        Log.d(m_TAG, "Final Right Set Text : " + SrtRightWord.getText().toString());
+
     }
 
     @Override
