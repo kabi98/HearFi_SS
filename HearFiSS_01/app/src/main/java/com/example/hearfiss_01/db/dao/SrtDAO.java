@@ -4,15 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.hearfiss_01.audioTest.PTT.PtaCalculator;
-import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
-import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
-import com.example.hearfiss_01.db.DTO.PttTestDevice;
-import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 
 import org.jetbrains.annotations.Nullable;
@@ -20,8 +15,6 @@ import org.jetbrains.annotations.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import kotlin.Unit;
 
 public class SrtDAO {
 
@@ -55,6 +48,14 @@ public class SrtDAO {
         this.m_Account = _Account;
     }
 
+    public ArrayList<SrtUnit> get_alLeftList() {
+        return m_alLeft;
+    }
+
+    public ArrayList<SrtUnit> get_alRightList() {
+        return m_alRight;
+    }
+
     public void setResultUnitList(ArrayList<SrtUnit> alLeft, ArrayList<SrtUnit> alRight) {
         this.m_alLeft = alLeft;
         this.m_alRight = alRight;
@@ -81,6 +82,15 @@ public class SrtDAO {
             Log.v(m_TAG, "releaseAndClose Exception " + e);
         }
     }
+
+    public HrTestSet getTestSetLeft() {
+        return m_TestSetLeft;
+    }
+
+    public HrTestSet getTestSetRight() {
+        return m_TestSetRight;
+    }
+
 
     public void saveResult(){
         Log.v(m_TAG, "savePttResult");
@@ -185,4 +195,35 @@ public class SrtDAO {
     }
 
 */
+    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput){
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+        m_TestGroup = hrTestDAO.selectTestGroup(tgInput);
+
+        selectBothSideTestSet();
+        getBothSideSrtUnitList();
+    }
+      public void loadSrtResultsFromTestGroupId(int iTgId){
+
+          HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+          m_TestGroup = hrTestDAO.selectTestGroupFromTgId(iTgId);
+
+          selectBothSideTestSet();
+          getBothSideSrtUnitList();
+      }
+
+    private void getBothSideSrtUnitList() {
+    }
+
+    private void selectBothSideTestSet() {
+    }
+//    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput){
+//
+//        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+//        m_TestGroup = hrTestDAO.selectTestGroup(tgInput);
+//
+//        selectBothSideTestSet();
+//        getBothSideSrtUnitList();
+//
+//    }
+
 }

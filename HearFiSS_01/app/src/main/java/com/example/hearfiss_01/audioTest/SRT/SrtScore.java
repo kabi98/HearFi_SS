@@ -57,6 +57,10 @@ public class SrtScore {
         return m_alSrtUnit;
     }
 
+    public void setM_alSrtUnit(ArrayList<SrtUnit> m_alSrtUnit){
+        this.m_alSrtUnit = m_alSrtUnit;
+    }
+
     public int addTestUnit(SrtUnit tuAdd){
         m_alSrtUnit.add(tuAdd);
         print();
