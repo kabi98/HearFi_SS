@@ -172,10 +172,10 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         SrtDAO srtDAO = new SrtDAO(m_Context);
 
         srtDAO.setAccount(m_Account);
+        srtDAO.loadSrtResultsFromTestGroupId(m_TgId);
+
         Log.d(m_TAG, "getSrtResultFromDatabase Account " + m_Account.toString());
         Log.d(m_TAG, "getSrtResultFromDatabase TGID " + m_TgId);
-
-        srtDAO.loadSrtResultsFromTestGroupId(m_TgId);
 
         m_TestGroup = srtDAO.getTestGroup();
 
@@ -188,36 +188,12 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         m_ScoreLeft.setM_alSrtUnit(m_alLeft);
         m_ScoreRight.setM_alSrtUnit(m_alRight);
 
-        /*
-        if (m_alLeft != null){
-            for(SrtUnit unit :m_alLeft) {
-             m_ScoreLeft.calcNextDbNSaveAnswer(unit);
-            }
-        }
-        if (m_alRight != null){
-            for (SrtUnit unit : m_alRight){
-                m_ScoreRight.calcNextDbNSaveAnswer(unit);
-            }
-        }
-*/
+
         srtDAO.releaseAndClose();
 
 
         Log.v(m_TAG, String.format("TestGroup id:%d, %s",
                 m_TestGroup.getTg_id(), m_TestGroup.toString() ) );
-/*
-        if (m_TestSetLeft != null) {
-            Log.v(m_TAG, String.format("TestSet LEFT %s", m_TestSetLeft.toString()));
-        } else {
-            Log.v(m_TAG, "TestSet LEFT is null");
-        }
-
-        if (m_TestSetRight != null) {
-            Log.v(m_TAG, String.format("TestSet RIGHT %s", m_TestSetRight.toString()));
-        } else {
-            Log.v(m_TAG, "TestSet RIGHT is null");
-        }
-*/
 
         for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
             Log.v(m_TAG,
@@ -231,6 +207,8 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
                             i , GlobalVar.g_alSrtLeft.get(i).toString() ) );
         }
     }
+
+
 
 
 

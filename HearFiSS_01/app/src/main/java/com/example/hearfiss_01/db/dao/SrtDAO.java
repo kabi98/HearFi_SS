@@ -1,6 +1,7 @@
 package com.example.hearfiss_01.db.dao;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -8,6 +9,7 @@ import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.global.TConst;
 
 import org.jetbrains.annotations.Nullable;
@@ -203,27 +205,110 @@ public class SrtDAO {
         getBothSideSrtUnitList();
     }
       public void loadSrtResultsFromTestGroupId(int iTgId){
+          Log.v(m_TAG, " loadSrtResultFromTestGroupId" + iTgId);
 
           HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
           m_TestGroup = hrTestDAO.selectTestGroupFromTgId(iTgId);
 
+          if (m_TestGroup == null){
+              Log.v(m_TAG, "loadSrtResultFromTestGroupId = null");
+          } else {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - TestGroup 로드 완료: " + m_TestGroup.toString());
+          }
+
           selectBothSideTestSet();
+          if (m_TestSetLeft == null) {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 TestSet이 null임.");
+          } else {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 TestSet 로드 완료: " + m_TestSetLeft.toString());
+          }
+          if (m_TestSetRight == null) {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 TestSet이 null임.");
+          } else {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 TestSet 로드 완료: " + m_TestSetRight.toString());
+          }
           getBothSideSrtUnitList();
+          if (m_alLeft == null) {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 SrtUnit 리스트가 null임.");
+          } else {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 SrtUnit 리스트 로드 완료, 크기: " + m_alLeft.size());
+          }
+          if (m_alRight == null) {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 SrtUnit 리스트가 null임.");
+          } else {
+              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 SrtUnit 리스트 로드 완료, 크기: " + m_alRight.size());
+          }
+
+          Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 완료");
+
       }
 
     private void getBothSideSrtUnitList() {
+        Log.v(m_TAG, String.format("getBothSideUnitList"));
+        try {
+            m_alLeft = tryGetUnitListFromTestSet(m_TestSetLeft.getTs_id());
+            m_alRight = tryGetUnitListFromTestSet(m_TestSetRight.getTs_id());
+        } catch (Exception e){
+            Log.v(m_TAG, "getBothSideUnitList Exception" + e);
+        }
+
+    }
+
+    private ArrayList<SrtUnit> tryGetUnitListFromTestSet(int _tsId) {
+
+        ArrayList<SrtUnit> unitList = new ArrayList<>();
+        m_database = m_helper.getReadableDatabase();
+
+        try {
+            m_database = m_helper.getReadableDatabase();
+
+            String strSQL = " SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect "
+                    + " FROM hrtest_unit WHERE ts_id = ?; ";
+            String[] params = {Integer.toString(_tsId)};
+            Cursor cursor = m_database.rawQuery(strSQL, params);
+
+            Log.v(m_TAG,
+                    String.format("tryGetSrtUnitListFromTestSet Result = %d", cursor.getCount()));
+            if (cursor.getCount() <= 0)
+                return new ArrayList<>();
+
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                int tu_id = cursor.getInt(0);
+                int ts_id = cursor.getInt(1);
+                String tu_question = cursor.getString(2);
+                String tu_answer = cursor.getString(3);
+                int tu_iscorrect = cursor.getInt(4);
+
+
+                SrtUnit unitOne = new SrtUnit(tu_question, tu_answer, tu_iscorrect, 0, 0);
+                unitList.add(unitOne);
+
+                Log.v("SQLiteControl", unitOne.toString());
+            }
+            cursor.close();
+            return unitList;
+
+        } catch (Exception e) {
+            Log.v("SQLiteControl", "selectTestUnitFromTsId Exception " + e);
+            return null;
+
+
+        }
     }
 
     private void selectBothSideTestSet() {
-    }
-//    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput){
-//
-//        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-//        m_TestGroup = hrTestDAO.selectTestGroup(tgInput);
-//
-//        selectBothSideTestSet();
-//        getBothSideSrtUnitList();
-//
-//    }
+        try {
+            HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+
+            m_TestSetLeft = hrTestDAO.selectTestSetFromTestGroup(m_TestGroup.getTg_id(), TConst.STR_LEFT_SIDE);
+            m_TestSetRight = hrTestDAO.selectTestSetFromTestGroup(m_TestGroup.getTg_id(), TConst.STR_RIGHT_SIDE);
+            Log.v(m_TAG,
+                    String.format("selectBothSideTestSet tg_id %d, ts_id_left %s, ts_id_right %s ",
+                            m_TestGroup.getTg_id(), m_TestSetLeft.getTs_id(), m_TestSetRight.getTs_id()));
+        } catch (Exception e) {
+            Log.v(m_TAG, " selectBothSideTestSet Exception " + e);
+        }
+  
 
 }
