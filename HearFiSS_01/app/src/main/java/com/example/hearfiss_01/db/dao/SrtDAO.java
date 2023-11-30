@@ -64,7 +64,7 @@ public class SrtDAO {
 
     }
 
-    public SrtDAO(@Nullable Context _context){
+    public SrtDAO(@Nullable Context _context) {
 
         m_Context = _context;
         m_helper = new SQLiteHelper(m_Context, TConst.DB_FILE, null, TConst.DB_VER);
@@ -73,7 +73,7 @@ public class SrtDAO {
         m_strTestType = TConst.STR_SRT_TYPE;
     }
 
-    public void releaseAndClose(){
+    public void releaseAndClose() {
         Log.v(m_TAG,
                 String.format("releaseAndClose"));
         try {
@@ -94,7 +94,7 @@ public class SrtDAO {
     }
 
 
-    public void saveResult(){
+    public void saveResult() {
         Log.v(m_TAG, "savePttResult");
         caculateTestSetAndGroupResult();
         insertAndSelectTestGroup();
@@ -152,8 +152,8 @@ public class SrtDAO {
         Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
     }
 
-    private void insertTestUnitList(){
-        try{
+    private void insertTestUnitList() {
+        try {
             tryInsertSrtTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
             tryInsertSrtTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
         } catch (Exception e) {
@@ -161,94 +161,80 @@ public class SrtDAO {
         }
     }
 
-    private void tryInsertSrtTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit){
+    private void tryInsertSrtTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit) {
         Log.v(m_TAG, "*********** tryInsertSrtTestUnitList ********** ");
         int i = 0;
-        for(SrtUnit unitOne : alSrtUnit) {
+        for (SrtUnit unitOne : alSrtUnit) {
             Log.v(m_TAG, i++ + unitOne.toString());
         }
 
         m_database = m_helper.getWritableDatabase();
-        for(SrtUnit unitOne : alSrtUnit){
+        for (SrtUnit unitOne : alSrtUnit) {
             Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q:%s, A:%s, C:%d",
-                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()) );
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
 
             String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
                     + " VALUES (?, ?, ?, ?); ";
-            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
+            Object[] params = {iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()};
 
             m_database.execSQL(strSQL, params);
         }
     }
 
-/*
-    private void insertTestUnitList(int iTsId, ArrayList<WordUnit> alWordUnit){
-        m_database = m_helper.getWritableDatabase();
-        for(WordUnit unitOne : alWordUnit){
-            Log.v(m_TAG, String.format("insertTestUnitList WordUnit Q:%s, A:%s, C:%d",
-                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()) );
 
-            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
-                    + " VALUES (?, ?, ?, ?); ";
-            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
-
-            m_database.execSQL(strSQL, params);
-        }
-    }
-
-*/
-    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput){
+    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput) {
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
         m_TestGroup = hrTestDAO.selectTestGroup(tgInput);
 
         selectBothSideTestSet();
         getBothSideSrtUnitList();
     }
-      public void loadSrtResultsFromTestGroupId(int iTgId){
-          Log.v(m_TAG, " loadSrtResultFromTestGroupId" + iTgId);
 
-          HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-          m_TestGroup = hrTestDAO.selectTestGroupFromTgId(iTgId);
+    public void loadSrtResultsFromTestGroupId(int iTgId) {
+        Log.v(m_TAG, " loadSrtResultFromTestGroupId" + iTgId);
 
-          if (m_TestGroup == null){
-              Log.v(m_TAG, "loadSrtResultFromTestGroupId = null");
-          } else {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - TestGroup 로드 완료: " + m_TestGroup.toString());
-          }
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+        m_TestGroup = hrTestDAO.selectTestGroupFromTgId(iTgId);
 
-          selectBothSideTestSet();
-          if (m_TestSetLeft == null) {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 TestSet이 null임.");
-          } else {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 TestSet 로드 완료: " + m_TestSetLeft.toString());
-          }
-          if (m_TestSetRight == null) {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 TestSet이 null임.");
-          } else {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 TestSet 로드 완료: " + m_TestSetRight.toString());
-          }
-          getBothSideSrtUnitList();
-          if (m_alLeft == null) {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 SrtUnit 리스트가 null임.");
-          } else {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 SrtUnit 리스트 로드 완료, 크기: " + m_alLeft.size());
-          }
-          if (m_alRight == null) {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 SrtUnit 리스트가 null임.");
-          } else {
-              Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 SrtUnit 리스트 로드 완료, 크기: " + m_alRight.size());
-          }
+        if (m_TestGroup == null) {
+            Log.v(m_TAG, "loadSrtResultFromTestGroupId = null");
+        } else {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - TestGroup 로드 완료: " + m_TestGroup.toString());
+        }
 
-          Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 완료");
+        selectBothSideTestSet();
+        if (m_TestSetLeft == null) {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 TestSet이 null임.");
+        } else {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 TestSet 로드 완료: " + m_TestSetLeft.toString());
+        }
+        if (m_TestSetRight == null) {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 TestSet이 null임.");
+        } else {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 TestSet 로드 완료: " + m_TestSetRight.toString());
+        }
+        getBothSideSrtUnitList();
+        if (m_alLeft == null) {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 SrtUnit 리스트가 null임.");
+        } else {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 왼쪽 SrtUnit 리스트 로드 완료, 크기: " + m_alLeft.size());
+        }
+        if (m_alRight == null) {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 SrtUnit 리스트가 null임.");
+        } else {
+            Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 오른쪽 SrtUnit 리스트 로드 완료, 크기: " + m_alRight.size());
+        }
 
-      }
+        Log.v(m_TAG, "loadSrtResultsFromTestGroupId - 완료");
+
+    }
 
     private void getBothSideSrtUnitList() {
         Log.v(m_TAG, String.format("getBothSideUnitList"));
         try {
             m_alLeft = tryGetUnitListFromTestSet(m_TestSetLeft.getTs_id());
             m_alRight = tryGetUnitListFromTestSet(m_TestSetRight.getTs_id());
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.v(m_TAG, "getBothSideUnitList Exception" + e);
         }
 
@@ -309,6 +295,7 @@ public class SrtDAO {
         } catch (Exception e) {
             Log.v(m_TAG, " selectBothSideTestSet Exception " + e);
         }
-  
 
+
+    }
 }

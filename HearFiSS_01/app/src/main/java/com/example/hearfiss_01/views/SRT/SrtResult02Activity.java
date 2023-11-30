@@ -208,7 +208,35 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         }
     }
 
+    private String getCorrectStringList(ArrayList<SrtUnit> _alUnitList){
+        Log.v(m_TAG, "getCrrectStringList - size : " +  _alUnitList.size());
+        String strCorrect = "";
+        for (SrtUnit unit : _alUnitList){
+            Log.v(m_TAG, "processing CorrectSrtUnit : " + unit.toString());
 
+            if (1 == unit.get_Correct()){
+                strCorrect += unit.get_Question() + " ";
+                Log.v(m_TAG, " Discover CorrectSrtUnit : " + unit.get_Question());
+            }
+        }
+        Log.v(m_TAG, " getCorrectStringList - end : "+ strCorrect);
+        return strCorrect;
+    }
+
+    private String getWrongStringList(ArrayList<SrtUnit> _alUnitList){
+        Log.v(m_TAG, "getWrongStringList - size : " + _alUnitList.size());
+        String strWrong = " ";
+        for (SrtUnit unit : _alUnitList){
+            Log.v(m_TAG, "processing WrongSrtUnit : " + unit.toString());
+
+            if (1 != unit.get_Correct()){
+                strWrong += unit.get_Question() + " ";
+                Log.v(m_TAG,"Discover WrongSrtUnit : "+ unit.get_Question());
+            }
+        }
+        Log.v(m_TAG, "getWrongStringList - end : " + strWrong);
+        return strWrong;
+    }
 
 
 
@@ -238,6 +266,23 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
 
         rightTotalNum = findViewById(R.id.rightTotalNum);
         leftTotalNum = findViewById(R.id.leftTotalNum);
+
+        String ResultLeft = String.format(
+                " %s %n%d %% (%d개/%d개)"
+                , m_ScoreLeft.getM_iCurDb()
+                , m_ScoreLeft.getM_iScore()
+                ,m_ScoreLeft.getM_iCorrect()
+                ,m_ScoreLeft.getM_iQuestion());
+
+        String ResultRight = String.format(
+                " %s %n%d %% (%d개/%d개)"
+                , m_ScoreRight.getM_iCurDb()
+                , m_ScoreRight.getM_iScore()
+                , m_ScoreRight.getM_iCorrect()
+                , m_ScoreRight.getM_iQuestion());
+
+        SrtLeftResult.setText(ResultLeft);
+        SrtRightResult.setText(ResultRight);
     }
 
     @Override
