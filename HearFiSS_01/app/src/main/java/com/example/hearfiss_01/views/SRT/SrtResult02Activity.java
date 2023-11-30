@@ -195,6 +195,10 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         Log.v(m_TAG, String.format("TestGroup id:%d, %s",
                 m_TestGroup.getTg_id(), m_TestGroup.toString() ) );
 
+        Log.v(m_TAG, String.format("TestSet LEFT %s", m_TestSetLeft.toString()));
+
+        Log.v(m_TAG, String.format("TesSet Right %s", m_TestSetRight.toString()));
+
         for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
             Log.v(m_TAG,
                     String.format(" SRT RESULT Right : %d, %s ",
@@ -268,14 +272,14 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         leftTotalNum = findViewById(R.id.leftTotalNum);
 
         String ResultLeft = String.format(
-                " %s %n%d %% (%d개/%d개)"
+                " %d %n%d %% (%d개/%d개)"
                 , m_ScoreLeft.getM_iCurDb()
                 , m_ScoreLeft.getM_iScore()
                 ,m_ScoreLeft.getM_iCorrect()
                 ,m_ScoreLeft.getM_iQuestion());
 
         String ResultRight = String.format(
-                " %s %n%d %% (%d개/%d개)"
+                " %d %n%d %% (%d개/%d개)"
                 , m_ScoreRight.getM_iCurDb()
                 , m_ScoreRight.getM_iScore()
                 , m_ScoreRight.getM_iCorrect()
@@ -283,6 +287,30 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
 
         SrtLeftResult.setText(ResultLeft);
         SrtRightResult.setText(ResultRight);
+
+        String l_answerNum = Integer.toString(m_ScoreLeft.getM_iCorrect());
+        String r_answerNum = Integer.toString(m_ScoreRight.getM_iCorrect());
+        SrtLeftAnswer.setText(l_answerNum);
+        SrtRightAnswer.setText(r_answerNum);
+
+
+        String l_wrongNum = Integer.toString(m_ScoreLeft.getM_iQuestion() - m_ScoreLeft.getM_iCorrect());
+        String r_wrongNum = Integer.toString(m_ScoreRight.getM_iQuestion() - m_ScoreRight.getM_iCorrect());
+
+        rightTotalNum.setText(Integer.toString(m_ScoreRight.getM_iQuestion()));
+        leftTotalNum.setText(Integer.toString(m_ScoreLeft.getM_iQuestion()));
+        SrtLeftWrong.setText(l_wrongNum);
+        SrtRightWrong.setText(r_wrongNum);
+
+        String l_answer= getCorrectStringList(m_alLeft);
+        String l_wrong = getWrongStringList(m_alLeft);
+        String r_answer= getCorrectStringList(m_alRight);
+        String r_wrong = getWrongStringList(m_alRight);
+
+        SrtLeftWord.setText(l_answer);
+        SrtLeftWrongWord.setText(l_wrong);
+        SrtRightWord.setText(r_answer);
+        SrtRightWrongWord.setText(r_wrong);
     }
 
     @Override
