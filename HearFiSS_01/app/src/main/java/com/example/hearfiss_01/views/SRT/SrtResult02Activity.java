@@ -177,6 +177,7 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         srtDAO.setAccount(m_Account);
         srtDAO.loadSrtResultsFromTestGroupId(m_TgId);
 
+
         Log.d(m_TAG, "getSrtResultFromDatabase Account " + m_Account.toString());
         Log.d(m_TAG, "getSrtResultFromDatabase TGID " + m_TgId);
 

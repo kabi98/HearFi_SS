@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.hearfiss_01.audioTest.SRT.SrtScore;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
@@ -70,6 +71,9 @@ public class SrtDAO {
         m_helper = new SQLiteHelper(m_Context, TConst.DB_FILE, null, TConst.DB_VER);
 
         m_Account = new Account();
+        m_alRight = new ArrayList<>();
+        m_alLeft = new ArrayList<>();
+
         m_strTestType = TConst.STR_SRT_TYPE;
     }
 
@@ -77,6 +81,8 @@ public class SrtDAO {
         Log.v(m_TAG,
                 String.format("releaseAndClose"));
         try {
+            m_alRight = new ArrayList<>();
+            m_alLeft = new ArrayList<>();
 
             m_database.close();
             m_helper.close();
@@ -115,7 +121,37 @@ public class SrtDAO {
 //        } else {
 //            m_strGroupResult = calcPTA.getHearingLossStr(iRightPTA);
 //        }
+        Log.v(m_TAG,"calculateTestSetAndGroupResult");
+        m_TestSetLeft = calculateSrtAndGetTestSet(TConst.T_LEFT);
+        m_TestSetRight = calculateSrtAndGetTestSet(TConst.T_RIGHT);
+
+        Log.v(m_TAG, "calculateTestSetAndGroupResult : " + m_TestSetLeft.toString());
+        Log.v(m_TAG, "calculateTestSetAndGroupResult : " + m_TestSetRight.toString());
+
+        // int iLeftSRT = Integer.parseInt(m_TestSetLeft.getTs_Result());
+        //int iRightSRT = Integer.parseInt(m_TestSetRight.getTs_Result());
+
         m_strGroupResult = "잘모르니 그냥 가자";
+    }
+
+    private HrTestSet calculateSrtAndGetTestSet(int iTestSide) {
+        Log.v(m_TAG, "cacluateSrtAndGetTestSet");
+        String strTestSide = "";
+        ArrayList<SrtUnit> alSrtUnit;
+
+        if (TConst.T_LEFT == iTestSide){
+            strTestSide = TConst.STR_LEFT_SIDE;
+            alSrtUnit = m_alLeft;
+        }else {
+            strTestSide = TConst.STR_RIGHT_SIDE;
+            alSrtUnit = m_alRight;
+        }
+        SrtScore curScore = new SrtScore();
+        curScore.setM_alSrtUnit(alSrtUnit);
+
+        String strResult = String.format("%d", curScore.getM_iCurDb());
+        String strComment = "임시 점수";
+        return new HrTestSet(0, 0, strTestSide, strResult, strComment);
     }
 
     public void insertAndSelectTestGroup() {
