@@ -305,12 +305,14 @@ public class SrtDAO {
                 String tu_question = cursor.getString(2);
                 String tu_answer = cursor.getString(3);
                 int tu_iscorrect = cursor.getInt(4);
+                int tu_curDb = cursor.getInt(5);
+                int tu_nextDb = cursor.getInt(6);
 
 
-                SrtUnit unitOne = new SrtUnit(tu_question, tu_answer, tu_iscorrect, 0, 0);
+                SrtUnit unitOne = new SrtUnit(tu_question, tu_answer, tu_iscorrect, tu_curDb, 0);
                 unitList.add(unitOne);
 
-                Log.v(m_TAG, unitOne.toString());
+                Log.v(m_TAG, "tryGetUnitListFromTestSet : " + unitOne);
             }
             cursor.close();
             return unitList;
