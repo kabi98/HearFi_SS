@@ -161,7 +161,6 @@ public class SrtDAO {
         String strDate = sdFormatter.format(dtNow);
 
         HrTestGroup tgIns = new HrTestGroup(0, strDate, m_strTestType, m_strGroupResult, m_Account.getAcc_id());
-
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
         m_TestGroup = hrTestDAO.insertAndSelectTestGroup(tgIns);
     }
@@ -171,8 +170,8 @@ public class SrtDAO {
 
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
 
-        m_TestSetLeft = new HrTestSet(0, 0, TConst.STR_LEFT_SIDE, "100 dB 비슷한 무언가", "심도난청 비슷한 무언가");
-        m_TestSetRight = new HrTestSet(0, 0, TConst.STR_RIGHT_SIDE, "30 dB 비슷한 무언가", "경도난청 비슷한 무언가");
+      //  m_TestSetLeft = new HrTestSet(0, 0, TConst.STR_LEFT_SIDE, "100 dB 비슷한 무언가", "심도난청 비슷한 무언가");
+      //  m_TestSetRight = new HrTestSet(0, 0, TConst.STR_RIGHT_SIDE, "30 dB 비슷한 무언가", "경도난청 비슷한 무언가");
 
         Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
         Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
@@ -205,8 +204,15 @@ public class SrtDAO {
     }
 
     public void tryInsertSrtTestUnitList(){
+        Log.v(m_TAG, "tryInsertSrtTestUnitList");
+
+        Log.v(m_TAG, "tryInsertSrtTestUnitList Right : " + m_alRight.size());
         insertTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
+
+        Log.v(m_TAG, "tryInsertSrtTestUnitList Left : " + m_alLeft.size());
         insertTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
+
+        Log.v(m_TAG, "tryInsertSrtTestUnitList completed");
     }
 
     private void insertTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit){
@@ -223,34 +229,6 @@ public class SrtDAO {
         }
     }
 
-//    private void tryInsertSrtTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit) {
-//        Log.v(m_TAG, "*********** tryInsertSrtTestUnitList ********** ");
-//        int i = 0;
-//        for (SrtUnit unitOne : alSrtUnit) {
-//            Log.v(m_TAG, i++ + unitOne.toString());
-//        }
-//
-//        m_database = m_helper.getWritableDatabase();
-//        for (SrtUnit unitOne : alSrtUnit) {
-//            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q:%s, A:%s, C:%d",
-//                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
-//
-//            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
-//                    + " VALUES (?, ?, ?, ?); ";
-//            Object[] params = {iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()};
-//
-//            m_database.execSQL(strSQL, params);
-//        }
-//    }
-
-
-    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput) {
-        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-        m_TestGroup = hrTestDAO.selectTestGroup(tgInput);
-
-        selectBothSideTestSet();
-        getBothSideSrtUnitList();
-    }
 
     public void loadSrtResultsFromTestGroupId(int iTgId) {
         Log.v(m_TAG, " loadSrtResultFromTestGroupId" + iTgId);
@@ -291,6 +269,7 @@ public class SrtDAO {
 
     }
 
+
     private void getBothSideSrtUnitList() {
         Log.v(m_TAG, String.format("getBothSideUnitList"));
         try {
@@ -305,7 +284,6 @@ public class SrtDAO {
     private ArrayList<SrtUnit> tryGetUnitListFromTestSet(int _tsId) {
 
         ArrayList<SrtUnit> unitList = new ArrayList<>();
-        m_database = m_helper.getReadableDatabase();
 
         try {
             m_database = m_helper.getReadableDatabase();
@@ -332,13 +310,13 @@ public class SrtDAO {
                 SrtUnit unitOne = new SrtUnit(tu_question, tu_answer, tu_iscorrect, 0, 0);
                 unitList.add(unitOne);
 
-                Log.v("SQLiteControl", unitOne.toString());
+                Log.v(m_TAG, unitOne.toString());
             }
             cursor.close();
             return unitList;
 
         } catch (Exception e) {
-            Log.v("SQLiteControl", "selectTestUnitFromTsId Exception " + e);
+            Log.v(m_TAG, "selectTestUnitFromTsId Exception " + e);
             return null;
 
 
