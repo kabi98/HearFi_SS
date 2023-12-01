@@ -105,7 +105,7 @@ public class SrtDAO {
         caculateTestSetAndGroupResult();
         insertAndSelectTestGroup();
         insertAndSelectTestSet();
-        insertTestUnitList();
+        InsertSrtTestUnitList();
     }
 
     private void caculateTestSetAndGroupResult() {
@@ -188,34 +188,60 @@ public class SrtDAO {
         Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
     }
 
-    private void insertTestUnitList() {
+//    private void insertTestUnitList() {
+//        try {
+//            tryInsertSrtTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
+//            tryInsertSrtTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
+//        } catch (Exception e) {
+//            Log.v(m_TAG, "insertTestUnitList Exception " + e);
+//        }
+//    }
+    public void InsertSrtTestUnitList(){
         try {
-            tryInsertSrtTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
-            tryInsertSrtTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
-        } catch (Exception e) {
-            Log.v(m_TAG, "insertTestUnitList Exception " + e);
+            tryInsertSrtTestUnitList();
+        }catch (Exception e){
+            Log.v(m_TAG, "InsertSrtTestUnitList Exception : " + e);
         }
     }
 
-    private void tryInsertSrtTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit) {
-        Log.v(m_TAG, "*********** tryInsertSrtTestUnitList ********** ");
-        int i = 0;
-        for (SrtUnit unitOne : alSrtUnit) {
-            Log.v(m_TAG, i++ + unitOne.toString());
-        }
+    public void tryInsertSrtTestUnitList(){
+        insertTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
+        insertTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
+    }
 
+    private void insertTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit){
         m_database = m_helper.getWritableDatabase();
-        for (SrtUnit unitOne : alSrtUnit) {
-            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q:%s, A:%s, C:%d",
+        for (SrtUnit unitOne : alSrtUnit){
+            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q:%s, A:%S, C:%d",
                     unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
 
-            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
-                    + " VALUES (?, ?, ?, ?); ";
-            Object[] params = {iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()};
+            String strSQL =  " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                    + "VALUES (?,?,?,?); ";
+            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
 
             m_database.execSQL(strSQL, params);
         }
     }
+
+//    private void tryInsertSrtTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit) {
+//        Log.v(m_TAG, "*********** tryInsertSrtTestUnitList ********** ");
+//        int i = 0;
+//        for (SrtUnit unitOne : alSrtUnit) {
+//            Log.v(m_TAG, i++ + unitOne.toString());
+//        }
+//
+//        m_database = m_helper.getWritableDatabase();
+//        for (SrtUnit unitOne : alSrtUnit) {
+//            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q:%s, A:%s, C:%d",
+//                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
+//
+//            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+//                    + " VALUES (?, ?, ?, ?); ";
+//            Object[] params = {iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()};
+//
+//            m_database.execSQL(strSQL, params);
+//        }
+//    }
 
 
     public void loadSrtResultsFromTestGroup(HrTestGroup tgInput) {
