@@ -95,11 +95,7 @@ CREATE TABLE IF NOT EXISTS sentence_word (
 CREATE TABLE IF NOT EXISTS srt_unit (
 			tu_id 			INTEGER PRIMARY KEY AUTOINCREMENT
 			, ts_id			INTEGER
-			, tu_question 	TEXT
-			, tu_answer		TEXT
-			, tu_iscorrect	INTEGER
-			, tu_curdb		INTEGER
-			, tu_nextdb		INTEGER
+			, tu_dBHL		INTEGER
 			, FOREIGN KEY(ts_id) REFERENCES hrtest_set(ts_id)
 			);
 

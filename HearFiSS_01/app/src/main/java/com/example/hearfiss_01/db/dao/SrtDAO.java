@@ -191,14 +191,7 @@ public class SrtDAO {
         Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
     }
 
-//    private void insertTestUnitList() {
-//        try {
-//            tryInsertSrtTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
-//            tryInsertSrtTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
-//        } catch (Exception e) {
-//            Log.v(m_TAG, "insertTestUnitList Exception " + e);
-//        }
-//    }
+
     public void InsertSrtTestUnitList(){
         try {
             tryInsertSrtTestUnitList();
@@ -222,16 +215,21 @@ public class SrtDAO {
     private void insertTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit){
         m_database = m_helper.getWritableDatabase();
         for (SrtUnit unitOne : alSrtUnit){
-            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q: %s, A: %s, C: %d, CurDb: %d, NextDb: %d",
-                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), unitOne.get_CurDb(), unitOne.get_NextDb()));
 
-            String strSQL =  " INSERT INTO srt_unit (ts_id, tu_question, tu_answer, tu_iscorrect, tu_curdb, tu_nextdb) "
-                    + "VALUES (?,?,?,?,?,?); ";
-            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), unitOne.get_CurDb(), unitOne.get_NextDb()};
+            // hrtestunit table
+            String strSQLHrTestUnit =  " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                    + "VALUES (?,?,?,?); ";
+            Object[] paramsHrTestUnit = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()};
 
-            m_database.execSQL(strSQL, params);
-            Log.v(m_TAG, String.format("inserted TestUnitList SrtUnit Q: %s, A: %s, C: %d, CurDb: %d, NextDb: %d",
-                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), unitOne.get_CurDb(), unitOne.get_NextDb()));
+            m_database.execSQL(strSQLHrTestUnit, paramsHrTestUnit);
+            Log.v(m_TAG, String.format("inserted TestUnitList HrTestUnit Q: %s, A: %s, C: %d ",
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
+
+            // srtunit table
+            String strSQLSrtUnit = "INSERT INTO srt_unit (ts_id, tu_dBHL) VALUES (?, ?);";
+            Object[] paramsSrtUnit = {iTsId, unitOne.get_CurDb()};
+            m_database.execSQL(strSQLSrtUnit, paramsSrtUnit);
+            Log.v(m_TAG, String.format("inserted TestUnitList SrtUnit dB : %d ", unitOne.get_CurDb()));
         }
     }
 
@@ -294,47 +292,45 @@ public class SrtDAO {
 
     }
 
-    private ArrayList<SrtUnit> tryGetUnitListFromTestSet(int _tsId) {
 
+    private ArrayList<SrtUnit> tryGetUnitListFromTestSet(int _tsId) {
+        Log.v(m_TAG, "tryGetUnitListFromTestSet");
         ArrayList<SrtUnit> unitList = new ArrayList<>();
 
         try {
             m_database = m_helper.getReadableDatabase();
 
-            String strSQL = " SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect "
-                    + " FROM hrtest_unit WHERE ts_id = ?; ";
+            String strSQL = "SELECT h.tu_id, h.ts_id, h.tu_question, h.tu_answer, h.tu_iscorrect, s.tu_dBHL " +
+                    "FROM hrtest_unit h JOIN srt_unit s ON h.ts_id = s.ts_id " +
+                    "WHERE h.ts_id = ?;";
             String[] params = {Integer.toString(_tsId)};
             Cursor cursor = m_database.rawQuery(strSQL, params);
 
             Log.v(m_TAG,
                     String.format("tryGetSrtUnitListFromTestSet Result = %d", cursor.getCount()));
-            if (cursor.getCount() <= 0)
+            if (cursor.getCount() <= 0) {
+                Log.v(m_TAG, "tryGetUnitListFromTestSet - No Data Found");
                 return new ArrayList<>();
+            }
 
-            for (int i = 0; i < cursor.getCount(); i++) {
+            for (int i = 0; i <cursor.getCount(); i++){
                 cursor.moveToNext();
-                int tu_id = cursor.getInt(0);
-                int ts_id = cursor.getInt(1);
                 String tu_question = cursor.getString(2);
                 String tu_answer = cursor.getString(3);
                 int tu_iscorrect = cursor.getInt(4);
-                int tu_curDb = cursor.getInt(5);
-                int tu_nextDb = cursor.getInt(6);
+                int tu_dBHL = cursor.getInt(5);
 
-
-                SrtUnit unitOne = new SrtUnit(tu_question, tu_answer, tu_iscorrect, tu_curDb, 0);
+                SrtUnit unitOne = new SrtUnit(tu_question, tu_answer, tu_iscorrect, tu_dBHL, 0);
                 unitList.add(unitOne);
 
                 Log.v(m_TAG, "tryGetUnitListFromTestSet : " + unitOne);
+
             }
             cursor.close();
             return unitList;
-
         } catch (Exception e) {
             Log.v(m_TAG, "selectTestUnitFromTsId Exception " + e);
             return null;
-
-
         }
     }
 
