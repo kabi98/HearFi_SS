@@ -43,6 +43,10 @@ public class SrtDAO {
         return m_TestGroup;
     }
 
+    public void setM_TestGroup(HrTestGroup _TestGroup) {
+        this.m_TestGroup = _TestGroup;
+    }
+
     public Account getAccount() {
         return m_Account;
     }
@@ -218,17 +222,26 @@ public class SrtDAO {
     private void insertTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit){
         m_database = m_helper.getWritableDatabase();
         for (SrtUnit unitOne : alSrtUnit){
-            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q:%s, A:%S, C:%d",
-                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
+            Log.v(m_TAG, String.format("insertTestUnitList SrtUnit Q: %s, A: %s, C: %d, CurDb: %d, NextDb: %d",
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), unitOne.get_CurDb(), unitOne.get_NextDb()));
 
-            String strSQL =  " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
-                    + "VALUES (?,?,?,?); ";
-            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
+            String strSQL =  " INSERT INTO srt_unit (ts_id, tu_question, tu_answer, tu_iscorrect, tu_curdb, tu_nextdb) "
+                    + "VALUES (?,?,?,?,?,?); ";
+            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), unitOne.get_CurDb(), unitOne.get_NextDb()};
 
             m_database.execSQL(strSQL, params);
+            Log.v(m_TAG, String.format("inserted TestUnitList SrtUnit Q: %s, A: %s, C: %d, CurDb: %d, NextDb: %d",
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), unitOne.get_CurDb(), unitOne.get_NextDb()));
         }
     }
 
+    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput){
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+        m_TestGroup = hrTestDAO.selectTestGroup(tgInput);
+
+        selectBothSideTestSet();
+        getBothSideSrtUnitList();
+    }
 
     public void loadSrtResultsFromTestGroupId(int iTgId) {
         Log.v(m_TAG, " loadSrtResultFromTestGroupId" + iTgId);
