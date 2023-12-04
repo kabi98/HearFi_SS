@@ -20,9 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hearfiss_01.R;
+import com.example.hearfiss_01.audioTest.SRS.SRS;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
+
+import java.util.ArrayList;
 
 public class SrsTestActivity extends AppCompatActivity
         implements View.OnClickListener, TextView.OnEditorActionListener{
@@ -35,6 +38,7 @@ public class SrsTestActivity extends AppCompatActivity
     EditText m_EditSRS;
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
 
+    SRS m_SRS = null;
     ProgressBar m_ProgressBar;
 //    SRS m_SRS = null;
     int m_iLimit = 0;
@@ -48,20 +52,20 @@ public class SrsTestActivity extends AppCompatActivity
 
         m_iLimit = GlobalVar.g_srsNumber;
 
-        m_AppBtnReplay = findViewById(R.id.srsReplayBtn);
+        m_AppBtnReplay = findViewById(R.id.srsVoiceAnswerBtn);
         m_AppBtnReplay.setOnClickListener(this);
+//        m_AppBtnReplay.setVisibility(View.INVISIBLE);
         m_AppBtnReplay.setEnabled(false);
 
         m_AppBtnNext = findViewById(R.id.srsnextBtn);
         m_AppBtnNext.setOnClickListener(this);
-
-//        setSideTextAndProgressBar();
-
+        setSideTextAndProgressBar();
         findAndSetHomeBack();
 
         setupAnswerEditAndShowSoftKeyboard();
 
         initAct();
+
     }
 
     @Override
@@ -71,9 +75,12 @@ public class SrsTestActivity extends AppCompatActivity
 
     }
 
+    @Override
     public void onBackPressed() {
+//        super.onBackPressed();
         startActivityAndFinish(SrsDesc01Activity.class);
     }
+
 
     private void findAndSetHomeBack() {
         m_ImgBtnBack = findViewById(R.id.imgBtnBack);
@@ -81,79 +88,113 @@ public class SrsTestActivity extends AppCompatActivity
 
         m_ImgBtnHome = findViewById(R.id.imgBtnHome);
         m_ImgBtnHome.setOnClickListener(this);
-    }
-
-    private void initAct() {
 
     }
 
-    private void finalAct() {
+    private void initAct(){
+        if(TConst.T_RIGHT == GlobalVar.g_TestSide) {
+            GlobalVar.g_alWrsRight.clear();
+            GlobalVar.g_alWrsLeft.clear();
+        }
+/*
+        m_isActChanging = false;
+        m_SRS = new SRS(m_Context);
+        m_SRS.setM_tsLimit(GlobalVar.g_wrsNumber);
+        m_SRS.setUserVolume(GlobalVar.g_wrsUserVolume);
+        m_SRS.setM_Type("mwl_a1");
+        m_SRS.playCurrent();
+        */
 
+
+    }
+
+    private void finalAct(){
+      /*  m_SRS.endTest();
+        m_AppBtnNext.setClickable(false);
+        m_AppBtnReplay.setClickable(false);
+
+        // 키보드 제어
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(m_EditWRS.getWindowToken(), 0);
+        // 채점기능
+
+       */
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.srsnextBtn) {
-            Log.v(m_TAG, "onClick" + R.id.srsnextBtn);
-            ClickedSrsNextBtn();
+        /*
+        if(view.getId() == R.id.wrsnextBtn) {
+            Log.v(m_TAG, "onClick" + R.id.wrsnextBtn);
+            ClickedWrsNextBtn();
 
-        } else if(view.getId() == R.id.srsReplayBtn){
-            Log.v(m_TAG, "onClick - srsReplayBtn");
-//            m_SRS.playCurrent();
+        } else if(view.getId() == R.id.wrsReplayBtn){
+            Log.v(m_TAG, "onClick - wrsReplayBtn");
+            m_WRS.playCurrent();
 
         }
 
+
+         */
         onClickHomeBack(view);
     }
 
-    private void ClickedSrsNextBtn() {
-        Log.v(m_TAG, "NextBtnClick - 문장 인지도 테스트");
+    public void ClickedSrsNextBtn(){
+        Log.v(m_TAG, "NextBtnClick - 단어 인지도 테스트");
         if(m_isActChanging) {
             return;
         }
+/*
+        String strAnswer = m_EditWRS.getText().toString();
+        m_EditWRS.setText("");
 
-        String srsAnswer = m_EditSRS.getText().toString();
-        m_EditSRS.setText("");
-
-//        m_SRS.SaveAnswer(strAnswer);
-//        int curPercent = m_SRS.getCurrentProgress();
-//        m_ProgressBar.setProgress(curPercent);
-//        Log.v(m_TAG, "NextBtnClick - progressbar value : " + curPercent);
+        m_WRS.SaveAnswer(strAnswer);
+        int curPercent = m_WRS.getCurrentProgress();
+        m_ProgressBar.setProgress(curPercent);
+        Log.v(m_TAG, "NextBtnClick - progressbar value : " + curPercent);
 
         checkTestEndAndNextPlay();
+
+
+ */
     }
 
     private void checkTestEndAndNextPlay() {
-//        if(m_SRS.isEnd()){
-//            m_ProgressBar.setProgress(100);
-//            m_AppBtnNext.setClickable(false);
-//            m_AppBtnReplay.setClickable(false);
+      /*
+        if(m_WRS.isEnd()){
+            m_ProgressBar.setProgress(100);
+            m_AppBtnNext.setClickable(false);
+            m_AppBtnReplay.setClickable(false);
 
             saveResultAndChangeAct();
 
-//        } else {
-//            m_SRS.playNext();
-//        }
+        } else {
+            m_WRS.playNext();
+        }
 
+
+       */
     }
 
     private void saveResultAndChangeAct() {
+/*
         m_isActChanging = true;
-//        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-//            saveSrsResultToGlobalVar();
-//            m_SRS.endTest();
-//
-//        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-//            saveSrsResultToGlobalVar();
-//            if(m_SRS.isEnd()){
-//                saveSrsResultToDatabase();
-//            }
-//            m_SRS.endTest();
-//        }
+        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
+            saveWrsResultToGlobalVar();
+            m_WRS.endTest();
+
+        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
+            saveWrsResultToGlobalVar();
+            if(m_WRS.isEnd()){
+                saveWrsResultToDatabase();
+            }
+            m_WRS.endTest();
+        }
 
         showChangeSideMessage();
-
         checkSideAndStartActivity();
+
+ */
     }
 
     private void onClickHomeBack(View view) {
@@ -166,22 +207,80 @@ public class SrsTestActivity extends AppCompatActivity
             startActivityAndFinish(MenuActivity.class);
 
         }
+
     }
 
-//    private void setSideTextAndProgressBar() {
-//        //----------------------------------SIDE TEXT SETTING-------------------------------------//
-//        m_TextViewTestSide = findViewById(R.id.srsTestSideTitle);
-//        if(GlobalVar.g_TestSide == TConst.T_LEFT){
-//            m_TextViewTestSide.setText("왼쪽 귀 테스트 중입니다.");
-//        } else {
-//            m_TextViewTestSide.setText("오른쪽 귀 테스트 중입니다.");
-//        }
-//        //----------------------------------PROGRESS BAR SETTING----------------------------------//
-//        m_ProgressBar = findViewById(R.id.progress_bar);
-//        m_ProgressBar.setIndeterminate(false);
-//        m_ProgressBar.setProgress(0);
-//
-//    }
+    private void saveWrsResultToDatabase() {
+       /*
+        Log.v(m_TAG, String.format("saveWrsResultToDatabase") );
+
+        printBothResult();
+
+        WrsDAO wrsDAO = new WrsDAO(m_Context);
+        wrsDAO.setAccount(GlobalVar.g_AccLogin);
+        wrsDAO.setResultList(GlobalVar.g_alWrsLeft, GlobalVar.g_alWrsRight);
+
+        wrsDAO.saveTestResults();
+        GlobalVar.g_TestGroup = wrsDAO.getTestGroup();
+
+        wrsDAO.releaseAndClose();
+
+        */
+    }
+
+    private void printBothResult() {
+        /*
+        ArrayList<WordUnit> alWrsResult;
+        alWrsResult = GlobalVar.g_alWrsLeft;
+        for (WordUnit resultOne : alWrsResult) {
+            Log.v(m_TAG, String.format("result LEFT Q:%s, A:%s, C:%d",
+                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
+        }
+
+        alWrsResult = GlobalVar.g_alWrsRight;
+        for (WordUnit resultOne : alWrsResult) {
+            Log.v(m_TAG, String.format("result RIGHT Q:%s, A:%s, C:%d",
+                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
+        }
+
+         */
+    }
+
+    private void saveWrsResultToGlobalVar(){
+        /*
+        Log.v(m_TAG, String.format("saveWrsResultToGlobalVar") );
+
+        ArrayList<WordUnit> alWrsResult = m_WRS.get_WordUnitList();
+
+        for(WordUnit resultOne : alWrsResult){
+            Log.v(m_TAG, String.format("result Side:%d Q:%s, A:%s, C:%d",
+                    GlobalVar.g_TestSide, resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()) );        }
+
+        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
+            GlobalVar.g_alWrsRight = alWrsResult;
+
+        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
+            GlobalVar.g_alWrsLeft = alWrsResult;
+
+        }
+
+         */
+    }
+
+    private void setSideTextAndProgressBar() {
+        //----------------------------------SIDE TEXT SETTING-------------------------------------//
+        m_TextViewTestSide = findViewById(R.id.srsTestSideTitle);
+        if(GlobalVar.g_TestSide == TConst.T_LEFT){
+            m_TextViewTestSide.setText("왼쪽 귀 테스트 중입니다.");
+        } else {
+            m_TextViewTestSide.setText("오른쪽 귀 테스트 중입니다.");
+        }
+        //----------------------------------PROGRESS BAR SETTING----------------------------------//
+        m_ProgressBar = findViewById(R.id.progress_bar);
+        m_ProgressBar.setIndeterminate(false);
+        m_ProgressBar.setProgress(0);
+
+    }
 
     private boolean isEnterKeyUp(int keyCode, KeyEvent keyEvent){
         return( (keyCode == keyEvent.KEYCODE_ENTER)
@@ -190,26 +289,36 @@ public class SrsTestActivity extends AppCompatActivity
 
     @Override
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        /*
         Log.v(m_TAG, String.format("onEditorAction v:%d, i:%d", textView.getId(), actionId) );
+
         if(EditorInfo.IME_ACTION_DONE == actionId){
             Log.v(m_TAG, String.format("onEditorAction v:%d, Action Done id = %d", textView.getId(), actionId) );
-            ClickedSrsNextBtn();
+            ClickedWrsNextBtn();
             return true;
         }
+
+         */
         return false;
     }
 
+
     private void setupAnswerEditAndShowSoftKeyboard() {
-        m_EditSRS = findViewById(R.id.srs_Edit);
-        m_EditSRS.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        m_EditSRS.setFocusableInTouchMode(true);
-        m_EditSRS.setOnEditorActionListener(this);
+        // 키보드 자동완성 제거
+        /*
+        m_EditWRS = findViewById(R.id.wrs_Edit);
+        m_EditWRS.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        m_EditWRS.setFocusableInTouchMode(true);
+        m_EditWRS.setOnEditorActionListener(this);
 
         InputMethodManager imm = (InputMethodManager) getSystemService((Context.INPUT_METHOD_SERVICE));
-        m_EditSRS.requestFocus();
-        imm.showSoftInput(m_EditSRS,0);
+        m_EditWRS.requestFocus();
+        imm.showSoftInput(m_EditWRS,0);
+
+         */
     }
-    private void showChangeSideMessage() {
+
+    public void showChangeSideMessage(){
         if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
             String info = "오른쪽 테스트 종료되었습니다.\n" +
                     "왼쪽 테스트 진행하겠습니다.\n";
@@ -222,7 +331,7 @@ public class SrsTestActivity extends AppCompatActivity
             toast.show();
         }
     }
-    private void checkSideAndStartActivity() {
+    public void checkSideAndStartActivity() {
         Handler handler = new Handler();
         handler.postDelayed(new RunCheckAndStartActivity(), 2000);
     }
