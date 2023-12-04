@@ -195,6 +195,9 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
 
         srtDAO.releaseAndClose();
 
+        Log.v(m_TAG, String.format("Srt result : m_ScoreLeft " + m_ScoreLeft.getM_iPassTrsd() ));
+        Log.v(m_TAG, String.format("Srt result : m_ScoreRight " + m_ScoreRight.getM_iPassTrsd() ));
+
 
         Log.v(m_TAG, String.format("TestGroup id:%d, %s",
                 m_TestGroup.getTg_id(), m_TestGroup.toString() ) );
@@ -203,16 +206,16 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
 
         Log.v(m_TAG, String.format("TesSet Right %s", m_TestSetRight.toString()));
 
-        for(int i=0; i< GlobalVar.g_alSrtRight.size(); i++){
+        for(int i=0; i< m_alRight.size(); i++){
             Log.v(m_TAG,
                     String.format(" SRT RESULT Right : %d, %s ",
-                            i , GlobalVar.g_alSrtRight.get(i).toString() ) );
+                            i , m_alRight.get(i).toString() ) );
         }
 
-        for(int i=0; i< GlobalVar.g_alSrtLeft.size(); i++){
+        for(int i=0; i< m_alLeft.size(); i++){
             Log.v(m_TAG,
                     String.format(" SRT RESULT Left : %d, %s ",
-                            i , GlobalVar.g_alSrtLeft.get(i).toString() ) );
+                            i , m_alLeft.get(i).toString() ) );
         }
     }
 
@@ -277,20 +280,14 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         leftTotalNum = findViewById(R.id.leftTotalNum);
 
         String ResultLeft = String.format(
-                " %d %n%d %% (%d개/%d개)"
-                , m_ScoreLeft.getM_iCurDb()
-                , m_ScoreLeft.getM_iScore()
-                ,m_ScoreLeft.getM_iCorrect()
-                ,m_ScoreLeft.getM_iQuestion());
+                " %d"
+                , m_ScoreLeft.getM_iPassTrsd());
         Log.d(m_TAG,"Result Left : " + ResultLeft);
 
 
         String ResultRight = String.format(
-                " %d %n%d %% (%d개/%d개)"
-                , m_ScoreRight.getM_iCurDb()
-                , m_ScoreRight.getM_iScore()
-                , m_ScoreRight.getM_iCorrect()
-                , m_ScoreRight.getM_iQuestion());
+                " %d"
+                , m_ScoreRight.getM_iPassTrsd());
         Log.d(m_TAG,"Result Right : " + SrtRightResult);
 
 

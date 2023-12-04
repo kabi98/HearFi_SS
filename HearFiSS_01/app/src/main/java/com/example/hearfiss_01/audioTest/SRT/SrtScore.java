@@ -59,6 +59,9 @@ public class SrtScore {
 
     public void setM_alSrtUnit(ArrayList<SrtUnit> m_alSrtUnit){
         this.m_alSrtUnit = m_alSrtUnit;
+
+        int iLast = m_alSrtUnit.size() - 1;
+        this.m_iPassTrsd = m_alSrtUnit.get(iLast).get_CurDb();
     }
 
     public int addTestUnit(SrtUnit tuAdd){

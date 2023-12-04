@@ -142,8 +142,11 @@ public class SrtDAO {
         SrtScore curScore = new SrtScore();
         curScore.setM_alSrtUnit(alSrtUnit);
 
-        String strResult = String.format("%d", curScore.getM_iCurDb());
-        String strComment = "임시 점수";
+        Log.v(m_TAG, String.format(" **** calculateSrtAndGetTestSet **** PassThrd : %d, CurDB : %d",
+                curScore.getM_iPassTrsd(), curScore.getM_iCurDb()));
+
+        String strResult = String.format("%d", curScore.getM_iPassTrsd());
+        String strComment = String.format("%d dB HL", curScore.getM_iPassTrsd());
         return new HrTestSet(0, 0, strTestSide, strResult, strComment);
     }
 
@@ -294,10 +297,17 @@ public class SrtDAO {
 
         try {
             m_database = m_helper.getReadableDatabase();
-
+/*
             String strSQL = "SELECT h.tu_id, h.ts_id, h.tu_question, h.tu_answer, h.tu_iscorrect, s.tu_dBHL " +
                     "FROM hrtest_unit h JOIN srt_unit s ON h.ts_id = s.ts_id " +
                     "WHERE h.ts_id = ?;";
+*/
+
+            String strSQL = " SELECT h.tu_id, h.ts_id, h.tu_question, h.tu_answer, h.tu_iscorrect, s.tu_dBHL "
+                    + " FROM hrtest_unit h, srt_unit s "
+                    + " WHERE h.tu_id = s.tu_id "
+                    + " AND h.ts_id = ?; ";
+
             String[] params = {Integer.toString(_tsId)};
             Cursor cursor = m_database.rawQuery(strSQL, params);
 
