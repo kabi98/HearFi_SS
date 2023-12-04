@@ -146,42 +146,8 @@
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
                             android:layout_height="wrap_content">
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="문제 개수"
-                                    android:textSize="13dp"
-                                    android:textAlignment="center"
-                                    android:textColor="#C7C7C7"
-                                    android:fontFamily="@font/pretendardregular"></TextView>
-                                <TextView
-                                    android:id="@+id/rightTotalNum"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="20"
-                                    android:textSize="21dp"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/blue"
-                                    android:fontFamily="@font/pretendardextrabold"></TextView>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <View
-                                    android:layout_gravity="center"
-                                    android:layout_width="2dp"
-                                    android:background="#e3e3e3"
-                                    android:layout_height="match_parent">
 
-                                </View>
-                            </LinearLayout>
+                            >
                             <LinearLayout
                                 android:layout_weight="0.2"
                                 android:layout_width="match_parent"
@@ -261,7 +227,7 @@
                             android:id="@+id/SrtRightResult"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="50%, 보통"
+                            android:text="50%"
                             android:textAlignment="center"
                             android:layout_marginTop="8dp"
                             android:textSize="22dp"
@@ -381,42 +347,8 @@
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
                             android:layout_height="wrap_content">
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="문제 개수"
-                                    android:textSize="13dp"
-                                    android:textAlignment="center"
-                                    android:textColor="#C7C7C7"
-                                    android:fontFamily="@font/pretendardregular"></TextView>
-                                <TextView
-                                    android:id="@+id/leftTotalNum"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="20"
-                                    android:textSize="21dp"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/blue"
-                                    android:fontFamily="@font/pretendardextrabold"></TextView>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <View
-                                    android:layout_gravity="center"
-                                    android:layout_width="2dp"
-                                    android:background="#e3e3e3"
-                                    android:layout_height="match_parent">
 
-                                </View>
-                            </LinearLayout>
+
                             <LinearLayout
                                 android:layout_weight="0.2"
                                 android:layout_width="match_parent"
@@ -487,7 +419,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="단어 인지도 테스트 결과"
+                            android:text="어음 청취 역치 테스트 결과"
                             android:textAlignment="center"
                             android:textSize="17dp"
                             android:fontFamily="@font/pretendardsemibold"
@@ -496,7 +428,7 @@
                             android:id="@+id/SrtLeftResult"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="50%, 보통"
+                            android:text="50%"
                             android:textAlignment="center"
                             android:layout_marginTop="8dp"
                             android:textSize="22dp"

@@ -220,7 +220,7 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
     }
 
     private String getCorrectStringList(ArrayList<SrtUnit> _alUnitList){
-        Log.v(m_TAG, "getCrrectStringList - size : " +  _alUnitList.size());
+        Log.v(m_TAG, "getCorrectStringList - size : " +  _alUnitList.size());
         String strCorrect = "";
         for (SrtUnit unit : _alUnitList){
             Log.v(m_TAG, "processing CorrectSrtUnit : " + unit.toString());
@@ -280,19 +280,21 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         leftTotalNum = findViewById(R.id.leftTotalNum);
 
         String ResultLeft = String.format(
-                " %d"
+                " %d%%"
                 , m_ScoreLeft.getM_iPassTrsd());
         Log.d(m_TAG,"Result Left : " + ResultLeft);
 
 
         String ResultRight = String.format(
-                " %d"
+                " %d%%"
                 , m_ScoreRight.getM_iPassTrsd());
         Log.d(m_TAG,"Result Right : " + SrtRightResult);
 
 
         SrtLeftResult.setText(ResultLeft);
         SrtRightResult.setText(ResultRight);
+
+
 
         String l_answerNum = Integer.toString(m_ScoreLeft.getM_iCorrect());
         String r_answerNum = Integer.toString(m_ScoreRight.getM_iCorrect());
@@ -306,8 +308,8 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         String l_wrongNum = Integer.toString(m_ScoreLeft.getM_iQuestion() - m_ScoreLeft.getM_iCorrect());
         String r_wrongNum = Integer.toString(m_ScoreRight.getM_iQuestion() - m_ScoreRight.getM_iCorrect());
 
-        rightTotalNum.setText(Integer.toString(m_ScoreRight.getM_iQuestion()));
-        leftTotalNum.setText(Integer.toString(m_ScoreLeft.getM_iQuestion()));
+//        rightTotalNum.setText(Integer.toString(m_ScoreRight.getM_iQuestion()));
+//        leftTotalNum.setText(Integer.toString(m_ScoreLeft.getM_iQuestion()));
         SrtLeftWrong.setText(l_wrongNum);
         SrtRightWrong.setText(r_wrongNum);
 

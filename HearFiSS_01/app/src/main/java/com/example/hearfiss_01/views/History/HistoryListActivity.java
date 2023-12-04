@@ -21,6 +21,8 @@ import com.example.hearfiss_01.db.DTO.ResultDTO;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.PTT.PttDesc01Activity;
+import com.example.hearfiss_01.views.SRS.SrsDesc01Activity;
+import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
 import com.example.hearfiss_01.views.WRS.WrsDesc01Activity;
 
 import java.util.ArrayList;
@@ -148,10 +150,10 @@ public class HistoryListActivity extends AppCompatActivity implements View.OnCli
             startActivityAndFinish(MenuActivity.class);
 
         }else if (view.getId() == R.id.WrsLayout) {
-            startActivityAndFinish(WrsDesc01Activity.class);
+            startActivityAndFinish(SrsDesc01Activity.class);
 
         }else if (view.getId() == R.id.PtaLayout) {
-            startActivityAndFinish(PttDesc01Activity.class);
+            startActivityAndFinish(SrtDesc01Activity.class);
         }
 
         onClickHomeBack(view);

@@ -121,10 +121,22 @@ public class SrtDAO {
         Log.v(m_TAG, "calculateTestSetAndGroupResult : " + m_TestSetLeft.toString());
         Log.v(m_TAG, "calculateTestSetAndGroupResult : " + m_TestSetRight.toString());
 
-        // int iLeftSRT = Integer.parseInt(m_TestSetLeft.getTs_Result());
-        //int iRightSRT = Integer.parseInt(m_TestSetRight.getTs_Result());
+        try {
+            int iLeftSRT = Integer.parseInt(m_TestSetLeft.getTs_Result());
+            int iRightSRT = Integer.parseInt(m_TestSetRight.getTs_Result());
 
-        m_strGroupResult = "잘모르니 그냥 가자";
+            if (iLeftSRT > iRightSRT){
+                m_strGroupResult = "왼쪽 : " + m_TestSetLeft.getTs_Comment();
+            }else {
+                m_strGroupResult = "오른쪽 : " + m_TestSetRight.getTs_Comment();
+            }
+
+        }catch (NumberFormatException e){
+            Log.e(m_TAG, "Error parsing SRT results : "+ e.getMessage());
+            m_strGroupResult = " 결과 분석 불가 !";
+        }
+
+        Log.v(m_TAG, "Group Result : " + m_strGroupResult);
     }
 
     private HrTestSet calculateSrtAndGetTestSet(int iTestSide) {
