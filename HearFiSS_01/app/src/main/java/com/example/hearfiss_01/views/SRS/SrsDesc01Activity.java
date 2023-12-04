@@ -20,20 +20,16 @@ import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
 import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
 
-public class SrsDesc01Activity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
+public class SrsDesc01Activity extends AppCompatActivity implements View.OnClickListener{
 
     String m_TAG = "SrsDesc01Activity";
 
     ImageButton m_ImgBtnBack, m_ImgBtnHome;
-
-    AppCompatToggleButton srs10,srs20,srs25;
-
+    
     AppCompatButton imgBtnSrsDesc01Next;
     LinearLayout HomeLayout,SrtLayout,SrsLayout,TestLayout;
 
-    int [] m_ToggleBtnId = {R.id.srs10, R.id.srs20, R.id.srs25};
 
-    String m_packname = null;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -41,11 +37,9 @@ public class SrsDesc01Activity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_srs_desc01);
 
-        m_packname = getPackageName();
+        Log.v(m_TAG, "onCreate - start");
 
-        srs10 = findViewById(R.id.srs10);
-        srs20 = findViewById(R.id.srs20);
-        srs25 = findViewById(R.id.srs25);
+
 
 
         imgBtnSrsDesc01Next = findViewById(R.id.imgBtnSrsDesc01Next);
@@ -54,13 +48,23 @@ public class SrsDesc01Activity extends AppCompatActivity implements View.OnClick
         findAndSetHomeBack();
         findAndSetNavigationBar();
 
-        srs10.setOnCheckedChangeListener(this);
-        srs20.setOnCheckedChangeListener(this);
-        srs25.setOnCheckedChangeListener(this);
-
 
 
     }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId() == R.id.imgBtnSrsDesc01Next) {
+            Log.v(m_TAG, "onClick - imgBtnSrsDesc01Next");
+            Intent intent = new Intent(getApplicationContext(), SrsDesc02Activity.class);
+            startActivity(intent);
+        }
+        onClickHomeBack(view);
+        onClickNavigationBar(view);
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -88,19 +92,6 @@ public class SrsDesc01Activity extends AppCompatActivity implements View.OnClick
         TestLayout.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.imgBtnSrsDesc01Next) {
-            GlobalVar.g_TestSide = TConst.T_RIGHT;
-            GlobalVar.g_srsNumber = getSrsNum();
-
-            startActivityAndFinish(SrsDesc02Activity.class);
-        }
-
-        onClickHomeBack(view);
-        onClickNavigationBar(view);
-
-    }
 
     private void onClickHomeBack(View view) {
         if (view.getId() == R.id.imgBtnBack) {
@@ -132,62 +123,6 @@ public class SrsDesc01Activity extends AppCompatActivity implements View.OnClick
         startActivity(intent);
         finish();
     }
-
-    public void Clickable(){
-        imgBtnSrsDesc01Next.setClickable(true);
-        imgBtnSrsDesc01Next.setOnClickListener(this);
-        imgBtnSrsDesc01Next.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packname));
-    }
-
-    public void unClickable(){
-        imgBtnSrsDesc01Next.setBackgroundResource(getResources().getIdentifier("gray_button","drawable", m_packname));
-        imgBtnSrsDesc01Next.setClickable(false);
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if (isChecked) {
-            compoundButton.setTextColor(getColor(R.color.white));
-            checkOtherBtnToggle(compoundButton.getId());
-        } else {
-            compoundButton.setTextColor(getColor(R.color.gray));
-        }
-        checkAndNextBtnClickable();
-
-    }
-
-
-    private void checkOtherBtnToggle(int idCheckedBtn) {
-        AppCompatToggleButton findBtn;
-        for(int i=0; i<m_ToggleBtnId.length; i++){
-            if(m_ToggleBtnId[i] == idCheckedBtn)
-                continue;
-
-            findBtn = findViewById(m_ToggleBtnId[i]);
-            if(findBtn.isChecked())
-                findBtn.performClick();
-        }
-
-    }
-
-    private void checkAndNextBtnClickable() {
-        if((srs10.isChecked()) | (srs20.isChecked()) | (srs25.isChecked())){
-            Clickable();
-        }else{
-            unClickable();
-        }
-    }
-
-
-    private int getSrsNum() {
-        if(srs25.isChecked()) {
-            return 25;
-        } else if(srs20.isChecked()) {
-            return 20;
-        } else {
-            return 10;
-        }
-    }
-    }
+}
 
 
