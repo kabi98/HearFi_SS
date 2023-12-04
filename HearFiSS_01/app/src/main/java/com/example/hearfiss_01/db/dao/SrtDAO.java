@@ -127,8 +127,10 @@ public class SrtDAO {
 
             if (iLeftSRT > iRightSRT){
                 m_strGroupResult = "왼쪽 : " + m_TestSetLeft.getTs_Comment();
-            }else {
+            }else if (iRightSRT> iLeftSRT){
                 m_strGroupResult = "오른쪽 : " + m_TestSetRight.getTs_Comment();
+            }else if (iRightSRT == iLeftSRT){
+                m_strGroupResult = "좌우 결과가 \n 동일합니다.";
             }
 
         }catch (NumberFormatException e){
