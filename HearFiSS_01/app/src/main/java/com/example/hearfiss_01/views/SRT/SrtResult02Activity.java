@@ -280,13 +280,13 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         leftTotalNum = findViewById(R.id.leftTotalNum);
 
         String ResultLeft = String.format(
-                " %d%%"
+                " %d dB HL"
                 , m_ScoreLeft.getM_iPassTrsd());
         Log.d(m_TAG,"Result Left : " + ResultLeft);
 
 
         String ResultRight = String.format(
-                " %d%%"
+                " %d dB HL"
                 , m_ScoreRight.getM_iPassTrsd());
         Log.d(m_TAG,"Result Right : " + SrtRightResult);
 
