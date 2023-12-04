@@ -212,24 +212,37 @@ public class SrtDAO {
         Log.v(m_TAG, "tryInsertSrtTestUnitList completed");
     }
 
+    private boolean isDuplicateSrtUnit(int tsId, String question, String answer){
+        m_database = m_helper.getReadableDatabase();
+        String query = "SELECT COUNT (*) FROM hrtest_unit WHERE ts_id = ? AND tu_question = ? AND tu_answer = ?";
+        Cursor cursor = m_database.rawQuery(query, new String[]{String.valueOf(tsId), question, answer});
+        if (cursor != null && cursor.moveToFirst()){
+            int count = cursor.getInt(0);
+            cursor.close();
+            return count > 0;
+        }
+        return false;
+    }
     private void insertTestUnitList(int iTsId, ArrayList<SrtUnit> alSrtUnit){
         m_database = m_helper.getWritableDatabase();
         for (SrtUnit unitOne : alSrtUnit){
+            if (!isDuplicateSrtUnit(iTsId, unitOne.get_Question(), unitOne.get_Answer())){
+                // hrtestunit table
+                String strSQLHrTestUnit =  " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                        + "VALUES (?,?,?,?); ";
+                Object[] paramsHrTestUnit = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()};
 
-            // hrtestunit table
-            String strSQLHrTestUnit =  " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
-                    + "VALUES (?,?,?,?); ";
-            Object[] paramsHrTestUnit = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()};
+                m_database.execSQL(strSQLHrTestUnit, paramsHrTestUnit);
+                Log.v(m_TAG, String.format("inserted TestUnitList HrTestUnit Q: %s, A: %s, C: %d ",
+                        unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
 
-            m_database.execSQL(strSQLHrTestUnit, paramsHrTestUnit);
-            Log.v(m_TAG, String.format("inserted TestUnitList HrTestUnit Q: %s, A: %s, C: %d ",
-                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
+                // srtunit table
+                String strSQLSrtUnit = "INSERT INTO srt_unit (ts_id, tu_dBHL) VALUES (?, ?);";
+                Object[] paramsSrtUnit = {iTsId, unitOne.get_CurDb()};
+                m_database.execSQL(strSQLSrtUnit, paramsSrtUnit);
+                Log.v(m_TAG, String.format("inserted TestUnitList SrtUnit dB : %d ", unitOne.get_CurDb()));
+            }
 
-            // srtunit table
-            String strSQLSrtUnit = "INSERT INTO srt_unit (ts_id, tu_dBHL) VALUES (?, ?);";
-            Object[] paramsSrtUnit = {iTsId, unitOne.get_CurDb()};
-            m_database.execSQL(strSQLSrtUnit, paramsSrtUnit);
-            Log.v(m_TAG, String.format("inserted TestUnitList SrtUnit dB : %d ", unitOne.get_CurDb()));
         }
     }
 
@@ -300,7 +313,7 @@ public class SrtDAO {
         try {
             m_database = m_helper.getReadableDatabase();
 
-            String strSQL = "SELECT h.tu_id, h.ts_id, h.tu_question, h.tu_answer, h.tu_iscorrect, s.tu_dBHL " +
+            String strSQL = "SELECT DISTINCT h.tu_id, h.ts_id, h.tu_question, h.tu_answer, h.tu_iscorrect, s.tu_dBHL " +
                     "FROM hrtest_unit h JOIN srt_unit s ON h.ts_id = s.ts_id " +
                     "WHERE h.ts_id = ?;";
             String[] params = {Integer.toString(_tsId)};
