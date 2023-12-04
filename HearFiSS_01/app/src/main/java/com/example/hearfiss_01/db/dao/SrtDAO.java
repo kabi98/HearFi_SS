@@ -113,18 +113,7 @@ public class SrtDAO {
     }
 
     private void caculateTestSetAndGroupResult() {
-//        m_TestSetLeft = caculatePtaAndGetTestSet(TConst.T_LEFT);
-//        m_TestSetRight = caculatePtaAndGetTestSet(TConst.T_RIGHT);
-//
-//        int iLeftPTA = Integer.parseInt(m_TestSetLeft.getTs_Result());
-//        int iRightPTA = Integer.parseInt(m_TestSetRight.getTs_Result());
-//
-//        PtaCalculator calcPTA = new PtaCalculator();
-//        if(iLeftPTA > iRightPTA){
-//            m_strGroupResult = calcPTA.getHearingLossStr(iLeftPTA);
-//        } else {
-//            m_strGroupResult = calcPTA.getHearingLossStr(iRightPTA);
-//        }
+
         Log.v(m_TAG,"calculateTestSetAndGroupResult");
         m_TestSetLeft = calculateSrtAndGetTestSet(TConst.T_LEFT);
         m_TestSetRight = calculateSrtAndGetTestSet(TConst.T_RIGHT);
@@ -246,13 +235,6 @@ public class SrtDAO {
         }
     }
 
-    public void loadSrtResultsFromTestGroup(HrTestGroup tgInput){
-        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-        m_TestGroup = hrTestDAO.selectTestGroup(tgInput);
-
-        selectBothSideTestSet();
-        getBothSideSrtUnitList();
-    }
 
     public void loadSrtResultsFromTestGroupId(int iTgId) {
         Log.v(m_TAG, " loadSrtResultFromTestGroupId" + iTgId);
@@ -313,7 +295,7 @@ public class SrtDAO {
         try {
             m_database = m_helper.getReadableDatabase();
 
-            String strSQL = "SELECT DISTINCT h.tu_id, h.ts_id, h.tu_question, h.tu_answer, h.tu_iscorrect, s.tu_dBHL " +
+            String strSQL = "SELECT h.tu_id, h.ts_id, h.tu_question, h.tu_answer, h.tu_iscorrect, s.tu_dBHL " +
                     "FROM hrtest_unit h JOIN srt_unit s ON h.ts_id = s.ts_id " +
                     "WHERE h.ts_id = ?;";
             String[] params = {Integer.toString(_tsId)};
