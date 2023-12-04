@@ -70,20 +70,10 @@ public class SrsDesc02Activity extends AppCompatActivity
 
     }
 
-    public void CheckCheck(){
-        if((m_CheckBtnOne.isChecked()) & (m_CheckBtnTwo.isChecked()) & (m_CheckBtnThree.isChecked())){
-            nextBtn.setClickable(true);
-            nextBtn.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packname));
-            nextBtn.setOnClickListener(this);
-        }else{
-            nextBtn.setClickable(false);
-            nextBtn.setBackgroundResource(getResources().getIdentifier("gray_button","drawable", m_packname));
-        }
-    }
-
     public void onBackPressed() {
         startActivityAndFinish(MenuActivity.class);
     }
+
 
     @Override
     public void onClick(View view) {
@@ -106,12 +96,27 @@ public class SrsDesc02Activity extends AppCompatActivity
         }
 
     }
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        if (isChecked) {
+            compoundButton.setTextColor(getColor(R.color.white));
 
+        } else {
+            compoundButton.setTextColor(getColor(R.color.gray));
+        }
+        CheckCheck();
 
-    private void startActivityAndFinish(Class<?> clsStart) {
-        Intent intent = new Intent(getApplicationContext(), clsStart);
-        startActivity(intent);
-        finish();
+    }
+    
+    public void CheckCheck(){
+        if((m_CheckBtnOne.isChecked()) & (m_CheckBtnTwo.isChecked()) & (m_CheckBtnThree.isChecked())){
+            nextBtn.setClickable(true);
+            nextBtn.setBackgroundResource(getResources().getIdentifier("blue_button","drawable", m_packname));
+            nextBtn.setOnClickListener(this);
+        }else{
+            nextBtn.setClickable(false);
+            nextBtn.setBackgroundResource(getResources().getIdentifier("gray_button","drawable", m_packname));
+        }
     }
 
 
@@ -125,14 +130,15 @@ public class SrsDesc02Activity extends AppCompatActivity
 
 
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if (isChecked) {
-            compoundButton.setTextColor(getColor(R.color.white));
-        } else {
-            compoundButton.setTextColor(getColor(R.color.gray));
-        }
-        CheckCheck();
-
+    private void startActivityAndFinish(Class<?> clsStart) {
+        Intent intent = new Intent(getApplicationContext(), clsStart);
+        startActivity(intent);
+        finish();
     }
+
+
+
+
+
+
 }
