@@ -64,6 +64,24 @@ public class SrsPreTestActivity extends AppCompatActivity implements View.OnClic
         }
         findAndSetHomeBack();
 
+        m_iCurVolume = 0;
+        m_AudioMan = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        m_AudioMan.setStreamVolume(AudioManager.STREAM_MUSIC, 7,0);
+
+        int idTrack = getResources().getIdentifier("pre", "raw", m_packname);
+        stopPlayer();
+        m_Player = MediaPlayer.create(m_Context, idTrack);
+
+        setVolumeFromDBHL(50);
+        m_Player.setLooping(true);
+        playStart(m_Player);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        stopPlayer();
     }
 
     private void findAndSetHomeBack() {
@@ -72,7 +90,21 @@ public class SrsPreTestActivity extends AppCompatActivity implements View.OnClic
 
         m_ImgBtnHome = findViewById(R.id.imgBtnHome);
         m_ImgBtnHome.setOnClickListener(this);
+    }
 
+    public int stopPlayer() {
+        Log.v(m_TAG, "stopPlayer");
+        try {
+            if (m_Player != null){
+                m_Player.stop();
+                m_Player.release();
+                m_Player = null;
+            }
+            return 1;
+        }catch (Exception e) {
+            Log.v(m_TAG, "stopPlayer Exception" + e );
+            return 0;
+        }
     }
 
     private void setTextColor() {
@@ -94,25 +126,21 @@ public class SrsPreTestActivity extends AppCompatActivity implements View.OnClic
         startActivityAndFinish(SrsDesc02Activity.class);
     }
 
-
-
     @Override
     public void onClick(View view) {
+
         if (view.getId() == R.id.imgBtnSrsPreTestStart) {
-//        stopPlayer();
+            stopPlayer();
 
-//        GlobalVar.g_wrsUserVolume = m_iCurVolume;
+            GlobalVar.g_srsUserVolume = m_iCurVolume;
 
-        startActivityAndFinish(SrsStartActivity.class);
-    }
-
-//        if(view.getId() == R.id.soundDown){
-//            checkbtnClickable();
-//            m_iCurVolume = adjustVolume(-1);
-//        }else if(view.getId() == R.id.soundUp){
-//            checkbtnClickable();
-//            m_iCurVolume = adjustVolume(+1);
-//        }
+            startActivityAndFinish(SrsStartActivity.class);
+        }
+        if (view.getId() == R.id.soundDown){
+            m_iCurVolume = adjustVolume(-1);
+        }else if (view.getId() == R.id.soundUp){
+            m_iCurVolume = adjustVolume(+1);
+        }
         onClickHomeBack(view);
 
     }
@@ -135,6 +163,59 @@ public class SrsPreTestActivity extends AppCompatActivity implements View.OnClic
         finish();
     }
 
+    private int setVolumeFromDBHL(int iDBHL) {
+        Log.v(m_TAG, String.format("setVolumeFromDBHL Vol = %d ", iDBHL) );
+        if(m_Player == null){
+            return 0;
+        }
+
+        if(GlobalVar.g_TestSide == TConst.T_RIGHT){
+            m_Player.setVolume(0.0f, 1.0f); // Right Only
+        } else {
+            m_Player.setVolume(1.0f, 0.0f); // Left Only
+        }
+
+        int iCalcVol = calculteVolumeFromDBHL(iDBHL);
+        int iCheckVol = getVolumeAfterMinMaxCheck(iCalcVol);
+
+        m_AudioMan.setStreamVolume(AudioManager.STREAM_MUSIC, iCheckVol,0);
+        return iCheckVol;
+    }
+    private int adjustVolume(int delta) {
+        if(m_Player == null || !m_Player.isPlaying()){
+            return 0;
+        }
+
+        int CurVol = m_AudioMan.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int NewVol = getVolumeAfterMinMaxCheck(CurVol + delta);
+
+        m_AudioMan.setStreamVolume(AudioManager.STREAM_MUSIC, NewVol,0);
+        return NewVol;
+    }
+    private int calculteVolumeFromDBHL(int iDBHL) {
+        int MaxVol = m_AudioMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int MinVol = m_AudioMan.getStreamMinVolume(AudioManager.STREAM_MUSIC);
+        int CalcVol = (int)(iDBHL * ((float)(MaxVol - MinVol) / 100.));
+
+        Log.v(m_TAG, String.format(" setVolumeFromDBHL DBHL = %d , Max : %d, Min : %d, Calc : %d ",
+                iDBHL, MaxVol, MinVol, CalcVol) );
+        return CalcVol;
+    }
+
+    private int getVolumeAfterMinMaxCheck(int iVol){
+        int MaxVol = m_AudioMan.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int MinVol = m_AudioMan.getStreamMinVolume(AudioManager.STREAM_MUSIC);
+
+        if(iVol > MaxVol){
+            iVol = MaxVol;
+        }
+        if(iVol < MinVol){
+            iVol = MinVol;
+        }
+
+        return iVol;
+    }
+
     private void checkbtnClickable(){
 
         startBtn.setClickable(true);
@@ -142,5 +223,32 @@ public class SrsPreTestActivity extends AppCompatActivity implements View.OnClic
         startBtn.setTextColor(getColor(R.color.white));
         startBtn.setOnClickListener(this);
     }
+
+    private void playStart(MediaPlayer m_player) {
+        float lVolume = GlobalVar.g_TestSide == TConst.T_LEFT?1.0f:0.0f;
+        float rVolume = GlobalVar.g_TestSide == TConst.T_RIGHT?1.0f:0.0f;
+        if (m_player != null){
+            m_player.setVolume(lVolume,rVolume);
+            m_player.start();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

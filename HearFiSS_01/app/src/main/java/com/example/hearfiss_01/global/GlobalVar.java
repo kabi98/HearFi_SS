@@ -45,6 +45,8 @@ public class GlobalVar {
     public static int g_wrsUserVolume = 0;
     public static int g_srtUserVolume = 0;
 
+    public static int g_srsUserVolume = 0;
+
     public static String g_RightResult = "";
     public static String g_leftResult = "";
 
