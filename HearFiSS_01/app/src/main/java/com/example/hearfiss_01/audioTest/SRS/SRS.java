@@ -120,13 +120,15 @@ public class SRS {
     }
 
     public int SaveAnswer(String strAnswer) {
-
         if (m_atCur == null) {
             return 0;
-        } else {
+        }
+        /*
+        else {
             String question = m_atCur.getAt_content();
             String answer = strAnswer.trim();
 
+            /*
             // 음원에 대한 at_id로 포함된 단어 검색
             ArrayList<StWord> alword = srsDAO.selectWordFromId(m_atCur.getAt_id());
             u_A = m_CurScore.sameSize(strAnswer);
@@ -142,8 +144,8 @@ public class SRS {
                 int idx = alword.get(i).getSw_idx();
                 Log.v(m_TAG,"sentence include Word : " + sWcnt);
                 HrTestUnit unit = new HrTestUnit();
-                unit.setTu_dBHL(GlobalVar.g_srsUserVolume);
-                unit.setTu_atId(m_atCur.getAt_id());
+               // unit.setTu_dBHL(GlobalVar.g_srsUserVolume);
+               // unit.setTu_atId(m_atCur.getAt_id());
                 unit.setTu_Question(alword.get(i).getSw_word());
                 Log.v("SaveAnswer", "u_A size : " + u_A.size());
                 if(u_A.get(idx).contains(alword.get(i).getSw_word())){
@@ -171,8 +173,11 @@ public class SRS {
             Log.v("SaveAnswer", "size : " + unitList.size());
             return (m_iCount+1);
         }
-
+             */
+        // temp return value
+        return 1;
     }
+
 
     public int playCurrent() {
         Log.v("SRT", "playCurrent : ");

@@ -27,6 +27,7 @@ public class SrsDAO {
                 String.format("selectWordFromId AtId %d", _atId));
 
         ArrayList<StWord> alWord = new ArrayList<>();
+        /*
         try {
             sqlite = helper.getReadableDatabase();
 
@@ -63,6 +64,9 @@ public class SrsDAO {
             Log.v("SQLiteControl", "selectWordFromId Exception " + e);
             return null;
         }
+         */
+        // temp return value
+        return null;
     }
 
     public HrTestGroup dataGroupInsert() {
