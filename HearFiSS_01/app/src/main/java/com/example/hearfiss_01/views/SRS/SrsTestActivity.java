@@ -247,24 +247,7 @@ public class SrsTestActivity extends AppCompatActivity
 
         showChangeSideMessage();
         checkSideAndStartActivity();
-/*
-        m_isActChanging = true;
-        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-            saveWrsResultToGlobalVar();
-            m_WRS.endTest();
 
-        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-            saveWrsResultToGlobalVar();
-            if(m_WRS.isEnd()){
-                saveWrsResultToDatabase();
-            }
-            m_WRS.endTest();
-        }
-
-        showChangeSideMessage();
-        checkSideAndStartActivity();
-
- */
     }
 
     private void onClickHomeBack(View view) {
