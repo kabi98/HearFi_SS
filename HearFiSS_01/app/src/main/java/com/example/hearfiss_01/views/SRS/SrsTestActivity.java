@@ -300,6 +300,7 @@ public class SrsTestActivity extends AppCompatActivity
     }
 
     private void saveSrsResultToGlobalVar(){
+        Log.v(m_TAG, String.format("saveSrsResultToGlobalVar"));
         /*
         Log.v(m_TAG, String.format("saveWrsResultToGlobalVar") );
 

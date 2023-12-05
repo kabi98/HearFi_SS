@@ -116,6 +116,7 @@ public class SRS {
     //------------------------------------GET CURRENT VALUE --------------------------------------//
 
     public int getCurrentProgress(){
+        Log.v(m_TAG, "getCurrentProgress");
         return (int)(((float)m_CurScore.getM_alWord().size() / (float) m_tsLimit)*100);
     }
 
@@ -125,7 +126,7 @@ public class SRS {
         }
 
         else {
-
+            // 1. Stword -> SrsUnit으로 변경
             /*
             String question = m_atCur.getAt_content();
             String answer = strAnswer.trim();
