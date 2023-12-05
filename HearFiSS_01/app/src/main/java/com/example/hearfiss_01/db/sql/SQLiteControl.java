@@ -22,6 +22,7 @@ public class SQLiteControl {
         this.helper = _helper;
     }
 
+
     public void db_close() {
         sqlite.close();
         helper.close();

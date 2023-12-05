@@ -63,6 +63,12 @@ public class SrsTestActivity extends AppCompatActivity
 
         m_iLimit = GlobalVar.g_srsNumber;
 
+        m_AppBtnVoiceAnswer = findViewById(R.id.srsVoiceAnswerBtn);
+
+        m_AppBtnNext = findViewById(R.id.srsnextBtn);
+        m_AppBtnNext.setOnClickListener(this);
+
+
         stt_intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         stt_intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,getPackageName());
         stt_intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR");
@@ -74,9 +80,6 @@ public class SrsTestActivity extends AppCompatActivity
         sttFinishBtn = findViewById(R.id.sttFinishBtn);
 
 
-        m_AppBtnVoiceAnswer = findViewById(R.id.srsVoiceAnswerBtn);
-        m_AppBtnVoiceAnswer.setOnClickListener(this);
-        m_AppBtnVoiceAnswer.setEnabled(false);
 
         m_AppBtnVoiceAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,8 +108,7 @@ public class SrsTestActivity extends AppCompatActivity
 
 
 
-        m_AppBtnNext = findViewById(R.id.srsnextBtn);
-        m_AppBtnNext.setOnClickListener(this);
+
         setSideTextAndProgressBar();
         findAndSetHomeBack();
 
@@ -141,9 +143,14 @@ public class SrsTestActivity extends AppCompatActivity
 
     private void initAct(){
         if(TConst.T_RIGHT == GlobalVar.g_TestSide) {
-            GlobalVar.g_alWrsRight.clear();
-            GlobalVar.g_alWrsLeft.clear();
+            GlobalVar.g_alSrsRight.clear();
+            GlobalVar.g_alSrsLeft.clear();
         }
+        m_isActChanging = false;
+        m_SRS = new SRS(m_Context);
+
+
+
 /*
         m_isActChanging = false;
         m_SRS = new SRS(m_Context);
@@ -171,28 +178,37 @@ public class SrsTestActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        /*
-        if(view.getId() == R.id.wrsnextBtn) {
-            Log.v(m_TAG, "onClick" + R.id.wrsnextBtn);
-            ClickedWrsNextBtn();
 
-        } else if(view.getId() == R.id.wrsReplayBtn){
-            Log.v(m_TAG, "onClick - wrsReplayBtn");
-            m_WRS.playCurrent();
+        if(view.getId() == R.id.srsnextBtn) {
+            Log.v(m_TAG, "onClick" + R.id.srsnextBtn);
+            m_AppBtnVoiceAnswer.setVisibility(View.VISIBLE);
+            m_AppBtnNext.setText("다음 문제");
+            ClickedSrsNextBtn();
 
+        } else if(m_AppBtnVoiceAnswer.isSelected()){
+            Log.v(m_TAG, "onClick - voice answer");
+//            m_SRS.playCurrent();
+            STTView.setVisibility(View.VISIBLE);
+            Log.v(m_TAG, "STTView set Visible");
         }
 
 
-         */
+
         onClickHomeBack(view);
     }
 
     public void ClickedSrsNextBtn(){
         Log.v(m_TAG, "NextBtnClick - 단어 인지도 테스트");
+
         if(m_isActChanging) {
             return;
         }
-/*
+      //  String strAnswer = m_EditSRS.getText().toString();
+      //  m_EditSRS.setText("");
+
+        checkTestEndAndNextPlay();
+
+        /*
         String strAnswer = m_EditWRS.getText().toString();
         m_EditWRS.setText("");
 
@@ -201,7 +217,6 @@ public class SrsTestActivity extends AppCompatActivity
         m_ProgressBar.setProgress(curPercent);
         Log.v(m_TAG, "NextBtnClick - progressbar value : " + curPercent);
 
-        checkTestEndAndNextPlay();
 
 
  */
@@ -337,33 +352,33 @@ public class SrsTestActivity extends AppCompatActivity
 
     @Override
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-        /*
+
         Log.v(m_TAG, String.format("onEditorAction v:%d, i:%d", textView.getId(), actionId) );
 
         if(EditorInfo.IME_ACTION_DONE == actionId){
             Log.v(m_TAG, String.format("onEditorAction v:%d, Action Done id = %d", textView.getId(), actionId) );
-            ClickedWrsNextBtn();
+            ClickedSrsNextBtn();
             return true;
         }
 
-         */
+
         return false;
     }
 
 
     private void setupAnswerEditAndShowSoftKeyboard() {
         // 키보드 자동완성 제거
-        /*
-        m_EditWRS = findViewById(R.id.wrs_Edit);
-        m_EditWRS.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        m_EditWRS.setFocusableInTouchMode(true);
-        m_EditWRS.setOnEditorActionListener(this);
+
+        m_EditSRS = findViewById(R.id.srs_Edit);
+        m_EditSRS.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        m_EditSRS.setFocusableInTouchMode(true);
+        m_EditSRS.setOnEditorActionListener(this);
 
         InputMethodManager imm = (InputMethodManager) getSystemService((Context.INPUT_METHOD_SERVICE));
-        m_EditWRS.requestFocus();
-        imm.showSoftInput(m_EditWRS,0);
+        m_EditSRS.requestFocus();
+        imm.showSoftInput(m_EditSRS,0);
 
-         */
+
     }
 
     public void showChangeSideMessage(){

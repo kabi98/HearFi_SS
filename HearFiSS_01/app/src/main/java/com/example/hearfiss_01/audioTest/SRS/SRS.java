@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.hearfiss_01.db.dao.SrsDAO;
 import com.example.hearfiss_01.db.sql.SQLiteControl;
 import com.example.hearfiss_01.db.dao.SQLiteHelper;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
@@ -28,10 +29,17 @@ public class SRS {
     MediaPlayer m_Player = null;
     Context m_context = null;
     RandomTrack m_randTrack = null;
+
+    SrsScore m_CurScore = null;
+
     String m_Type = "";
     String m_PkgName = "";
 
+
     int m_iCount = -1;
+
+
+    int m_iVolumeSide = 0;
     HrTestSet testSet = null;
     ArrayList<HrTestUnit> unitList = new ArrayList<HrTestUnit>();
     HrTestSet hrTestSet = null;
@@ -46,15 +54,18 @@ public class SRS {
     ArrayList<String> u_A;
     ArrayList<String> c_Q;
     HrTestGroup m_testGroup = null;
+    SrsDAO srsDAO ;
+
+
     //------------------------------------GETTER M_TYPE METHOD-----------------------------------//
     public String getM_Type() {
         return m_Type;
     }
     //------------------------------------SETTER M_TYPE METHOD-----------------------------------//
-   /*
+
     public void setM_Type(String m_Type) {
 
-        if (GlobalVar.g_MenuType.equals("왼쪽")){
+        if (GlobalVar.g_TestSide == TConst.T_RIGHT){
             this.m_Type = "sl_a2";
             m_randTrack.setM_Type(m_Type);
         }else{
@@ -69,11 +80,27 @@ public class SRS {
     //------------------------------------CONSTRUCTOR--------------------------------------------//
     public SRS(@Nullable Context context){
         this.m_context = context;
-        m_randTrack = new RandomTrack(context);
-        m_PkgName = m_context.getPackageName();
+        this.m_PkgName = m_context.getPackageName();
+        /*
         helper = new SQLiteHelper(m_context,  TConst.DB_FILE, null, TConst.DB_VER);
-        sqlcon = new SQLiteControl(helper);
+        //sqlcon = new SQLiteControl(helper );
+        m_randTrack = new RandomTrack(context);
+        srsDAO = new SrsDAO(helper);
+         */
+
+        startTest();
     }
+
+    public void startTest() {
+        m_randTrack = new RandomTrack(m_context);
+        m_iCount = -1;
+        m_iVolumeSide = GlobalVar.g_TestSide;
+
+        m_CurScore = new SrsScore();
+
+    }
+
+    /*
     //------------------------------------GETTER RANDOM BAG VALUE---------------------------------//
     public AmTrack getNext(){
         Log.v(aName, "getNext : m_icount Pre = " + m_iCount);
@@ -285,7 +312,9 @@ public class SRS {
         Log.v("insertUnit", "cnt : " + row);
     }
 
-*/
+
+
+ */
 }
 
 
