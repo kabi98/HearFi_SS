@@ -148,6 +148,7 @@ public class SrsTestActivity extends AppCompatActivity
         }
         m_isActChanging = false;
         m_SRS = new SRS(m_Context);
+        m_SRS.setM_tsLimit(GlobalVar.g_srsNumber);
         m_SRS.setUserVolume(GlobalVar.g_srsUserVolume);
         if (GlobalVar.g_TestSide == TConst.T_LEFT){
             m_SRS.setM_Type("sl_a2");
@@ -155,31 +156,15 @@ public class SrsTestActivity extends AppCompatActivity
             m_SRS.setM_Type("sl_a1");
         }
 
-
-
-/*
-        m_isActChanging = false;
-        m_SRS = new SRS(m_Context);
-        m_SRS.setM_tsLimit(GlobalVar.g_wrsNumber);
-        m_SRS.setUserVolume(GlobalVar.g_wrsUserVolume);
-        m_SRS.setM_Type("mwl_a1");
-        m_SRS.playCurrent();
-        */
-
-
     }
 
     private void finalAct(){
-      /*  m_SRS.endTest();
+        m_SRS.endTest();
         m_AppBtnNext.setClickable(false);
-        m_AppBtnReplay.setClickable(false);
+        m_AppBtnVoiceAnswer.setClickable(false);
 
-        // 키보드 제어
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(m_EditWRS.getWindowToken(), 0);
-        // 채점기능
-
-       */
+        imm.hideSoftInputFromWindow(m_EditSRS.getWindowToken(), 0);
     }
 
     @Override

@@ -39,6 +39,7 @@ public class SRS {
 
     int m_iCount = -1;
 
+    int m_tsLimit = 10;
 
     int m_iVolumeSide = 0;
     HrTestSet testSet = null;
@@ -58,6 +59,9 @@ public class SRS {
     SrsDAO srsDAO ;
 
 
+    public void setM_tsLimit(int m_tsLimit){
+        this.m_tsLimit = m_tsLimit;
+    }
     public void setUserVolume(int userVolume){
         this.userVolume = userVolume;
     }
@@ -128,8 +132,6 @@ public class SRS {
     //------------------------------------RANDOM TRACK ID PARSER & PLAY -------------------------//
     private int playTrack(){
         int idTrack = m_context.getResources().getIdentifier(m_atCur.getAt_file_name(), "raw",m_PkgName);
-//          Log.v(aName,"at_id :  " + m_atCur.getAt_id());
-//          Log.v(aName,"getfile_name :  " + m_atCur.getAt_file_name()+"\nid : " + idTrack);
         if (m_Player != null) {
             m_Player.stop();
             m_Player.release();
@@ -139,16 +141,36 @@ public class SRS {
         setVolumeSideCheck();
         m_Player.start();
         return m_iCount;
-       /*
-        float lVolume = GlobalVar.g_MenuSide.equals("LEFT")?1.0f:0.0f;
-        float rVolume = GlobalVar.g_MenuSide.equals("RIGHT")?1.0f:0.0f;
-        Log.v(aName,"Volumn test L: " + lVolume);
-        Log.v(aName,"Volumn test R: " + rVolume);
-        m_Player = MediaPlayer.create(m_context, idTrack);
-        m_Player.setVolume(lVolume,rVolume);
-        m_Player.start();
-        return m_iCount;
-        */
+    }
+
+    public void endTest(){
+        Log.v(m_TAG, String.format("endTest"));
+        stopPlayer();
+
+        m_randTrack.releaseAndClose();
+    }
+
+    public int stopPlayer(){
+        Log.v(m_TAG, "stopPlayer");
+        try {
+            if (m_Player != null){
+                m_Player.stop();
+                m_Player.release();
+                m_Player = null;
+            }
+            return 1;
+        }catch (Exception e){
+            Log.v(m_TAG, "stopPlayer Exception " + e);
+            return 0;
+        }
+    }
+
+    public boolean isEnd(){
+        if (m_iCount == (m_tsLimit -1)){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     private void setVolumeSideCheck() {
