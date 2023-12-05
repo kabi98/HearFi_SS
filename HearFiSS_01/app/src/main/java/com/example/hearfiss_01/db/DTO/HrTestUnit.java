@@ -10,6 +10,12 @@ public class HrTestUnit {
     String  tu_Answer;
     int     tu_IsCorrect;
 
+    //===========================SRS============================================================
+    int tu_dBHL;
+
+    int tu_atId;
+
+    //------------------------------------------------------------------------------------------
     public HrTestUnit() {
     }
 
@@ -27,7 +33,24 @@ public class HrTestUnit {
         this.tu_Answer = tu_Answer;
         this.tu_IsCorrect = tu_IsCorrect;
     }
+    //========================SRS=======================================================================
+    public void setTu_dBHL(int tu_dBHL) {
+        this.tu_dBHL = tu_dBHL;
+    }
 
+    public void setTu_atId(int tu_atId) {
+        this.tu_atId = tu_atId;
+    }
+
+
+
+
+
+
+
+
+
+    //----------------------------------------------------------------------------------------------------------
     public int getTu_id() {
         return tu_id;
     }

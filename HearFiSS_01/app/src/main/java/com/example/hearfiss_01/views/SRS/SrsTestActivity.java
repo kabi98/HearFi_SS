@@ -142,6 +142,7 @@ public class SrsTestActivity extends AppCompatActivity
     }
 
     private void initAct(){
+        Log.v(m_TAG, "initAct");
         if(TConst.T_RIGHT == GlobalVar.g_TestSide) {
             GlobalVar.g_alSrsRight.clear();
             GlobalVar.g_alSrsLeft.clear();
@@ -159,6 +160,7 @@ public class SrsTestActivity extends AppCompatActivity
     }
 
     private void finalAct(){
+        Log.v(m_TAG, "finalAct");
         m_SRS.endTest();
         m_AppBtnNext.setClickable(false);
         m_AppBtnVoiceAnswer.setClickable(false);
@@ -171,15 +173,14 @@ public class SrsTestActivity extends AppCompatActivity
     public void onClick(View view) {
 
         if(view.getId() == R.id.srsnextBtn) {
-            Log.v(m_TAG, "onClick" + R.id.srsnextBtn);
+            Log.v(m_TAG, "onClick - nextBtn Click ");
             m_AppBtnVoiceAnswer.setVisibility(View.VISIBLE);
             m_AppBtnNext.setText("다음 문제");
             m_SRS.playCurrent();
             ClickedSrsNextBtn();
 
         } else if(m_AppBtnVoiceAnswer.isSelected()){
-            Log.v(m_TAG, "onClick - voice answer");
-//            m_SRS.playCurrent();
+            Log.v(m_TAG, "onClick - voice answer Click");
             STTView.setVisibility(View.VISIBLE);
             Log.v(m_TAG, "STTView set Visible");
         }
@@ -195,10 +196,14 @@ public class SrsTestActivity extends AppCompatActivity
         if(m_isActChanging) {
             return;
         }
-      //  String strAnswer = m_EditSRS.getText().toString();
-      //  m_EditSRS.setText("");
+         String strAnswer = m_EditSRS.getText().toString();
+         m_EditSRS.setText("");
 
-        checkTestEndAndNextPlay();
+         m_SRS.SaveAnswer(strAnswer);
+         int curPercent = m_SRS.getCurrentProgress();
+         m_ProgressBar.setProgress(curPercent);
+         Log.v(m_TAG, "NextBtnClick - progressbar value : " + curPercent);
+         checkTestEndAndNextPlay();
 
         /*
         String strAnswer = m_EditWRS.getText().toString();
@@ -215,23 +220,33 @@ public class SrsTestActivity extends AppCompatActivity
     }
 
     private void checkTestEndAndNextPlay() {
-      /*
-        if(m_WRS.isEnd()){
+        if (m_SRS.isEnd()){
             m_ProgressBar.setProgress(100);
             m_AppBtnNext.setClickable(false);
-            m_AppBtnReplay.setClickable(false);
+            m_AppBtnVoiceAnswer.setClickable(false);
 
             saveResultAndChangeAct();
-
-        } else {
-            m_WRS.playNext();
+        }else {
+            m_SRS.playNext();
         }
 
-
-       */
     }
 
     private void saveResultAndChangeAct() {
+        m_isActChanging = true;
+        if (TConst.T_RIGHT == GlobalVar.g_TestSide){
+            saveSrsResultToGlobalVar();
+            m_SRS.endTest();
+        }else if (TConst.T_LEFT == GlobalVar.g_TestSide){
+            saveSrsResultToGlobalVar();
+            if (m_SRS.isEnd()){
+                saveSrsResultToDatabase();
+            }
+            m_SRS.endTest();
+        }
+
+        showChangeSideMessage();
+        checkSideAndStartActivity();
 /*
         m_isActChanging = true;
         if(TConst.T_RIGHT == GlobalVar.g_TestSide){
@@ -265,7 +280,7 @@ public class SrsTestActivity extends AppCompatActivity
 
     }
 
-    private void saveWrsResultToDatabase() {
+    private void saveSrsResultToDatabase() {
        /*
         Log.v(m_TAG, String.format("saveWrsResultToDatabase") );
 
@@ -301,7 +316,7 @@ public class SrsTestActivity extends AppCompatActivity
          */
     }
 
-    private void saveWrsResultToGlobalVar(){
+    private void saveSrsResultToGlobalVar(){
         /*
         Log.v(m_TAG, String.format("saveWrsResultToGlobalVar") );
 
