@@ -123,12 +123,14 @@ public class SRS {
         if (m_atCur == null) {
             return 0;
         }
-        /*
+
         else {
+
+            /*
             String question = m_atCur.getAt_content();
             String answer = strAnswer.trim();
 
-            /*
+
             // 음원에 대한 at_id로 포함된 단어 검색
             ArrayList<StWord> alword = srsDAO.selectWordFromId(m_atCur.getAt_id());
             u_A = m_CurScore.sameSize(strAnswer);
@@ -170,12 +172,12 @@ public class SRS {
                 unitList.add(unit);
                 Log.v("unit check", "value : " + unit.toString());
             }
+
+             */
             Log.v("SaveAnswer", "size : " + unitList.size());
             return (m_iCount+1);
         }
-             */
-        // temp return value
-        return 1;
+
     }
 
 

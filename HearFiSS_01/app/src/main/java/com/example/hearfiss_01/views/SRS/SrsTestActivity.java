@@ -191,7 +191,7 @@ public class SrsTestActivity extends AppCompatActivity
     }
 
     public void ClickedSrsNextBtn(){
-        Log.v(m_TAG, "NextBtnClick - 단어 인지도 테스트");
+        Log.v(m_TAG, "NextBtnClick - 문장 인지도 테스트");
 
         if(m_isActChanging) {
             return;

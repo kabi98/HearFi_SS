@@ -1,42 +1,133 @@
 package com.example.hearfiss_01.db.dao;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
+import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
 import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.db.DTO.StWord;
 import com.example.hearfiss_01.global.GlobalVar;
+import com.example.hearfiss_01.global.TConst;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class SrsDAO {
-    SQLiteDatabase sqlite;
-    SQLiteHelper helper;
+    SQLiteDatabase m_database;
+    SQLiteHelper m_helper;
 
-    public SrsDAO(SQLiteHelper helper) {
+    Context m_Context;
+    HrTestGroup m_TestGroup;
 
+    HrTestSet m_TestSetLeft, m_TestSetRight;
+    Account m_Account;
+    String m_TAG = "SrsDAO";
+
+    String m_strGroupResult;
+    String m_strTestType;
+    public HrTestGroup getTestGroup(){
+        return m_TestGroup;
     }
 
+    public void setM_TestGroup(HrTestGroup _TestGroup) {
+        this.m_TestGroup = _TestGroup;
+    }
+
+    public Account getAccount() {
+        return m_Account;
+    }
+    public void setAccount(Account _Account) {
+        this.m_Account = _Account;
+    }
+
+
+    public SrsDAO(@Nullable Context _context) {
+        m_Context = _context;
+        m_helper = new SQLiteHelper(m_Context, TConst.DB_FILE, null, TConst.DB_VER);
+
+        m_Account = new Account();
+
+        m_strTestType = TConst.STR_SRS_TYPE;
+    }
+
+    public void releaseAndClose(){
+        Log.v(m_TAG,String.format("releaseAndClose"));
+        try {
+            m_database.close();
+            m_helper.close();
+        }catch (Exception e){
+            Log.v(m_TAG, "releaseAndClose Exception " + e);
+        }
+    }
+
+    public HrTestSet getTestSetLeft(){
+        return m_TestSetLeft;
+    }
+
+    public HrTestSet getTestSetRight(){
+        return m_TestSetRight;
+    }
+
+    public void saveResult(){
+        Log.v(m_TAG, "saveSrsResult");
+        insertAndSelectTestGroup();
+        insertAndSelectTestSet();
+    }
+    public void insertAndSelectTestGroup() {
+        Log.v(m_TAG, " insertAndSelectTestGroup ");
+        Date dtNow = new Date();
+        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdFormatter.format(dtNow);
+
+        HrTestGroup tgIns = new HrTestGroup(0, strDate, m_strTestType, m_strGroupResult, m_Account.getAcc_id());
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+        m_TestGroup = hrTestDAO.insertAndSelectTestGroup(tgIns);
+    }
+
+    public void insertAndSelectTestSet() {
+        Log.v(m_TAG, " insertAndSelectTestSet ");
+
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+
+
+        Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
+        Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
+        m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
+        hrTestDAO.insertTestSet(m_TestSetLeft);
+        m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
+
+        m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
+        hrTestDAO.insertTestSet(m_TestSetRight);
+        m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
+
+        Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
+        Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
+    }
+
+
+
     public ArrayList<StWord> selectWordFromId(int _atId) {
-        Log.v("SQLiteControl",
+        Log.v(m_TAG,
                 String.format("selectWordFromId AtId %d", _atId));
 
         ArrayList<StWord> alWord = new ArrayList<>();
-        /*
+
         try {
-            sqlite = helper.getReadableDatabase();
+            m_database = m_helper.getReadableDatabase();
 
             String strSQL = "  SELECT sw_id, sw_word, at_id, sw_idx FROM sentence_word   "
                     + " WHERE at_id = ? ; ";
             String[] params = {Integer.toString(_atId)};
-            Cursor cursor = sqlite.rawQuery(strSQL, params);
+            Cursor cursor = m_database.rawQuery(strSQL, params);
 
-            Log.v("SQLiteControl",
+            Log.v(m_TAG,
                     String.format("selectWordFromId Result = %d", cursor.getCount()));
             if (cursor.getCount() <= 0)
                 return null;
@@ -53,7 +144,7 @@ public class SrsDAO {
 
                 alWord.add(wordOne);
 
-                Log.v("SQLiteControl",
+                Log.v(m_TAG,
                         String.format("  selectWordFromId \n sw_id %d, word %s, at_id %d sw_idx %d ",
                                 sw_id, word, at_id, sw_idx));
             }
@@ -61,12 +152,10 @@ public class SrsDAO {
             return alWord;
 
         } catch (Exception e) {
-            Log.v("SQLiteControl", "selectWordFromId Exception " + e);
+            Log.v(m_TAG, "selectWordFromId Exception " + e);
             return null;
         }
-         */
-        // temp return value
-        return null;
+
     }
 
     public HrTestGroup dataGroupInsert() {
