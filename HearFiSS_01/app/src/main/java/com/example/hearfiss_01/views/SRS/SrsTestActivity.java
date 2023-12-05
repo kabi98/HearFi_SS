@@ -148,6 +148,12 @@ public class SrsTestActivity extends AppCompatActivity
         }
         m_isActChanging = false;
         m_SRS = new SRS(m_Context);
+        m_SRS.setUserVolume(GlobalVar.g_srsUserVolume);
+        if (GlobalVar.g_TestSide == TConst.T_LEFT){
+            m_SRS.setM_Type("sl_a2");
+        }else{
+            m_SRS.setM_Type("sl_a1");
+        }
 
 
 
@@ -183,6 +189,7 @@ public class SrsTestActivity extends AppCompatActivity
             Log.v(m_TAG, "onClick" + R.id.srsnextBtn);
             m_AppBtnVoiceAnswer.setVisibility(View.VISIBLE);
             m_AppBtnNext.setText("다음 문제");
+            m_SRS.playCurrent();
             ClickedSrsNextBtn();
 
         } else if(m_AppBtnVoiceAnswer.isSelected()){

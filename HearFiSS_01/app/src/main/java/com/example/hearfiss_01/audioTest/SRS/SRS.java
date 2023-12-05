@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class SRS {
     //------------------------------------FIELD AND GLOBAL VARIABLE -----------------------------//
-    String aName = "SRS";
+    String m_TAG = "SRS";
     MediaPlayer m_Player = null;
     Context m_context = null;
     RandomTrack m_randTrack = null;
@@ -35,6 +35,7 @@ public class SRS {
     String m_Type = "";
     String m_PkgName = "";
 
+    int userVolume = 0;
 
     int m_iCount = -1;
 
@@ -57,6 +58,9 @@ public class SRS {
     SrsDAO srsDAO ;
 
 
+    public void setUserVolume(int userVolume){
+        this.userVolume = userVolume;
+    }
     //------------------------------------GETTER M_TYPE METHOD-----------------------------------//
     public String getM_Type() {
         return m_Type;
@@ -64,16 +68,8 @@ public class SRS {
     //------------------------------------SETTER M_TYPE METHOD-----------------------------------//
 
     public void setM_Type(String m_Type) {
-
-        if (GlobalVar.g_TestSide == TConst.T_RIGHT){
-            this.m_Type = "sl_a2";
-            m_randTrack.setM_Type(m_Type);
-        }else{
-            this.m_Type = m_Type;
-            m_randTrack.setM_Type(m_Type);
-        }
-
-
+        this.m_Type = m_Type;
+        m_randTrack.setM_Type(m_Type);
     }
 
 
@@ -100,15 +96,16 @@ public class SRS {
 
     }
 
-    /*
+
     //------------------------------------GETTER RANDOM BAG VALUE---------------------------------//
     public AmTrack getNext(){
-        Log.v(aName, "getNext : m_icount Pre = " + m_iCount);
+        Log.v(m_TAG, "getNext : m_icount Pre = " + m_iCount);
         m_randTrack.printTrackContent();
         m_iCount ++;
         return m_randTrack.getNext();
     }
     //------------------------------------GET CURRENT VALUE --------------------------------------//
+
     public int playCurrent() {
         Log.v("SRT", "playCurrent : ");
 
@@ -123,7 +120,7 @@ public class SRS {
     }
     //------------------------------------RANDOM TRACK SHUFFLE -----------------------------------//
     public int playNext() {
-        Log.v(aName, "playNext : ");
+        Log.v(m_TAG, "playNext : ");
         // AmTrack class -> getNext Method(트랙이 비었을 경우 새로 리스트 업)
         m_atCur = getNext();
         return playTrack();
@@ -136,7 +133,13 @@ public class SRS {
         if (m_Player != null) {
             m_Player.stop();
             m_Player.release();
+            m_Player = null;
         }
+        m_Player = MediaPlayer.create(m_context, idTrack);
+        setVolumeSideCheck();
+        m_Player.start();
+        return m_iCount;
+       /*
         float lVolume = GlobalVar.g_MenuSide.equals("LEFT")?1.0f:0.0f;
         float rVolume = GlobalVar.g_MenuSide.equals("RIGHT")?1.0f:0.0f;
         Log.v(aName,"Volumn test L: " + lVolume);
@@ -145,7 +148,18 @@ public class SRS {
         m_Player.setVolume(lVolume,rVolume);
         m_Player.start();
         return m_iCount;
+        */
     }
+
+    private void setVolumeSideCheck() {
+        Log.v(m_TAG, String.format("setVolumeSideChecj - side : %d", m_iVolumeSide));
+        if (m_iVolumeSide == TConst.T_RIGHT){
+            m_Player.setVolume(0.0f, 1.0f);
+        }else if (m_iVolumeSide == TConst.T_LEFT){
+            m_Player.setVolume(1.0f, 0.0f);
+        }
+    }
+    /*
     public ArrayList<String> sameSize(String strAnswer){
         ArrayList<StWord> alword = sqlcon.selectWordFromId(m_atCur.getAt_id());
         String question = m_atCur.getAt_content();
