@@ -54,9 +54,7 @@ public class SRS {
     public void setUserVolume(int userVolume){
         this.userVolume = userVolume;
     }
-    public ArrayList<HrTestUnit> get_SrsUnitList(){
-        return m_CurScore.getM_allUnit();
-    }
+
     public void setM_tsLimit(int m_tsLimit){
         this.m_tsLimit = m_tsLimit;
     }
@@ -117,16 +115,27 @@ public class SRS {
 
     public int getCurrentProgress(){
         Log.v(m_TAG, "getCurrentProgress");
-        return (int)(((float)m_CurScore.getM_alWord().size() / (float) m_tsLimit)*100);
+      //  return (int)(((float)m_CurScore.getM_alWord().size() / (float) m_tsLimit)*100);
+        return 0;
     }
 
     public int SaveAnswer(String strAnswer) {
+        Log.v(m_TAG, "SaveAnswer");
         if (m_atCur == null) {
+            Log.v(m_TAG, "SaveAnswer - m_atCur is null");
             return 0;
+        } else {
+            // 1. Stword -> SrsUnit으로 변경
+            SrsUnit unitAdd = new SrsUnit(m_atCur.getAt_content(), strAnswer, -1);
+            Log.v(m_TAG, "SaveAnswer : " + m_atCur.getAt_content() + ", Answer : "+ strAnswer);
+
+            m_CurScore.addSrsUnit(unitAdd);
+            Log.v(m_TAG, "SaveAnswer - Srsunit added ");
+
+            return m_CurScore.getM_alSrs().size();
         }
 
-        else {
-            // 1. Stword -> SrsUnit으로 변경
+    }
             /*
             String question = m_atCur.getAt_content();
             String answer = strAnswer.trim();
@@ -174,12 +183,7 @@ public class SRS {
                 Log.v("unit check", "value : " + unit.toString());
             }
 
-             */
-            Log.v("SaveAnswer", "size : " + unitList.size());
-            return (m_iCount+1);
-        }
-
-    }
+      */
 
 
     public int playCurrent() {

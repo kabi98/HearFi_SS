@@ -1,53 +1,60 @@
 package com.example.hearfiss_01.audioTest.SRS;
 
+import android.util.Log;
+
 public class SrsUnit {
-    int sw_id;
-
-    String sw_word;
-
-    int at_id;
-
-    int sw_idx;
+    String m_TAG = "SrsUnit";
+    String  _Question;
+    String  _Answer;
+    int     _Correct;
 
     public SrsUnit() {
+
     }
 
-    public SrsUnit(int sw_id, String sw_word, int at_id, int sw_idx) {
-        this.sw_id = sw_id;
-        this.sw_word = sw_word;
-        this.at_id = at_id;
-        this.sw_idx = sw_idx;
+    public SrsUnit(String _Question, String _Answer, int _Correct) {
+        this._Question = _Question;
+        this._Answer = _Answer;
+        this._Correct = _Correct;
     }
 
-    public int getSw_id() {
-        return sw_id;
+    public String get_Question() {
+        return _Question;
     }
 
-    public void setSw_id(int sw_id) {
-        this.sw_id = sw_id;
+    public void set_Question(String _Question) {
+        this._Question = _Question;
     }
 
-    public String getSw_word() {
-        return sw_word;
+    public String get_Answer() {
+        return _Answer;
     }
 
-    public void setSw_word(String sw_word) {
-        this.sw_word = sw_word;
+    public void set_Answer(String _Answer) {
+        this._Answer = _Answer;
     }
 
-    public int getAt_id() {
-        return at_id;
+    public int get_Correct() {
+        return _Correct;
     }
 
-    public void setAt_id(int at_id) {
-        this.at_id = at_id;
+    public void set_Correct(int _Correct) {
+        this._Correct = _Correct;
     }
 
-    public int getSw_idx() {
-        return sw_idx;
+    @Override
+    public String toString() {
+        return "SrsUnit{" +
+                "_Question='" + _Question + '\'' +
+                ", _Answer='" + _Answer + '\'' +
+                ", _Correct=" + _Correct +
+                '}';
     }
 
-    public void setSw_idx(int sw_idx) {
-        this.sw_idx = sw_idx;
+    public void print() {
+        Log.v(m_TAG,
+                String.format("Q: %s, A: %s, C: %d",
+                        _Question, _Answer, _Correct) );
     }
+
 }
