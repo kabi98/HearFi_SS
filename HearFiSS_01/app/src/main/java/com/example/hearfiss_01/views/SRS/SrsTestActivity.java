@@ -1,8 +1,5 @@
 package com.example.hearfiss_01.views.SRS;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRS.SRS;
@@ -200,6 +200,7 @@ public class SrsTestActivity extends AppCompatActivity
          m_EditSRS.setText("");
 
          m_SRS.SaveAnswer(strAnswer);
+         Log.v(m_TAG, "srstest - save answer : "+ strAnswer);
          int curPercent = m_SRS.getCurrentProgress();
          m_ProgressBar.setProgress(curPercent);
          Log.v(m_TAG, "NextBtnClick - progressbar value : " + curPercent);
@@ -264,35 +265,21 @@ public class SrsTestActivity extends AppCompatActivity
     }
     private void saveSrsResultToGlobalVar(){
         Log.v(m_TAG, String.format("saveSrsResultToGlobalVar"));
-        if (GlobalVar.g_TestSide == TConst.T_RIGHT){
-            GlobalVar.g_alSrsRight = m_SRS.getScoreList();
-            for (int i = 0; i < GlobalVar.g_alSrsRight.size(); i++){
-                Log.v(m_TAG, String.format("SRS RESULT RIGHT : %d, %s ", i, GlobalVar.g_alSrsRight.get(i).toString()));
+        try {
+            if (GlobalVar.g_TestSide == TConst.T_RIGHT){
+                GlobalVar.g_alSrsRight = m_SRS.getScoreList();
+                for (int i = 0; i < GlobalVar.g_alSrsRight.size(); i++){
+                    Log.v(m_TAG, String.format("SRS RESULT RIGHT : %d, %s ", i, GlobalVar.g_alSrsRight.get(i).toString()));
+                }
+            }else {
+                GlobalVar.g_alSrsLeft = m_SRS.getScoreList();
+                for (int i =0; i <GlobalVar.g_alSrsLeft.size(); i++){
+                    Log.v(m_TAG, String.format("SRS RESULT LEFT : %d, %s ", i, GlobalVar.g_alSrsLeft.get(i).toString()));
+                }
             }
-        }else {
-            GlobalVar.g_alSrsLeft = m_SRS.getScoreList();
-            for (int i =0; i <GlobalVar.g_alSrsLeft.size(); i++){
-                Log.v(m_TAG, String.format("SRS RESULT LEFT : %d, %s ", i, GlobalVar.g_alSrsLeft.get(i).toString()));
-            }
+        }catch (Exception e) {
+            Log.v(m_TAG, "saveSrsResultToGlobalVar error : " + e);
         }
-        /*
-        Log.v(m_TAG, String.format("saveWrsResultToGlobalVar") );
-
-        ArrayList<WordUnit> alWrsResult = m_WRS.get_WordUnitList();
-
-        for(WordUnit resultOne : alWrsResult){
-            Log.v(m_TAG, String.format("result Side:%d Q:%s, A:%s, C:%d",
-                    GlobalVar.g_TestSide, resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()) );        }
-
-        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-            GlobalVar.g_alWrsRight = alWrsResult;
-
-        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-            GlobalVar.g_alWrsLeft = alWrsResult;
-
-        }
-
-         */
     }
 
     private void saveSrsResultToDatabase() {
