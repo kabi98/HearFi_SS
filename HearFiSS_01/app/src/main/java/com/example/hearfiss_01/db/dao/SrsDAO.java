@@ -7,7 +7,9 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.hearfiss_01.audioTest.SRS.SrsUnit;
 import com.example.hearfiss_01.db.DTO.Account;
+import com.example.hearfiss_01.db.DTO.AmTrack;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
 import com.example.hearfiss_01.db.DTO.HrTestUnit;
@@ -77,60 +79,69 @@ public class SrsDAO {
 
     public void saveResult(){
         Log.v(m_TAG, "saveSrsResult");
-        insertAndSelectTestGroup();
-        insertAndSelectTestSet();
+
     }
-    public void insertAndSelectTestGroup() {
-        Log.v(m_TAG, " insertAndSelectTestGroup ");
-        Date dtNow = new Date();
-        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = sdFormatter.format(dtNow);
+    public ArrayList<AmTrack> selectTrackFromType(String _strType) {
+        Log.v(m_TAG,
+                String.format("selectTrackFromType Type %s", _strType));
 
-        HrTestGroup tgIns = new HrTestGroup(0, strDate, m_strTestType, m_strGroupResult, m_Account.getAcc_id());
-        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-        m_TestGroup = hrTestDAO.insertAndSelectTestGroup(tgIns);
+        ArrayList<AmTrack> alTrack = new ArrayList<>();
+        try {
+            m_database = m_helper.getReadableDatabase();
+
+            String strSQL = "  SELECT at_id, at_file_name, at_file_ext, at_type, at_content FROM audiometry_track "
+                    + " WHERE at_type = ? ; ";
+            String[] params = {_strType};
+            Cursor cursor = m_database.rawQuery(strSQL, params);
+
+            Log.v(m_TAG,
+                    String.format("selectTrackFromType Result = %d", cursor.getCount()));
+            if (cursor.getCount() <= 0)
+                return null;
+
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String ext = cursor.getString(2);
+                String type = cursor.getString(3);
+                String content = cursor.getString(4);
+
+                AmTrack atOne = new AmTrack(id, name, ext, type, content);
+                alTrack.add(atOne);
+
+                Log.v(m_TAG,
+                        String.format("  selectTrackFromType \n name %s, ext %s, type %s, content %s ",
+                                name, ext, type, content));
+            }
+            cursor.close();
+            return alTrack;
+
+        } catch (Exception e) {
+            Log.v(m_TAG, "selectTrackFromType Exception " + e);
+            return null;
+        }
     }
-
-    public void insertAndSelectTestSet() {
-        Log.v(m_TAG, " insertAndSelectTestSet ");
-
-        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-
-
-        Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
-        Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
-        m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
-        hrTestDAO.insertTestSet(m_TestSetLeft);
-        m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
-
-        m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
-        hrTestDAO.insertTestSet(m_TestSetRight);
-        m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
-
-        Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
-        Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
-    }
-
-
 
     public ArrayList<StWord> selectWordFromId(int _atId) {
         Log.v(m_TAG,
                 String.format("selectWordFromId AtId %d", _atId));
 
         ArrayList<StWord> alWord = new ArrayList<>();
-
         try {
             m_database = m_helper.getReadableDatabase();
 
-            String strSQL = "  SELECT sw_id, sw_word, at_id, sw_idx FROM sentence_word   "
+            String strSQL = "  SELECT sw_id, sw_word, at_id, sw_idx FROM sentence_word"
                     + " WHERE at_id = ? ; ";
             String[] params = {Integer.toString(_atId)};
             Cursor cursor = m_database.rawQuery(strSQL, params);
 
             Log.v(m_TAG,
                     String.format("selectWordFromId Result = %d", cursor.getCount()));
-            if (cursor.getCount() <= 0)
+            if (cursor.getCount() <= 0){
+                Log.v(m_TAG, "selectWordFromId - No results found for _atId : " + _atId);
                 return null;
+            }
 
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
@@ -140,7 +151,7 @@ public class SrsDAO {
                 int at_id = cursor.getInt(2);
                 int sw_idx = cursor.getInt(3);
 
-                StWord wordOne = new StWord(sw_id, word, at_id, sw_idx);
+                StWord wordOne = new StWord(sw_id, word, at_id , sw_idx);
 
                 alWord.add(wordOne);
 
@@ -155,66 +166,139 @@ public class SrsDAO {
             Log.v(m_TAG, "selectWordFromId Exception " + e);
             return null;
         }
-
     }
+    public int insertTestUnit(SrsUnit tuInsert) {
+        Log.v(m_TAG, " insertTestUnit ");
+        try {
+//            INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id) VALUES (1, '편지', '편지', 1, 60);
+            m_database = m_helper.getWritableDatabase();
+            String strSQL = " INSERT INTO srs_unit (ts_id, tu_question, tu_answer, tu_iscorrect, tu_dbHL, at_id) "
+                    + " VALUES (?, ?, ?, ?, ?, ?); ";
+            Object[] params = { tuInsert.getTs_id(), tuInsert.getTu_Question(), tuInsert.getTu_Answer(),
+                    tuInsert.getTu_IsCorrect(), tuInsert.getTu_dBHL(), tuInsert.getTu_atId() };
 
-    public HrTestGroup dataGroupInsert() {
-        /*
-        Date dtNow = new Date();
-        // ex) 2023-08-10 16:22:22 포멧팅
-        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // 문자형으로 날짜 포맷팅
-        String strDate = sdFormatter.format(dtNow);
-        HrTestGroup hrTestGroup = new HrTestGroup(0, strDate, GlobalVar.g_MenuType, GlobalVar.g_AccLogin.getAcc_id());
-        sqlcon.insertTestGroup(hrTestGroup);
-        m_testGroup = sqlcon.selectTestGroup(hrTestGroup);
-        GlobalVar.g_TestGroup = m_testGroup;
-        Log.v(aName, "insertData : " + m_testGroup.toString());
-        return m_testGroup;
-    }
-         */
-        // 임시 리턴값
-        return dataGroupInsert();
-    }
-
-    public HrTestSet insertSet(int wResult, int sResult) {
-/*
-        if(GlobalVar.g_MenuSide.equals("RIGHT")){
-            m_testGroup = dataGroupInsert();
+            m_database.execSQL(strSQL, params);
+        } catch (Exception e) {
+            Log.v(m_TAG, "insertTestUnit Exception " + e);
+            return -1;
         }
-        hrTestSet = new HrTestSet();
 
-        // HrTestSet 수정 필요
-        //hrTestSet.setTs_Date(strDate); // 테스트 날짜
-        //hrTestSet.setTs_type(GlobalVar.g_MenuType); //테스트 타입
-
-        hrTestSet.setTg_id(GlobalVar.g_TestGroup.getTg_id());
-        hrTestSet.setTs_side(GlobalVar.g_MenuSide); // 테스트 방향
-        hrTestSet.setTs_Result("단어 기준 : " +Integer.toString(wResult) +"%"); // 단어 기준 점수
-        hrTestSet.setTs_Comment("문장 기준 : " +Integer.toString(sResult) +"%"); // 문장 기준 점수
-        sqlcon.insertTestSet(hrTestSet);
-        HrTestSet m_testset = sqlcon.selectTestSet(hrTestSet);
-        Log.v(aName,"insertData : " + m_testset.toString());
-        return m_testset;
+        return 1;
     }
 
- */
-        // 임시 리턴값
-        return null;
-    }
+    public int insertTestGroup(HrTestGroup tgInsert) {
+        Log.v(m_TAG, " insertTestGroup ");
+        try {
+            m_database = m_helper.getWritableDatabase();
+            String strSQL = " INSERT INTO hrtest_group (tg_date, tg_type, tg_result, acc_id)  "
+                    + " VALUES (?, ?, ?, ?) ";
+            Object[] params = {tgInsert.getTg_Date(), tgInsert.getTg_type(),tgInsert.getTg_result(), tgInsert.getAcc_id()};
 
-    public void insertUnit(ArrayList<HrTestUnit> unitList, HrTestSet srsTestSet){
-/*
-        int row = 0;
-        for(int i=0; i<unitList.size(); i++){
-            unitList.get(i).setTs_id(srsTestSet.getTs_id());
-            int insert = sqlcon.insertTestUnit(unitList.get(i));
-            row += insert;
-
-            Log.v(aName, "insertData" + unitList.get(i).toString());
+            m_database.execSQL(strSQL, params);
+        } catch (Exception e) {
+            Log.v(m_TAG, "insertTestGroup Exception " + e);
+            return -1;
         }
-        Log.v("insertUnit", "cnt : " + row);
+
+        return 1;
     }
-    */
+
+    public HrTestGroup selectTestGroup(HrTestGroup tgInput) {
+        Log.v(m_TAG,
+                String.format("selectTestGroup Date %s, Type %s Result %s Id %d",
+                        tgInput.getTg_Date(), tgInput.getTg_type(), tgInput.getTg_result(), tgInput.getAcc_id()));
+
+        try {
+            m_database = m_helper.getReadableDatabase();
+
+            String strSQL = "  SELECT tg_id, tg_date, tg_type, acc_id "
+                    + " FROM hrtest_group WHERE tg_date= ? and tg_type = ? and tg_result = ? and acc_id = ?; ";
+            String[] params = { tgInput.getTg_Date(), tgInput.getTg_type(), tgInput.getTg_result(),
+                    Integer.toString(tgInput.getAcc_id())};
+            Cursor cursor = m_database.rawQuery(strSQL, params);
+
+            Log.v(m_TAG,
+                    String.format("selectTestGroup Result = %d", cursor.getCount()));
+            if (cursor.getCount() > 0) {
+                cursor.moveToNext();
+
+                int     tg_id      = cursor.getInt(0);
+                String  tg_date    = cursor.getString(1);
+                String  tg_type    = cursor.getString(2);
+                String  tg_result  = cursor.getString(3);
+                int     acc_id     = cursor.getInt(4);
+
+                HrTestGroup tgOne = new HrTestGroup(tg_id, tg_date, tg_type, tg_result, acc_id);
+
+                Log.v(m_TAG, tgOne.toString());
+                cursor.close();
+
+                return tgOne;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            Log.v("SQLiteControl", "selectTestGroup Exception " + e);
+            return null;
+        }
+    }
+
+    public int insertTestSet(HrTestSet tsInsert) {
+        Log.v(m_TAG, " insertTestSet ");
+        try {
+            m_database = m_helper.getWritableDatabase();
+
+            String strSQL = " INSERT INTO hrtest_set (tg_id, ts_side, ts_result, ts_comment)  "
+                    + " VALUES (?, ?, ?, ?) ";
+            Object[] params = {tsInsert.getTg_id(), tsInsert.getTs_side(),
+                    tsInsert.getTs_Result(), tsInsert.getTs_Comment()};
+
+            m_database.execSQL(strSQL, params);
+        } catch (Exception e) {
+            Log.v(m_TAG, "insertTestSet Exception " + e);
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public HrTestSet selectTestSet(HrTestSet tsInput) {
+        Log.v(m_TAG,
+                String.format("selectTestSet tg_id %d, ts_side %s ",
+                        tsInput.getTg_id(), tsInput.getTs_side()));
+
+        try {
+            m_database = m_helper.getReadableDatabase();
+
+            String strSQL = "  SELECT ts_id, tg_id, ts_side, ts_result, ts_comment "
+                    + " FROM hrtest_set WHERE tg_id= ? and ts_side = ?; ";
+            String[] params = { Integer.toString(tsInput.getTg_id()), tsInput.getTs_side() };
+            Cursor cursor = m_database.rawQuery(strSQL, params);
+
+            Log.v(m_TAG,
+                    String.format("selectTestSet Result = %d", cursor.getCount()));
+            if (cursor.getCount() > 0) {
+                cursor.moveToNext();
+
+                int     ts_id      = cursor.getInt(0);
+                int     tg_id      = cursor.getInt(1);
+                String  tg_side    = cursor.getString(2);
+                String  tg_result  = cursor.getString(3);
+                String  tg_comment = cursor.getString(4);
+
+                HrTestSet tsOne = new HrTestSet(ts_id, tg_id, tg_side, tg_result, tg_comment);
+                Log.v(m_TAG, tsOne.toString());
+                cursor.close();
+
+                return tsOne;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            Log.v(m_TAG, "selectTestSet Exception " + e);
+            return null;
+        }
     }
 }

@@ -20,6 +20,7 @@ public class RandomTrack {
 
     Context m_Context;
 
+    SrsDAO srsDAO;
     SQLiteControl m_sqlcon = null;
     SQLiteDatabase m_database;
     com.example.hearfiss_01.db.sql.SQLiteHelper m_helper = null;
@@ -34,6 +35,7 @@ public class RandomTrack {
         m_helper = new SQLiteHelper(m_Context,  TConst.DB_FILE, null, TConst.DB_VER);
         m_sqlcon = new SQLiteControl(m_helper);
         m_alTrack = new ArrayList<AmTrack>();
+        srsDAO = new SrsDAO(m_Context);
     }
 
     public void releaseAndClose() {
@@ -62,7 +64,7 @@ public class RandomTrack {
 
     public void filling(){
 
-        ArrayList<AmTrack> alTemp = selectTrackFromType(m_Type);
+        ArrayList<AmTrack> alTemp = srsDAO.selectTrackFromType(m_Type);
 
         if(alTemp!= null){
             Log.v("TEST LOG","selectTrackFromType : " + alTemp.size());
