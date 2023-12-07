@@ -1,9 +1,5 @@
 package com.example.hearfiss_01.views.SRT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatToggleButton;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,31 +11,23 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatToggleButton;
+
 import com.example.hearfiss_01.R;
-import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
 import com.example.hearfiss_01.audioTest.SRT.SrtScore;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
-import com.example.hearfiss_01.audioTest.WRS.WordScore;
-import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
-import com.example.hearfiss_01.db.DTO.HrTestUnit;
-import com.example.hearfiss_01.db.dao.PttDAO;
 import com.example.hearfiss_01.db.dao.SrtDAO;
 import com.example.hearfiss_01.global.GlobalVar;
-import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
-import com.example.hearfiss_01.views.PTT.HlinfoActivity;
-import com.example.hearfiss_01.views.PTT.PttResult02Activity;
 import com.example.hearfiss_01.views.SRS.SrsDesc01Activity;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
-
-import kotlin.Unit;
 
 public class SrtResult02Activity extends AppCompatActivity  implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 

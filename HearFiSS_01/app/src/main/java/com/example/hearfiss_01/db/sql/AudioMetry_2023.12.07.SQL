@@ -111,7 +111,21 @@ CREATE TABLE srs_unit (
 			, FOREIGN KEY(at_id) REFERENCES audiometry_track(at_id)
 			);
 
-			
+CREATE TABLE audiometry_track (
+			at_id 			INTEGER PRIMARY KEY AUTOINCREMENT
+			, at_file_name 	TEXT
+			, at_file_ext 	TEXT
+			, at_type		TEXT
+			, at_content	TEXT );
+
+CREATE TABLE sentence_word (
+            sw_id 			INTEGER PRIMARY KEY AUTOINCREMENT
+            , sw_word 	TEXT
+            , sw_idx    INTEGER
+            , at_id		INTEGER
+            , FOREIGN KEY(at_id) REFERENCES audiometry_track(at_id));
+
+
 
 INSERT INTO audiometry_track (at_file_name, at_file_ext, at_type, at_content) VALUES ('ks_mwl_a1_001', 'mp3', 'mwl_a1', '귀');
 INSERT INTO audiometry_track (at_file_name, at_file_ext, at_type, at_content) VALUES ('ks_mwl_a1_002', 'mp3', 'mwl_a1', '남');

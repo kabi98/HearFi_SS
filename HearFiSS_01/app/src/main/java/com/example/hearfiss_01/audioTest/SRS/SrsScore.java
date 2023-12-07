@@ -2,15 +2,13 @@ package com.example.hearfiss_01.audioTest.SRS;
 
 import android.util.Log;
 
+
 import com.example.hearfiss_01.db.DTO.AmTrack;
-import com.example.hearfiss_01.db.DTO.HrTestSet;
 import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.db.DTO.StWord;
 import com.example.hearfiss_01.db.dao.SrsDAO;
-import com.example.hearfiss_01.global.GlobalVar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SrsScore {
 
