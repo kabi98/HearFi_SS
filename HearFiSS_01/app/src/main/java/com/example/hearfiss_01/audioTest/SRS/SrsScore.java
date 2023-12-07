@@ -33,6 +33,10 @@ public class SrsScore {
     SrsDAO srsDAO;
 
 
+    public ArrayList<SrsUnit> getM_alSrs(){
+        return m_alSrs;
+    }
+
     public SrsScore(){
         m_iQuestion = -1;
         m_alSrs = new ArrayList<>();
@@ -46,10 +50,6 @@ public class SrsScore {
                 ", m_iCorrect=" + m_iCorrect +
                 ", m_iScore=" + m_iScore +
                 '}';
-    }
-
-    public ArrayList<SrsUnit> getM_alSrs(){
-        return m_alSrs;
     }
 
     public void setM_alSrs(ArrayList<SrsUnit> m_alSrs){

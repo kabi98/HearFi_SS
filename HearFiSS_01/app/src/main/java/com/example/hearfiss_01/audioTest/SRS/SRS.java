@@ -58,6 +58,11 @@ public class SRS {
     public void setM_tsLimit(int m_tsLimit){
         this.m_tsLimit = m_tsLimit;
     }
+
+    public ArrayList<SrsUnit> getScoreList(){
+        return m_CurScore.getM_alSrs();
+    }
+
     public SRS(@Nullable Context context){
         this.m_context = context;
         this.m_PkgName = m_context.getPackageName();

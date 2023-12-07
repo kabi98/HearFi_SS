@@ -262,6 +262,38 @@ public class SrsTestActivity extends AppCompatActivity
         }
 
     }
+    private void saveSrsResultToGlobalVar(){
+        Log.v(m_TAG, String.format("saveSrsResultToGlobalVar"));
+        if (GlobalVar.g_TestSide == TConst.T_RIGHT){
+            GlobalVar.g_alSrsRight = m_SRS.getScoreList();
+            for (int i = 0; i < GlobalVar.g_alSrsRight.size(); i++){
+                Log.v(m_TAG, String.format("SRS RESULT RIGHT : %d, %s ", i, GlobalVar.g_alSrsRight.get(i).toString()));
+            }
+        }else {
+            GlobalVar.g_alSrsLeft = m_SRS.getScoreList();
+            for (int i =0; i <GlobalVar.g_alSrsLeft.size(); i++){
+                Log.v(m_TAG, String.format("SRS RESULT LEFT : %d, %s ", i, GlobalVar.g_alSrsLeft.get(i).toString()));
+            }
+        }
+        /*
+        Log.v(m_TAG, String.format("saveWrsResultToGlobalVar") );
+
+        ArrayList<WordUnit> alWrsResult = m_WRS.get_WordUnitList();
+
+        for(WordUnit resultOne : alWrsResult){
+            Log.v(m_TAG, String.format("result Side:%d Q:%s, A:%s, C:%d",
+                    GlobalVar.g_TestSide, resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()) );        }
+
+        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
+            GlobalVar.g_alWrsRight = alWrsResult;
+
+        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
+            GlobalVar.g_alWrsLeft = alWrsResult;
+
+        }
+
+         */
+    }
 
     private void saveSrsResultToDatabase() {
        /*
@@ -299,27 +331,7 @@ public class SrsTestActivity extends AppCompatActivity
          */
     }
 
-    private void saveSrsResultToGlobalVar(){
-        Log.v(m_TAG, String.format("saveSrsResultToGlobalVar"));
-        /*
-        Log.v(m_TAG, String.format("saveWrsResultToGlobalVar") );
 
-        ArrayList<WordUnit> alWrsResult = m_WRS.get_WordUnitList();
-
-        for(WordUnit resultOne : alWrsResult){
-            Log.v(m_TAG, String.format("result Side:%d Q:%s, A:%s, C:%d",
-                    GlobalVar.g_TestSide, resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()) );        }
-
-        if(TConst.T_RIGHT == GlobalVar.g_TestSide){
-            GlobalVar.g_alWrsRight = alWrsResult;
-
-        } else if(TConst.T_LEFT == GlobalVar.g_TestSide){
-            GlobalVar.g_alWrsLeft = alWrsResult;
-
-        }
-
-         */
-    }
 
     private void setSideTextAndProgressBar() {
         //----------------------------------SIDE TEXT SETTING-------------------------------------//
