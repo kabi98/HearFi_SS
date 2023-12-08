@@ -257,16 +257,22 @@ public class SRS {
     }
     public HrTestGroup dataGroupInsert() {
         java.util.Date dtNow = new Date();
-        // ex) 2023-08-10 16:22:22 포멧팅
         SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // 문자형으로 날짜 포맷팅
         String strDate = sdFormatter.format(dtNow);
-        HrTestGroup hrTestGroup = new HrTestGroup(0, strDate, m_strTestType, m_strGroupResult, m_Account.getAcc_id());
-        srsDAO.insertTestGroup(hrTestGroup);
-        m_testGroup = srsDAO.selectTestGroup(hrTestGroup);
-        GlobalVar.g_TestGroup = m_testGroup;
-        Log.v(m_TAG, "insertData : " + m_testGroup.toString());
-        return m_testGroup;
+
+        // m_Account가 null이 아닐 때만 실행
+        if (m_Account != null) {
+            HrTestGroup hrTestGroup = new HrTestGroup(0, strDate, m_strTestType, m_strGroupResult, m_Account.getAcc_id());
+            srsDAO.insertTestGroup(hrTestGroup);
+            m_testGroup = srsDAO.selectTestGroup(hrTestGroup);
+            GlobalVar.g_TestGroup = m_testGroup;
+            Log.v(m_TAG, "insertData : " + m_testGroup.toString());
+            return m_testGroup;
+        } else {
+            // m_Account가 null일 경우 로그를 출력하고 null을 반환하거나 적절한 예외 처리를 합니다.
+            Log.v(m_TAG, "m_Account is null, cannot insert data");
+            return null; // 또는 적절한 예외를 throw 할 수 있습니다.
+        }
     }
     public HrTestSet insertSet(int wResult, int sResult, int iTestSide){
 

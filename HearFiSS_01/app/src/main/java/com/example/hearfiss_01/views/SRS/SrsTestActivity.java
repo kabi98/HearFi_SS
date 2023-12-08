@@ -199,12 +199,21 @@ public class SrsTestActivity extends AppCompatActivity
          String strAnswer = m_EditSRS.getText().toString();
          m_EditSRS.setText("");
 
-         m_SRS.SaveAnswer(strAnswer);
+         int unitSize = m_SRS.SaveAnswer(strAnswer);
          Log.v(m_TAG, "srstest - save answer : "+ strAnswer);
-         int curPercent = m_SRS.getCurrentProgress();
-         m_ProgressBar.setProgress(curPercent);
-         Log.v(m_TAG, "NextBtnClick - progressbar value : " + curPercent);
-         checkTestEndAndNextPlay();
+         int result = (int)(((float)unitSize / (float)10)*100);
+         m_ProgressBar.setProgress(result);
+
+         if (!m_SRS.isEnd()){
+             m_SRS.playNext();
+         }else {
+             int s = m_SRS.scoring();
+             Log.v(m_TAG, "문장 인지도 테스트 결과 : " + s);
+             checkTestEndAndNextPlay();
+         }
+
+         Log.v(m_TAG, "NextBtnClick - progressbar value : " + result);
+
 
         /*
         String strAnswer = m_EditWRS.getText().toString();
