@@ -125,6 +125,27 @@ CREATE TABLE sentence_word (
             , at_id		INTEGER
             , FOREIGN KEY(at_id) REFERENCES audiometry_track(at_id));
 
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_001','mp3','sl_a1','백화점에 가서 목걸이와 반지를 샀습니다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_002','mp3','sl_a1','휴지를 버려 주세요');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_003','mp3','sl_a1','우체국은 병원 앞에 있어요');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_004','mp3','sl_a1','약을 하루에 두 번씩 드세요');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_005','mp3','sl_a1','감기에 걸리지 않도록 조심해라');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_006','mp3','sl_a1','내가 퇴근하는 시간은 항상 같다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_007','mp3','sl_a1','물이 차다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_008','mp3','sl_a1','오늘처럼 눈이 오는 날은 조심해서 운전해야 한다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_009','mp3','sl_a1','당신이 만든 작품을 설명해 보세요');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_010','mp3','sl_a1','당근은 무슨 색입니까');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_001','mp3','sl_a2','커피를 마셔서 잠이 오지 않는다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_002','mp3','sl_a2','여기서 기다리세요');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_003','mp3','sl_a2','전화번호가 어떻게 됩니까');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_004','mp3','sl_a2','오래된 음식은 먹지 마세요');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_005','mp3','sl_a2','눈이 내리는 겨울이 빨리 왔으면 좋겠습니다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_006','mp3','sl_a2','아침에 안개가 껴서 앞을 보기가 힘들었다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_007','mp3','sl_a2','수박이 달다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_008','mp3','sl_a2','일을 마치고 갈 시간이 충분합니다');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_009','mp3','sl_a2','내가 읽은 책을 너한테 빌려줄게');
+INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_010','mp3','sl_a2','음악을 들으며 운동해 보세요');
+
 
 
 INSERT INTO audiometry_track (at_file_name, at_file_ext, at_type, at_content) VALUES ('ks_mwl_a1_001', 'mp3', 'mwl_a1', '귀');
@@ -179,32 +200,12 @@ INSERT INTO audiometry_track (at_file_name, at_file_ext, at_type, at_content) VA
 INSERT INTO audiometry_track (at_file_name, at_file_ext, at_type, at_content) VALUES ('ks_mwl_a1_050', 'mp3', 'mwl_a1', '능');
 
 
+
+
+
 INSERT INTO account (acc_id, acc_phone_id, acc_phone, acc_pwd, acc_name, acc_gender, acc_birth) VALUES ('1', '12345678901', '123-4567-8901', '123456', '관리자', '남', '12-34-56');
 INSERT INTO account (acc_id, acc_phone_id, acc_phone, acc_pwd, acc_name, acc_gender, acc_birth) VALUES ('2', '01034567890', '010-5678-1234', '010101', '성춘향', '여', '01-01-01');
 INSERT INTO account (acc_id, acc_phone_id, acc_phone, acc_pwd, acc_name, acc_gender, acc_birth) VALUES ('3', '01012345678', '010-1234-5678', '541212', '홍길동', '남', '54-12-12');
-
-
-
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_001','mp3','sl_a1','백화점에 가서 목걸이와 반지를 샀습니다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_002','mp3','sl_a1','휴지를 버려 주세요');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_003','mp3','sl_a1','우체국은 병원 앞에 있어요');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_004','mp3','sl_a1','약을 하루에 두 번씩 드세요');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_005','mp3','sl_a1','감기에 걸리지 않도록 조심해라');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_006','mp3','sl_a1','내가 퇴근하는 시간은 항상 같다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_007','mp3','sl_a1','물이 차다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_008','mp3','sl_a1','오늘처럼 눈이 오는 날은 조심해서 운전해야 한다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_009','mp3','sl_a1','당신이 만든 작품을 설명해 보세요');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_010','mp3','sl_a1','당근은 무슨 색입니까');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_001','mp3','sl_a2','커피를 마셔서 잠이 오지 않는다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_002','mp3','sl_a2','여기서 기다리세요');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_003','mp3','sl_a2','전화번호가 어떻게 됩니까');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_004','mp3','sl_a2','오래된 음식은 먹지 마세요');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_005','mp3','sl_a2','눈이 내리는 겨울이 빨리 왔으면 좋겠습니다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_006','mp3','sl_a2','아침에 안개가 껴서 앞을 보기가 힘들었다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_007','mp3','sl_a2','수박이 달다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_008','mp3','sl_a2','일을 마치고 갈 시간이 충분합니다');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_009','mp3','sl_a2','내가 읽은 책을 너한테 빌려줄게');
-INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a2_010','mp3','sl_a2','음악을 들으며 운동해 보세요');
 
 INSERT INTO audiometry_track (at_file_name, at_file_ext, at_type, at_content) VALUES ('ks_bwl_a1_001', 'mp3', 'bwl_a1', '편지');
 INSERT INTO audiometry_track (at_file_name, at_file_ext, at_type, at_content) VALUES ('ks_bwl_a1_002', 'mp3', 'bwl_a1', '달걀');
