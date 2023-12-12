@@ -6,21 +6,14 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.AmTrack;
-import com.example.hearfiss_01.db.DTO.HrTestGroup;
-import com.example.hearfiss_01.db.DTO.HrTestSet;
 import com.example.hearfiss_01.db.DTO.StWord;
 import com.example.hearfiss_01.db.dao.RandomTrack;
 import com.example.hearfiss_01.db.dao.SrsDAO;
-import com.example.hearfiss_01.db.sql.SQLiteControl;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 
 public class SRS {
@@ -42,6 +35,8 @@ public class SRS {
     MediaPlayer m_Player = null;
 
     RandomTrack m_randTrack = null;
+
+    SentScore m_CurScore = null;
 
 
     public void setUserVolume(int userVolume){
@@ -73,7 +68,7 @@ public class SRS {
         m_iCount = -1;
         m_iVolumeSide = GlobalVar.g_TestSide;
 
-    //    m_CurScore = new SrsScore();
+        m_CurScore =  new SentScore();
 
     }
 
@@ -99,7 +94,7 @@ public class SRS {
     }
 
     public int playCurrent() {
-        Log.v(m_TAG, "playCurrent : ");
+        Log.v(m_TAG, "playCurrent ");
 
         if(m_atCur == null) {
             return playNext();
@@ -133,6 +128,7 @@ public class SRS {
         m_Player = MediaPlayer.create(m_context, idTrack);
         setVolumeSideCheck();
         m_Player.start();
+        Log.v(m_TAG, "current sentence : " + m_atCur.getAt_content());
         return m_iCount;
     }
     private void setVolumeSideCheck() {
@@ -146,7 +142,7 @@ public class SRS {
 
     public boolean isEnd(){
         Log.v(m_TAG, "isEnd : " + m_iCount);
-        if(m_iCount == 9){
+        if(m_iCount ==  9){
             return true;
         }else{
             return false;
@@ -156,69 +152,59 @@ public class SRS {
 
     public int SaveAnswer(String strAnswer) {
         Log.v(m_TAG, "*********SaveAnswer***********");
+        Log.v(m_TAG, "Question : " + m_atCur.getAt_content());
+        Log.v(m_TAG, "Answer : " + strAnswer);
 
-//        if (m_atCur == null) {
-//            return 0;
-//        } else {
-//            String question = m_atCur.getAt_content();
-//            String answer = strAnswer.trim();
-//
-//            // 음원에 대한 at_id로 포함된 단어 검색
-//            ArrayList<StWord> alword = srsDAO.selectWordFromId(m_atCur.getAt_id());
-//
-//            // alword가 null이 아니고 비어있지 않은지 확인
-//            if (alword != null && !alword.isEmpty()) {
-//                u_A = sameSize(strAnswer);
-//
-//                // 단어 갯수 확인 변수
-//                tWord += alword.size();
-//                Log.v(m_TAG, "word count : " + tWord);
-//                int temp = 0;
-//                int sWcnt = alword.size();
-//                for (int i = 0; i < alword.size(); i++) {
-//                    Log.v(m_TAG, "sentence include Word : " + sWcnt);
-//                    int idx = alword.get(i).getSw_idx();
-//                    Log.v(m_TAG, "sentence include Word : " + sWcnt);
-//                    SrsUnit unit = new SrsUnit();
-//                    unit.setTu_dBHL(GlobalVar.g_srsUserVolume);
-//                    unit.setTu_atId(m_atCur.getAt_id());
-//                    unit.setTu_Question(alword.get(i).getSw_word());
-//                    Log.v(m_TAG, "u_A size : " + u_A.size());
-//                    if (idx >= 0 && idx < u_A.size() && u_A.get(idx).contains(alword.get(i).getSw_word())) {
-//                        // 사용자 입력 배열에 인덱스 값이 출력한 단어 인덱스와 같을 때
-//                        Log.v(m_TAG, "포함된 단어 : "+alword.get(i).getSw_word() + "|" + sWcnt);
-//                        unit.setTu_Answer(u_A.get(idx));
-//                        unit.setTu_IsCorrect(1);
-//                        sWcnt -= 1;
-//                        cWord += 1;
-//                        Log.v(m_TAG, "남은 단어 갯수  : " + sWcnt);
-//                        Log.v(m_TAG, "맞은 단어 갯수  : " + cWord);
-//                    } else {
-//                        Log.v(m_TAG, "미포함 단어 : " + alword.get(i).getSw_word() + "|" + sWcnt);
-//                        unit.setTu_Answer(u_A.get(i));
-//                        unit.setTu_IsCorrect(0);
-//                    }
-//
-//                    if (sWcnt == 0) {
-//                        cSentence += 1;
-//                        Log.v(m_TAG, "맞은 문장 : " + cSentence);
-//                    }
-//                    unitList.add(unit);
-//                    Log.v(m_TAG, "unit check value : " + unit.toString());
-//                }
-//            } else {
-//                Log.v(m_TAG, "alword is null or empty");
-//            }
-//
-//            Log.v(m_TAG, "size : " + unitList.size());
-//            return (m_iCount + 1);
-//        }
+        if(m_atCur == null){
+            return 0;
+        } else {
+            SrsDAO srsDAO = new SrsDAO(m_context);
+
+            ArrayList<StWord> wordList = srsDAO.selectWordListFromId(m_atCur.getAt_id());
+
+            SentUnit unitAdd = new SentUnit();
+
+            for(int i=0; i<wordList.size(); i++){
+                Log.v( m_TAG,
+                        String.format("word : %s, idx : %d",
+                        wordList.get(i).getSw_word(), wordList.get(i).getSw_idx()) );
+                unitAdd.addWordNIdx(wordList.get(i).getSw_word(), wordList.get(i).getSw_idx());
+            }
+
+            String strTrimAnswer = strAnswer.trim();
+            unitAdd.saveQnA(m_atCur.getAt_content(), strTrimAnswer);
+            Log.v(m_TAG, "unitAdd : " + unitAdd.toString());
+
+            srsDAO.releaseAndClose();
+            m_CurScore.addSentUnit(unitAdd);
+//            m_CurScore.printSentence();
+
+        }
+
         return 0;
 
     }
 
     public int scoring(){
         Log.v(m_TAG, "****scoring****");
+        m_CurScore.printSentence();
+        m_CurScore.scoring();
+
+        Log.v( m_TAG,
+                String.format("scoring : word_score %d, q :%d, c:%d, sent_score %d, q :%d, c:%d,",
+                        m_CurScore.get_iWordScore(), m_CurScore.get_iWordQuest(), m_CurScore.get_iWordCorrect(),
+                        m_CurScore.get_iSentScore(), m_CurScore.get_iSentQuest(), m_CurScore.get_iSentCorrect()   ) );
+
+//        assertEquals(8, scoreTemp.get_iWordCorrect());
+//        assertEquals(10, scoreTemp.get_iWordQuest());
+//        assertEquals(80, scoreTemp.get_iWordScore());
+//
+//        assertEquals(1, scoreTemp.get_iSentCorrect());
+//        assertEquals(3, scoreTemp.get_iSentQuest());
+//        assertEquals(33, scoreTemp.get_iSentScore());
+
+
+
 //        // 단어 기준
 //        int wResult = (int)(((float)(cWord) / (float)(tWord)*100));
 //        int sResult = (int)(((float) (cSentence) / (float) (10)*100));

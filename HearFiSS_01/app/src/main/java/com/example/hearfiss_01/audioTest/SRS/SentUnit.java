@@ -86,6 +86,7 @@ public class SentUnit {
 
     public int saveQnA(String strQuest, String strAnswer){
         _Question = strQuest;
+        _Answer = strAnswer;
         saveAnswer(strAnswer);
         scoring();
         return 1;

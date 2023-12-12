@@ -25,6 +25,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRS.SRS;
+import com.example.hearfiss_01.db.DTO.AmTrack;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
@@ -54,6 +55,9 @@ public class SrsTestActivity extends AppCompatActivity
     InputMethodManager imm = null;
 
     String user_Answer = "";
+
+    AmTrack m_atCur = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,9 +201,13 @@ public class SrsTestActivity extends AppCompatActivity
             return;
         }
          String strAnswer = m_EditSRS.getText().toString();
+
+         Log.v(m_TAG, "NextBtnClick - Answer" + strAnswer);
+         int unitSize = m_SRS.SaveAnswer(strAnswer);
+
          m_EditSRS.setText("");
 
-         int unitSize = m_SRS.SaveAnswer(strAnswer);
+
          Log.v(m_TAG, "srstest - save answer : "+ strAnswer);
          int result = (int)(((float)unitSize / (float)10)*100);
          m_ProgressBar.setProgress(result);

@@ -1,5 +1,7 @@
 package com.example.hearfiss_01.audioTest;
 
+import android.util.Log;
+
 import com.example.hearfiss_01.audioTest.SRS.SentScore;
 import com.example.hearfiss_01.audioTest.SRS.SentUnit;
 
@@ -8,6 +10,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 public class SentScoreTest extends TestCase {
+    String m_TAG = "SentScoreTest";
 
     @Test
     public void testSentScoreCreate() {
@@ -179,6 +182,41 @@ public class SentScoreTest extends TestCase {
         assertEquals(1, scoreTemp.get_iSentCorrect());
         assertEquals(3, scoreTemp.get_iSentQuest());
         assertEquals(33, scoreTemp.get_iSentScore());
+
+    }
+
+    @Test
+    public void testSentScoreCreate_06() {
+
+        SentScore scoreTemp = new SentScore();
+        String[] arrQuestion = {"백화점에 가서 목걸이와 반지를 샀습니다."};
+        String[] arrAnswer = {"백화점에 가   목걸이와 반지를 샀습니다."};
+        String[][] arrQuestWord = {
+                {"백화점", "가서", "목걸이", "반지", "샀습니다"}
+        };
+
+        int[][] arrIdx  =   {
+                {0, 1, 2, 3, 4}
+                };
+
+        SentUnit unitAdd = null;
+
+        unitAdd = new SentUnit();
+        for(int i = 0; i<arrQuestWord[0].length; i++){
+            unitAdd.addWordNIdx(arrQuestWord[0][i], arrIdx[0][i]);
+        }
+
+        unitAdd.saveQnA(arrQuestion[0], arrAnswer[0]);
+
+        scoreTemp.addSentUnit(unitAdd);
+
+        Log.v(m_TAG, unitAdd.get_Question());
+        Log.v(m_TAG, unitAdd.get_Answer());
+        Log.v(m_TAG, unitAdd.get_alWordIdx().toString());
+        Log.v(m_TAG, unitAdd.get_alWordUnit().toString());
+
+        scoreTemp.printSentence();
+        scoreTemp.scoring();
 
     }
 
