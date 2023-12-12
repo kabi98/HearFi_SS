@@ -48,7 +48,7 @@ public class SrsTestActivity extends AppCompatActivity
 
     SRS m_SRS = null;
     ProgressBar m_ProgressBar;
-    int m_iLimit = 0;
+    int m_iLimit = 10;
     boolean m_isActChanging;
 
     InputMethodManager imm = null;
@@ -149,7 +149,7 @@ public class SrsTestActivity extends AppCompatActivity
         }
         m_isActChanging = false;
         m_SRS = new SRS(m_Context);
-        m_SRS.setM_tsLimit(GlobalVar.g_srsNumber);
+        m_SRS.setM_tsLimit(m_iLimit );
         m_SRS.setUserVolume(GlobalVar.g_srsUserVolume);
         if (GlobalVar.g_TestSide == TConst.T_LEFT){
             m_SRS.setM_Type("sl_a2");
