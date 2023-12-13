@@ -22,7 +22,7 @@ public class SRS {
     Context m_context = null;
     String m_PkgName = "";
 
-    int m_tsLimit = 10;
+    int m_tsLimit = 0;
     int userVolume = 0;
 
     int m_iCount = -1;
@@ -46,6 +46,10 @@ public class SRS {
     public void setM_tsLimit(int m_tsLimit){
         this.m_tsLimit = m_tsLimit;
     }
+    public int getCount(){
+        return m_iCount;
+    }
+
 
     public String getM_Type() {
         return m_Type;
@@ -94,12 +98,14 @@ public class SRS {
     }
 
     public int playCurrent() {
-        Log.v(m_TAG, "playCurrent ");
+        Log.v(m_TAG, String.format("playCurrent m_iCount = %d, Limit %d ", m_iCount, m_tsLimit));
 
         if(m_atCur == null) {
+            Log.v(m_TAG, String.format("playCurrent null atCur m_iCount = %d, Limit %d ", m_iCount, m_tsLimit));
             return playNext();
         }
         else {
+            Log.v(m_TAG, String.format("playCurrent m_iCount = %d, Limit %d ", m_iCount, m_tsLimit));
             return playTrack();
         }
     }
@@ -140,11 +146,13 @@ public class SRS {
         }
     }
 
-    public boolean isEnd(){
-        Log.v(m_TAG, "isEnd : " + m_iCount);
-        if(m_iCount ==  9){
+    public boolean isEnd() {
+        Log.v(m_TAG, String.format("isEnd : m_iCount = %d, m_tsLimit = %d", m_iCount, m_tsLimit));
+        if(m_iCount >=  m_tsLimit){
+            Log.v(m_TAG, String.format("isEnd : m_iCount = %d, m_tsLimit = %d return true", m_iCount, m_tsLimit));
             return true;
         }else{
+            Log.v(m_TAG, String.format("isEnd : m_iCount = %d, m_tsLimit = %d return false", m_iCount, m_tsLimit));
             return false;
         }
     }

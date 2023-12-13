@@ -38,7 +38,7 @@ public class GlobalVar {
 
     public static int g_wrsNumber = 0;
 
-    public static int g_srsNumber = 0;
+    public static int g_srsNumber = 10;
 
     public static int g_srtNumber = 0;
 

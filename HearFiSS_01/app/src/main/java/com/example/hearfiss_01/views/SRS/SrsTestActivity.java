@@ -179,9 +179,20 @@ public class SrsTestActivity extends AppCompatActivity
         if(view.getId() == R.id.srsnextBtn) {
             Log.v(m_TAG, "onClick - nextBtn Click ");
             m_AppBtnVoiceAnswer.setVisibility(View.VISIBLE);
-            m_AppBtnNext.setText("다음 문제");
-            m_SRS.playCurrent();
-            ClickedSrsNextBtn();
+
+            Log.v(m_TAG, String.format("onClick - nextBtn Click %s ", m_AppBtnNext.getText().toString()) );
+            String strBtnText = m_AppBtnNext.getText().toString();
+
+            if( strBtnText.equals("시작 하기") ){
+                Log.v(m_TAG, String.format("onClick - nextBtn is Equal %s %s", m_AppBtnNext.getText().toString(), "시작 하기") );
+                m_SRS.playCurrent();
+                m_AppBtnNext.setText("다음 문제");
+
+            } else {
+                Log.v(m_TAG, String.format("onClick - nextBtn is Not Equal %s %s", m_AppBtnNext.getText().toString(), "시작 하기") );
+                ClickedSrsNextBtn();
+
+            }
 
         } else if(m_AppBtnVoiceAnswer.isSelected()){
             Log.v(m_TAG, "onClick - voice answer Click");
@@ -200,27 +211,28 @@ public class SrsTestActivity extends AppCompatActivity
         if(m_isActChanging) {
             return;
         }
-         String strAnswer = m_EditSRS.getText().toString();
+        String strAnswer = m_EditSRS.getText().toString();
 
-         Log.v(m_TAG, "NextBtnClick - Answer" + strAnswer);
-         int unitSize = m_SRS.SaveAnswer(strAnswer);
+        Log.v(m_TAG, "NextBtnClick - Answer" + strAnswer);
+        int unitSize = m_SRS.SaveAnswer(strAnswer);
 
-         m_EditSRS.setText("");
+        m_EditSRS.setText("");
 
+        Log.v(m_TAG, "srstest - save answer : "+ strAnswer);
 
-         Log.v(m_TAG, "srstest - save answer : "+ strAnswer);
-         int result = (int)(((float)unitSize / (float)10)*100);
-         m_ProgressBar.setProgress(result);
+        int iProgress = (int)( ( (float) ( (float)(m_SRS.getCount() + 1) / m_iLimit) ) * 100);
 
-         if (!m_SRS.isEnd()){
-             m_SRS.playNext();
-         }else {
-             int s = m_SRS.scoring();
-             Log.v(m_TAG, "문장 인지도 테스트 결과 : " + s);
-             checkTestEndAndNextPlay();
-         }
+        m_ProgressBar.setProgress( iProgress );
 
-         Log.v(m_TAG, "NextBtnClick - progressbar value : " + result);
+        m_SRS.playNext();
+
+        if(m_SRS.isEnd()){
+            int s = m_SRS.scoring();
+            Log.v(m_TAG, "문장 인지도 테스트 결과 : " + s);
+            checkTestEndAndNextPlay();
+        }
+
+        Log.v(m_TAG, "NextBtnClick - progressbar value : " + iProgress);
 
 
         /*

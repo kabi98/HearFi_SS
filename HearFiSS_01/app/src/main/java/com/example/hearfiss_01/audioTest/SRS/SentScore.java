@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class SentScore {
+    String m_TAG = "SentScore";
     ArrayList <SentUnit> _alSentence = null;
 
     int _iSentQuest, _iSentCorrect, _iSentScore;
@@ -51,8 +52,9 @@ public class SentScore {
     }
 
     public void printSentence(){
+        int iOrder = 0;
         for(SentUnit unitPrt : _alSentence) {
-            Log.v("SentScore printSentence", unitPrt.get_Question());
+            Log.v(m_TAG, String.format("printSentence %d : %s ", iOrder++, unitPrt.get_Question()));
             unitPrt.printWordList();
         }
     }
