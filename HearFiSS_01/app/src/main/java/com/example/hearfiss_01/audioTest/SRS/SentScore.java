@@ -22,6 +22,9 @@ public class SentScore {
         _alSentence = new ArrayList<>();
     }
 
+    public ArrayList<SentUnit> get_alSentence(){
+        return _alSentence;
+    }
     public int get_iSentQuest() {
         return _iSentQuest;
     }

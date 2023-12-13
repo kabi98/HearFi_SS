@@ -292,24 +292,27 @@ public class SrsTestActivity extends AppCompatActivity
         }
 
     }
-    private void saveSrsResultToGlobalVar(){
+    private void saveSrsResultToGlobalVar() {
         Log.v(m_TAG, String.format("saveSrsResultToGlobalVar"));
-        try {
-            if (GlobalVar.g_TestSide == TConst.T_RIGHT){
-                GlobalVar.g_alSrsRight = m_SRS.getScoreList();
-                for (int i = 0; i < GlobalVar.g_alSrsRight.size(); i++){
-                    Log.v(m_TAG, String.format("SRS RESULT RIGHT : %d, %s ", i, GlobalVar.g_alSrsRight.get(i).toString()));
-                }
-            }else {
-                GlobalVar.g_alSrsLeft = m_SRS.getScoreList();
-                for (int i =0; i <GlobalVar.g_alSrsLeft.size(); i++){
-                    Log.v(m_TAG, String.format("SRS RESULT LEFT : %d, %s ", i, GlobalVar.g_alSrsLeft.get(i).toString()));
-                }
+        if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
+            GlobalVar.g_alSrsRight = m_SRS.getScoreList();
+            for(int i=0; i< GlobalVar.g_alSrsRight.size(); i++){
+                Log.v(m_TAG,
+                        String.format(" SRS RESULT Right : %d, %s ",
+                                i , GlobalVar.g_alSrsRight.get(i).toString()) );
             }
-        }catch (Exception e) {
-            Log.v(m_TAG, "saveSrsResultToGlobalVar error : " + e);
+
+        } else  {
+            GlobalVar.g_alSrsLeft = m_SRS.getScoreList();
+            for(int i=0; i< GlobalVar.g_alSrsLeft.size(); i++){
+                Log.v(m_TAG,
+                        String.format(" SRS RESULT Left : %d, %s ",
+                                i , GlobalVar.g_alSrsLeft.get(i).toString() ) );
+            }
+
         }
     }
+
 
     private void saveSrsResultToDatabase() {
        /*

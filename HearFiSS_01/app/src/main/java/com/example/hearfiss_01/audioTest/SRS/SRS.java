@@ -237,12 +237,19 @@ public class SRS {
         return 0;
     }
 
-    public ArrayList<SrsUnit> getScoreList(){
-
-//        return m_CurScore.getM_alSrs();
-
-        return null;
+/*
+    public ArrayList<SentUnit> get_SentUnitList(){
+        return m_CurScore.get_alSentence();
     }
+
+ */
+
+    public ArrayList<SentUnit> getScoreList(){
+
+        return m_CurScore.get_alSentence();
+    }
+
+
 
 }
 
