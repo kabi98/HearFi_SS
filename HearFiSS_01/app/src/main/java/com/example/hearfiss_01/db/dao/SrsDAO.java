@@ -233,16 +233,6 @@ public class SrsDAO {
     public void insertAndSelectTestSet() {
         Log.v(m_TAG, "insertAndSelectTestSet");
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-/*
-        m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
-        hrTestDAO.insertTestSet(m_TestSetRight);
-        m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
-
-        m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
-        hrTestDAO.insertTestSet(m_TestSetLeft);
-        m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
-
- */
 
         m_TestSetLeft = new HrTestSet(0, 0, TConst.STR_LEFT_SIDE, "단어 기준 점수", "문장 기준 점수");
         m_TestSetRight = new HrTestSet(0, 0, TConst.STR_RIGHT_SIDE, "단어 기준 점수", "문장 기준 점수");
@@ -285,5 +275,11 @@ public class SrsDAO {
             m_database.execSQL(strSQL, params);
         }
     }
+    /*
+    public void loadSrsResultFromTestGroupId(int iTgId){
+
+    }
+
+     */
 
 }

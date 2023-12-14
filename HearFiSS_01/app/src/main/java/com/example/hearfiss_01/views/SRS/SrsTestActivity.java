@@ -25,6 +25,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRS.SRS;
+import com.example.hearfiss_01.audioTest.SRS.SentUnit;
 import com.example.hearfiss_01.db.DTO.AmTrack;
 import com.example.hearfiss_01.db.dao.SrsDAO;
 import com.example.hearfiss_01.global.GlobalVar;
@@ -318,6 +319,8 @@ public class SrsTestActivity extends AppCompatActivity
     private void saveSrsResultToDatabase() {
         Log.v(m_TAG, "saveSrsResultToDatabase");
 
+        printBothResult();
+
         SrsDAO srsDAO = new SrsDAO(m_Context);
         Log.v(m_TAG, "SrsDAO object created");
 
@@ -339,24 +342,24 @@ public class SrsTestActivity extends AppCompatActivity
         }
 
 
-        //srsDAO.releaseAndClose();
+        srsDAO.releaseAndClose();
     }
-       /*
-        Log.v(m_TAG, String.format("saveWrsResultToDatabase") );
 
-        printBothResult();
+    private void printBothResult(){
+        Log.v(m_TAG, "printBothResult");
+        ArrayList<SentUnit> alSrsResult;
+        alSrsResult = GlobalVar.g_alSrsLeft;
+        for (SentUnit resultOne : alSrsResult) {
+            Log.v(m_TAG, String.format("result LEFT Q:%s, A:%s, C:%d",
+                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
+        }
 
-        WrsDAO wrsDAO = new WrsDAO(m_Context);
-        wrsDAO.setAccount(GlobalVar.g_AccLogin);
-        wrsDAO.setResultList(GlobalVar.g_alWrsLeft, GlobalVar.g_alWrsRight);
-
-        wrsDAO.saveTestResults();
-        GlobalVar.g_TestGroup = wrsDAO.getTestGroup();
-
-        wrsDAO.releaseAndClose();
-
-        */
-
+        alSrsResult = GlobalVar.g_alSrsRight;
+        for (SentUnit resultOne : alSrsResult) {
+            Log.v(m_TAG, String.format("result RIGHT Q:%s, A:%s, C:%d",
+                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
+        }
+    }
 
 
 
