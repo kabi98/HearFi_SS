@@ -164,8 +164,9 @@ public class SrsDAO {
         Log.v(m_TAG, "saveTestResults");
         insertAndSelectTestGroup();
         //insertAndSelectTestSet();
-        releaseAndClose();
+
     }
+
 
     public void insertAndSelectTestGroup() {
         Log.v(m_TAG,"insertAndSelectTestGroup");
@@ -176,21 +177,31 @@ public class SrsDAO {
         HrTestGroup tgIns = new HrTestGroup(0, strDate, m_strTestType, "임시 결과", m_Account.getAcc_id());
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
         m_TestGroup = hrTestDAO.insertAndSelectTestGroup(tgIns);
-        releaseAndClose();
+
     }
 
-
-/*    public void insertAndSelectTestSet() {
+/*
+    public void insertAndSelectTestSet() {
         Log.v(m_TAG, "insertAndSelectTestSet");
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
 
+        m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
+        hrTestDAO.insertTestSet(m_TestSetRight);
+        m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
 
+        m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
+        hrTestDAO.insertTestSet(m_TestSetLeft);
+        m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
     }
 
 
  */
 
+
+
     public HrTestGroup getTestGroup(){
         return m_TestGroup;
+
     }
 
      

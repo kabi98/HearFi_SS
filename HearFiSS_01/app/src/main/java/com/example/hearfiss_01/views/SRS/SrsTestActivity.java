@@ -315,21 +315,8 @@ public class SrsTestActivity extends AppCompatActivity
     }
 
 
-    private void saveSrsResultToDatabase(){
-        try {
-            trySaveSrsResultToDatabase();
-        }catch (Exception e){
-            Log.v(m_TAG, "saveSrsResultToDatabase Exception " + e);
-            m_SRS.endTest();
-        }
-    }
-
-    private void trySaveSrsResultToDatabase() {
-        Log.v(m_TAG, "trySaveSrsResultToDatabase");
-
-        if (!m_SRS.isEnd()){
-            Log.v(m_TAG,"trySaveSrtResultToDatabase ---- return is not end SRS Test");
-        }
+    private void saveSrsResultToDatabase() {
+        Log.v(m_TAG, "saveSrsResultToDatabase");
 
         SrsDAO srsDAO = new SrsDAO(m_Context);
         Log.v(m_TAG, "SrsDAO object created");
@@ -344,10 +331,16 @@ public class SrsTestActivity extends AppCompatActivity
         srsDAO.saveTestResults();
 
         GlobalVar.g_TestGroup = srsDAO.getTestGroup();
-        Log.v(m_TAG, "test group : " + GlobalVar.g_TestGroup.toString());
+
+        if (GlobalVar.g_TestGroup != null) {
+            Log.v(m_TAG, "Test Group: " + GlobalVar.g_TestGroup.toString());
+        } else {
+            Log.v(m_TAG, "Test Group is null");
+        }
+
 
         srsDAO.releaseAndClose();
-
+    }
        /*
         Log.v(m_TAG, String.format("saveWrsResultToDatabase") );
 
@@ -363,7 +356,7 @@ public class SrsTestActivity extends AppCompatActivity
         wrsDAO.releaseAndClose();
 
         */
-    }
+
 
 
 
