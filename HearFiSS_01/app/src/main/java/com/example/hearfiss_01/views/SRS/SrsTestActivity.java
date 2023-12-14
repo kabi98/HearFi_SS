@@ -339,7 +339,7 @@ public class SrsTestActivity extends AppCompatActivity
         }
 
 
-        srsDAO.releaseAndClose();
+        //srsDAO.releaseAndClose();
     }
        /*
         Log.v(m_TAG, String.format("saveWrsResultToDatabase") );

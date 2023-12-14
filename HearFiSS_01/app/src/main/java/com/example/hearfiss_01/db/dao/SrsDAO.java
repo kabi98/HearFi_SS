@@ -44,6 +44,29 @@ public class SrsDAO {
 
     SentScore m_SentScore;
 
+    public ArrayList<SentUnit> getRightUnitList(){
+        return m_alRight;
+    }
+
+    public ArrayList<SentUnit> getLeftUnitList(){
+        return m_alLeft;
+    }
+
+    public void setResultList(ArrayList<SentUnit> _alLeft, ArrayList<SentUnit> _alRight){
+        this.m_alLeft = _alLeft;
+        this.m_alRight = _alRight;
+    }
+
+    public HrTestGroup getTestGroup(){
+        return m_TestGroup;
+
+    }
+
+    public Account getAccount(){
+        return m_Account;
+    }
+
+
     public SrsDAO(@Nullable Context _context) {
         m_Context = _context;
         m_helper = new SQLiteHelper(m_Context, TConst.DB_FILE, null, TConst.DB_VER);
@@ -155,18 +178,43 @@ public class SrsDAO {
         this.m_Account = _Account;
     }
 
-    public void setResultList(ArrayList<SentUnit> _alLeft, ArrayList<SentUnit> _alRight){
-        this.m_alLeft = _alLeft;
-        this.m_alRight = _alRight;
-    }
 
     public void saveTestResults(){
         Log.v(m_TAG, "saveTestResults");
+        calculateTestSetAndGroupResult();
         insertAndSelectTestGroup();
-        //insertAndSelectTestSet();
+        insertAndSelectTestSet();
 
     }
 
+    private void calculateTestSetAndGroupResult() {
+        Log.v(m_TAG, "calculateTestSetAndGroupResult");
+        m_strGroupResult = "임시";
+
+        
+    }
+
+/*
+    public HrTestSet calculateSrsAndGetTestSet(int iTestSide) {
+        Log.v(m_TAG,"calculateSrsAndGetTestSet");
+        String strTestSide = "";
+        ArrayList<SentUnit> alSentUnit;
+
+        if (TConst.T_LEFT == iTestSide){
+            strTestSide = TConst.STR_LEFT_SIDE;
+            alSentUnit =m_alLeft;
+        } else {
+            strTestSide = TConst.STR_RIGHT_SIDE;
+            alSentUnit =m_alRight;
+        }
+
+        SentScore curScore = new SentScore();
+        curScore.setM_alSentUnit(alSentUnit);
+        curScore
+    }
+
+
+ */
 
     public void insertAndSelectTestGroup() {
         Log.v(m_TAG,"insertAndSelectTestGroup");
@@ -174,17 +222,17 @@ public class SrsDAO {
         SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String strDate = sdFormatter.format(dtNow);
 
-        HrTestGroup tgIns = new HrTestGroup(0, strDate, m_strTestType, "임시 결과", m_Account.getAcc_id());
+        HrTestGroup tgIns = new HrTestGroup(0, strDate, m_strTestType, m_strGroupResult, m_Account.getAcc_id());
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
         m_TestGroup = hrTestDAO.insertAndSelectTestGroup(tgIns);
 
     }
 
-/*
+
     public void insertAndSelectTestSet() {
         Log.v(m_TAG, "insertAndSelectTestSet");
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
-
+/*
         m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
         hrTestDAO.insertTestSet(m_TestSetRight);
         m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
@@ -192,17 +240,30 @@ public class SrsDAO {
         m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
         hrTestDAO.insertTestSet(m_TestSetLeft);
         m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
-    }
-
 
  */
 
+        m_TestSetLeft = new HrTestSet(0, 0, TConst.STR_LEFT_SIDE, "단어 기준 점수", "문장 기준 점수");
+        m_TestSetRight = new HrTestSet(0, 0, TConst.STR_RIGHT_SIDE, "단어 기준 점수", "문장 기준 점수");
 
-
-    public HrTestGroup getTestGroup(){
-        return m_TestGroup;
+        Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
+        Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
+        m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
+        hrTestDAO.insertTestSet(m_TestSetLeft);
+        m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
+        m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
+        hrTestDAO.insertTestSet(m_TestSetRight);
+        m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
 
     }
+
+
+
+
+
+
+
+
 
      
 
