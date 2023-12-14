@@ -190,12 +190,14 @@ public class SrsDAO {
 
     private void calculateTestSetAndGroupResult() {
         Log.v(m_TAG, "calculateTestSetAndGroupResult");
+        m_TestSetLeft = calculateSrsAndGetTestSet(TConst.T_LEFT);
+        m_TestSetRight = calculateSrsAndGetTestSet(TConst.T_RIGHT);
         m_strGroupResult = "임시";
 
         
     }
 
-/*
+
     public HrTestSet calculateSrsAndGetTestSet(int iTestSide) {
         Log.v(m_TAG,"calculateSrsAndGetTestSet");
         String strTestSide = "";
@@ -211,11 +213,15 @@ public class SrsDAO {
 
         SentScore curScore = new SentScore();
         curScore.setM_alSentUnit(alSentUnit);
-        curScore
+        Log.v(m_TAG, String.format("calculateSrsAndGetTestSet WordScore : %d, SentenceScore : %d ",
+                curScore.get_iWordScore(), curScore.get_iSentScore()));
+        String strResult = String.format("단어 기준 정답률 : %d%%", curScore.get_iWordScore());
+        String strComment = String.format("문장 기준 정답률 : %d%%", curScore.get_iSentScore());
+        return new HrTestSet(0,0,strTestSide, strResult, strComment);
     }
 
 
- */
+
 
     public void insertAndSelectTestGroup() {
         Log.v(m_TAG,"insertAndSelectTestGroup");
