@@ -7,11 +7,18 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.hearfiss_01.audioTest.SRS.SentScore;
+import com.example.hearfiss_01.audioTest.SRS.SentUnit;
+import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.AmTrack;
+import com.example.hearfiss_01.db.DTO.HrTestGroup;
+import com.example.hearfiss_01.db.DTO.HrTestSet;
 import com.example.hearfiss_01.db.DTO.StWord;
 import com.example.hearfiss_01.global.TConst;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SrsDAO {
     String m_TAG = "SrsDAO";
@@ -20,10 +27,35 @@ public class SrsDAO {
 
     Context m_Context;
     String m_strTestType;
+
+    String m_strGroupResult;
+
+    Account m_Account;
+
+    ArrayList <SentUnit> m_alLeft;
+
+    ArrayList <SentUnit> m_alRight;
+
+    HrTestGroup m_TestGroup;
+
+    HrTestSet m_TestSetLeft;
+
+    HrTestSet m_TestSetRight;
+
+    SentScore m_SentScore;
+
     public SrsDAO(@Nullable Context _context) {
         m_Context = _context;
         m_helper = new SQLiteHelper(m_Context, TConst.DB_FILE, null, TConst.DB_VER);
+
+        m_Account = new Account();
+
+        m_alLeft = new ArrayList<>();
+
+        m_alRight = new ArrayList<>();
+
         m_strTestType = TConst.STR_SRS_TYPE;
+
     }
 
     public void releaseAndClose(){
@@ -118,4 +150,49 @@ public class SrsDAO {
         }
 
     }
+
+    public void setAccount(Account _Account){
+        this.m_Account = _Account;
+    }
+
+    public void setResultList(ArrayList<SentUnit> _alLeft, ArrayList<SentUnit> _alRight){
+        this.m_alLeft = _alLeft;
+        this.m_alRight = _alRight;
+    }
+
+    public void saveTestResults(){
+        Log.v(m_TAG, "saveTestResults");
+        insertAndSelectTestGroup();
+        //insertAndSelectTestSet();
+        releaseAndClose();
+    }
+
+    public void insertAndSelectTestGroup() {
+        Log.v(m_TAG,"insertAndSelectTestGroup");
+        Date dtNow = new Date();
+        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdFormatter.format(dtNow);
+
+        HrTestGroup tgIns = new HrTestGroup(0, strDate, m_strTestType, "임시 결과", m_Account.getAcc_id());
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+        m_TestGroup = hrTestDAO.insertAndSelectTestGroup(tgIns);
+        releaseAndClose();
+    }
+
+
+/*    public void insertAndSelectTestSet() {
+        Log.v(m_TAG, "insertAndSelectTestSet");
+
+
+    }
+
+
+ */
+
+    public HrTestGroup getTestGroup(){
+        return m_TestGroup;
+    }
+
+     
+
 }

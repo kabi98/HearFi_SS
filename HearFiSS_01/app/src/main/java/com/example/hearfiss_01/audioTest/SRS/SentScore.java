@@ -11,6 +11,7 @@ public class SentScore {
     int _iSentQuest, _iSentCorrect, _iSentScore;
     int _iWordQuest, _iWordCorrect, _iWordScore;
 
+
     public SentScore() {
         _iSentQuest     = -1;
         _iSentCorrect   = -1;
@@ -87,4 +88,8 @@ public class SentScore {
         return 1;
     }
 
+    public void setM_alSentUnit(ArrayList<SentUnit> _alSentence) {
+        this._alSentence = _alSentence;
+
+    }
 }

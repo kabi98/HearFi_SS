@@ -26,6 +26,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRS.SRS;
 import com.example.hearfiss_01.db.DTO.AmTrack;
+import com.example.hearfiss_01.db.dao.SrsDAO;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 import com.example.hearfiss_01.views.Common.MenuActivity;
@@ -220,7 +221,7 @@ public class SrsTestActivity extends AppCompatActivity
 
         Log.v(m_TAG, "srstest - save answer : "+ strAnswer);
 
-        int iProgress = (int)( ( (float) ( (float)(m_SRS.getCount() + 1) / m_iLimit) ) * 100);
+        int iProgress = (int)( ( ( (float)(m_SRS.getCount() + 1) / m_iLimit) ) * 100);
 
         m_ProgressBar.setProgress( iProgress );
 
@@ -314,7 +315,39 @@ public class SrsTestActivity extends AppCompatActivity
     }
 
 
-    private void saveSrsResultToDatabase() {
+    private void saveSrsResultToDatabase(){
+        try {
+            trySaveSrsResultToDatabase();
+        }catch (Exception e){
+            Log.v(m_TAG, "saveSrsResultToDatabase Exception " + e);
+            m_SRS.endTest();
+        }
+    }
+
+    private void trySaveSrsResultToDatabase() {
+        Log.v(m_TAG, "trySaveSrsResultToDatabase");
+
+        if (!m_SRS.isEnd()){
+            Log.v(m_TAG,"trySaveSrtResultToDatabase ---- return is not end SRS Test");
+        }
+
+        SrsDAO srsDAO = new SrsDAO(m_Context);
+        Log.v(m_TAG, "SrsDAO object created");
+
+
+        srsDAO.setAccount(GlobalVar.g_AccLogin);
+
+        srsDAO.setResultList(GlobalVar.g_alSrsLeft, GlobalVar.g_alSrsRight);
+        Log.v(m_TAG, "Result list set for Left: " + GlobalVar.g_alSrsLeft.size() + " items, Right: " + GlobalVar.g_alSrsRight.size() + " items");
+
+
+        srsDAO.saveTestResults();
+
+        GlobalVar.g_TestGroup = srsDAO.getTestGroup();
+        Log.v(m_TAG, "test group : " + GlobalVar.g_TestGroup.toString());
+
+        srsDAO.releaseAndClose();
+
        /*
         Log.v(m_TAG, String.format("saveWrsResultToDatabase") );
 
@@ -332,23 +365,6 @@ public class SrsTestActivity extends AppCompatActivity
         */
     }
 
-    private void printBothResult() {
-        /*
-        ArrayList<WordUnit> alWrsResult;
-        alWrsResult = GlobalVar.g_alWrsLeft;
-        for (WordUnit resultOne : alWrsResult) {
-            Log.v(m_TAG, String.format("result LEFT Q:%s, A:%s, C:%d",
-                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
-        }
-
-        alWrsResult = GlobalVar.g_alWrsRight;
-        for (WordUnit resultOne : alWrsResult) {
-            Log.v(m_TAG, String.format("result RIGHT Q:%s, A:%s, C:%d",
-                    resultOne.get_Question(), resultOne.get_Answer(), resultOne.get_Correct()));
-        }
-
-         */
-    }
 
 
 
