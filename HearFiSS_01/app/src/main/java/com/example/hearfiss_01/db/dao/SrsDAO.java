@@ -184,6 +184,7 @@ public class SrsDAO {
         calculateTestSetAndGroupResult();
         insertAndSelectTestGroup();
         insertAndSelectTestSet();
+        insertSrsTestUnitList();
 
     }
 
@@ -256,15 +257,33 @@ public class SrsDAO {
         m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
 
     }
+    public void insertSrsTestUnitList(){
+        Log.v(m_TAG,"**insertSrsTestUnitList**");
+        try {
+            tryInsertSrsTestUnitList();
+        }catch (Exception e){
+            Log.v(m_TAG, "insertSrsTestUnitList Exception " + e);
+        }
+    }
 
+    private void tryInsertSrsTestUnitList() {
+        Log.v(m_TAG, "tryInsertSrsTestUnitList");
+        insertTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
+        insertTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
+    }
 
+    private void insertTestUnitList(int iTsId, ArrayList<SentUnit> alSentUnit){
+        Log.v(m_TAG, "*****insertTestUnitList*****");
+        m_database = m_helper.getWritableDatabase();
+        for (SentUnit unitOne : alSentUnit){
+            Log.v(m_TAG,String.format("insertTestUnitList SentUnit Q : %s, A : %s, C : %d",
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
+            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                    + " VALUES (?, ?, ?, ?); ";
+            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
 
-
-
-
-
-
-
-     
+            m_database.execSQL(strSQL, params);
+        }
+    }
 
 }
