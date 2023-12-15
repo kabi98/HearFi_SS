@@ -14,6 +14,7 @@ import com.example.hearfiss_01.db.DTO.AmTrack;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
 import com.example.hearfiss_01.db.DTO.StWord;
+import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 
 import java.text.SimpleDateFormat;
@@ -32,9 +33,11 @@ public class SrsDAO {
 
     Account m_Account;
 
-    ArrayList <SentUnit> m_alLeft;
+  //  ArrayList <SentUnit> m_alLeft;
 
-    ArrayList <SentUnit> m_alRight;
+    //ArrayList <SentUnit> m_alRight;
+
+
 
     HrTestGroup m_TestGroup;
 
@@ -42,8 +45,10 @@ public class SrsDAO {
 
     HrTestSet m_TestSetRight;
 
-    SentScore m_SentScore;
+    SentScore m_SentScoreLeft;
 
+    SentScore m_SentScoreRight;
+/*
     public ArrayList<SentUnit> getRightUnitList(){
         return m_alRight;
     }
@@ -52,9 +57,12 @@ public class SrsDAO {
         return m_alLeft;
     }
 
-    public void setResultList(ArrayList<SentUnit> _alLeft, ArrayList<SentUnit> _alRight){
-        this.m_alLeft = _alLeft;
-        this.m_alRight = _alRight;
+
+ */
+
+    public void setResultList(SentScore scoreLeft, SentScore scoreRight) {
+        this.m_SentScoreLeft = scoreLeft;
+        this.m_SentScoreRight = scoreRight;
     }
 
     public HrTestGroup getTestGroup(){
@@ -73,9 +81,13 @@ public class SrsDAO {
 
         m_Account = new Account();
 
-        m_alLeft = new ArrayList<>();
+        //m_alLeft = new ArrayList<>();
 
-        m_alRight = new ArrayList<>();
+        //m_alRight = new ArrayList<>();
+
+        m_SentScoreLeft = new SentScore();
+
+        m_SentScoreRight = new SentScore();
 
         m_strTestType = TConst.STR_SRS_TYPE;
 
@@ -201,22 +213,27 @@ public class SrsDAO {
     public HrTestSet calculateSrsAndGetTestSet(int iTestSide) {
         Log.v(m_TAG,"calculateSrsAndGetTestSet");
         String strTestSide = "";
-        ArrayList<SentUnit> alSentUnit;
+        SentScore scoreCur;
 
         if (TConst.T_LEFT == iTestSide){
             strTestSide = TConst.STR_LEFT_SIDE;
-            alSentUnit =m_alLeft;
+            scoreCur = GlobalVar.g_SentScoreLeft;
+
+
+
         } else {
             strTestSide = TConst.STR_RIGHT_SIDE;
-            alSentUnit =m_alRight;
+            scoreCur = GlobalVar.g_SentScoreRight;
+
+
         }
 
-        SentScore curScore = new SentScore();
-        curScore.setM_alSentUnit(alSentUnit);
         Log.v(m_TAG, String.format("calculateSrsAndGetTestSet WordScore : %d, SentenceScore : %d ",
-                curScore.get_iWordScore(), curScore.get_iSentScore()));
-        String strResult = String.format("단어 기준 정답률 : %d%%", curScore.get_iWordScore());
-        String strComment = String.format("문장 기준 정답률 : %d%%", curScore.get_iSentScore());
+                scoreCur.get_iWordScore(), scoreCur.get_iSentScore()));
+        String strResult = String.format("단어 기준 정답률 : %d%%", scoreCur.get_iWordScore());
+        String strComment = String.format("문장 기준 정답률 : %d%%", scoreCur.get_iSentScore());
+
+
         return new HrTestSet(0,0,strTestSide, strResult, strComment);
     }
 
@@ -240,8 +257,15 @@ public class SrsDAO {
         Log.v(m_TAG, "insertAndSelectTestSet");
         HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
 
-        m_TestSetLeft = new HrTestSet(0, 0, TConst.STR_LEFT_SIDE, "단어 기준 점수", "문장 기준 점수");
-        m_TestSetRight = new HrTestSet(0, 0, TConst.STR_RIGHT_SIDE, "단어 기준 점수", "문장 기준 점수");
+        // String strResult = String.format("단어 기준 정답률 : %d%%" , GlobalVar.);
+        String strLeftResult = String.format("단어 기준 정답률 : %d%%" , m_SentScoreLeft.get_iWordScore());
+        String strLeftResultComment = String.format("문장 기준 정답률 : %d%%" , m_SentScoreLeft.get_iSentScore());
+        m_TestSetLeft = new HrTestSet(0, 0, TConst.STR_LEFT_SIDE, strLeftResult, strLeftResultComment);
+
+        String strRightResult = String.format("단어 기준 정답률 : %d%%" , m_SentScoreRight.get_iWordScore());
+        String strRightResultComment = String.format("문장 기준 정답률 : %d%%" , m_SentScoreRight.get_iSentScore());
+
+        m_TestSetRight = new HrTestSet(0, 0, TConst.STR_RIGHT_SIDE,strRightResult, strRightResultComment);
 
         Log.v(m_TAG, "*********** insertAndSelectTestSet right ********** " + m_TestSetRight.toString());
         Log.v(m_TAG, "*********** insertAndSelectTestSet left ********** " + m_TestSetLeft.toString());
@@ -264,8 +288,8 @@ public class SrsDAO {
 
     private void tryInsertSrsTestUnitList() {
         Log.v(m_TAG, "tryInsertSrsTestUnitList");
-        insertTestUnitList(m_TestSetLeft.getTs_id(), m_alLeft);
-        insertTestUnitList(m_TestSetRight.getTs_id(), m_alRight);
+        insertTestUnitList(m_TestSetLeft.getTs_id(), m_SentScoreLeft.get_alSentence());
+        insertTestUnitList(m_TestSetRight.getTs_id(), m_SentScoreRight.get_alSentence());
     }
 
     private void insertTestUnitList(int iTsId, ArrayList<SentUnit> alSentUnit){

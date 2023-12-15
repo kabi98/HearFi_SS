@@ -1,6 +1,7 @@
 package com.example.hearfiss_01.global;
 
 import com.example.hearfiss_01.audioTest.PTT.PttThreshold;
+import com.example.hearfiss_01.audioTest.SRS.SentScore;
 import com.example.hearfiss_01.audioTest.SRS.SentUnit;
 import com.example.hearfiss_01.audioTest.SRT.SrtUnit;
 import com.example.hearfiss_01.audioTest.WRS.WordUnit;
@@ -31,6 +32,10 @@ public class GlobalVar {
 
     public static ArrayList<SrtUnit> g_alSrtLeft = new ArrayList<>();
     public static ArrayList<SrtUnit> g_alSrtRight = new ArrayList<>();
+
+    public static SentScore g_SentScoreLeft = new SentScore();
+
+    public static SentScore g_SentScoreRight = new SentScore();
 
     public static ArrayList<SentUnit> g_alSrsLeft = new ArrayList<>();
 

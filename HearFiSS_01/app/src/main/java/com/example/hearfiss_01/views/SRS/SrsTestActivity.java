@@ -297,14 +297,24 @@ public class SrsTestActivity extends AppCompatActivity
     private void saveSrsResultToGlobalVar() {
         Log.v(m_TAG, String.format("saveSrsResultToGlobalVar"));
         if(GlobalVar.g_TestSide == TConst.T_RIGHT) {
+            GlobalVar.g_SentScoreRight = m_SRS.getScore();
+            Log.v(m_TAG,"GlobarVar Right Score : " + GlobalVar.g_SentScoreRight.toString());
+
+
             GlobalVar.g_alSrsRight = m_SRS.getScoreList();
+
             for(int i=0; i< GlobalVar.g_alSrsRight.size(); i++){
                 Log.v(m_TAG,
                         String.format(" SRS RESULT Right : %d, %s ",
                                 i , GlobalVar.g_alSrsRight.get(i).toString()) );
             }
 
+
+
         } else  {
+            GlobalVar.g_SentScoreLeft = m_SRS.getScore();
+            Log.v(m_TAG,"GlobarVar Left Score : " + GlobalVar.g_SentScoreLeft.toString());
+
             GlobalVar.g_alSrsLeft = m_SRS.getScoreList();
             for(int i=0; i< GlobalVar.g_alSrsLeft.size(); i++){
                 Log.v(m_TAG,
@@ -327,9 +337,7 @@ public class SrsTestActivity extends AppCompatActivity
 
         srsDAO.setAccount(GlobalVar.g_AccLogin);
 
-        srsDAO.setResultList(GlobalVar.g_alSrsLeft, GlobalVar.g_alSrsRight);
-        Log.v(m_TAG, "Result list set for Left: " + GlobalVar.g_alSrsLeft.size() + " items, Right: " + GlobalVar.g_alSrsRight.size() + " items");
-
+        srsDAO.setResultList(GlobalVar.g_SentScoreLeft, GlobalVar.g_SentScoreRight);
 
         srsDAO.saveTestResults();
 

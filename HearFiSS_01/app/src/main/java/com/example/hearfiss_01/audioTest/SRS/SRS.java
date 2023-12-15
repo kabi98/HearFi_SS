@@ -61,6 +61,10 @@ public class SRS {
         m_randTrack.setM_Type(m_Type);
     }
 
+    public SentScore getScore(){
+        return m_CurScore;
+    }
+
     public SRS(@Nullable Context context){
         this.m_context = context;
         this.m_PkgName = m_context.getPackageName();
