@@ -160,33 +160,22 @@
                                     android:textAlignment="center"
                                     android:textColor="#C7C7C7"
                                     android:fontFamily="@font/pretendardregular"></TextView>
+
                                 <TextView
                                     android:id="@+id/rightTotalNum"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="20"
-                                    android:textSize="21dp"
+                                    android:fontFamily="@font/pretendardextrabold"
+                                    android:text="단어 : 20 \n문장 : 20"
                                     android:textAlignment="center"
                                     android:textColor="@color/blue"
-                                    android:fontFamily="@font/pretendardextrabold"></TextView>
+                                    android:textSize="21dp"></TextView>
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_weight="0.2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <View
-                                    android:layout_gravity="center"
-                                    android:layout_width="2dp"
-                                    android:background="#e3e3e3"
-                                    android:layout_height="match_parent">
-
-                                </View>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
@@ -200,28 +189,17 @@
                                     android:id="@+id/SrsRightAnswer"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="20"
+                                    android:text="단어 : 20 \n문장: 20"
                                     android:textSize="21dp"
                                     android:textAlignment="center"
                                     android:textColor="@color/blue"
                                     android:fontFamily="@font/pretendardextrabold"></TextView>
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_weight="0.2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <View
-                                    android:layout_gravity="center"
-                                    android:layout_width="2dp"
-                                    android:background="#e3e3e3"
-                                    android:layout_height="match_parent">
-                                </View>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
@@ -235,7 +213,7 @@
                                     android:id="@+id/SrsRightWrong"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="20"
+                                    android:text="단어 : 20\n문장 :20"
                                     android:textSize="21dp"
                                     android:textAlignment="center"
                                     android:textColor="@color/blue"
@@ -262,7 +240,7 @@
                             android:id="@+id/SrsRightResult"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="50%, 보통"
+                            android:text="단어 기준 정답률 : 50%\n 문장 기준 정답률 : 50%"
                             android:textAlignment="center"
                             android:layout_marginTop="8dp"
                             android:textSize="22dp"
@@ -399,29 +377,17 @@
                                     android:id="@+id/leftTotalNum"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="20"
+                                    android:text="단어 : 20\n문장 : 20"
                                     android:textSize="21dp"
                                     android:textAlignment="center"
                                     android:textColor="@color/blue"
                                     android:fontFamily="@font/pretendardextrabold"></TextView>
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_weight="0.2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <View
-                                    android:layout_gravity="center"
-                                    android:layout_width="2dp"
-                                    android:background="#e3e3e3"
-                                    android:layout_height="match_parent">
-
-                                </View>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
@@ -435,28 +401,17 @@
                                     android:id="@+id/SrsLeftAnswer"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="20"
+                                    android:text="단어 : 20\n문장 : 20"
                                     android:textSize="21dp"
                                     android:textAlignment="center"
                                     android:textColor="@color/blue"
                                     android:fontFamily="@font/pretendardextrabold"></TextView>
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_weight="0.2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical">
-                                <View
-                                    android:layout_gravity="center"
-                                    android:layout_width="2dp"
-                                    android:background="#e3e3e3"
-                                    android:layout_height="match_parent">
-                                </View>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="0.2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
@@ -470,7 +425,7 @@
                                     android:id="@+id/SrsLeftWrong"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="20"
+                                    android:text="단어 : 20\n문장 : 20"
                                     android:textSize="21dp"
                                     android:textAlignment="center"
                                     android:textColor="@color/blue"
@@ -497,7 +452,7 @@
                             android:id="@+id/SrsLeftResult"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="50%, 보통"
+                            android:text="단어 기준 정답률 : 50%\n 문장 기준 정답률 : 50%"
                             android:textAlignment="center"
                             android:layout_marginTop="8dp"
                             android:textSize="22dp"
