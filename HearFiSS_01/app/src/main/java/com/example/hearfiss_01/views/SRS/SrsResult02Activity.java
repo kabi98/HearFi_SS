@@ -193,6 +193,22 @@ public class SrsResult02Activity extends AppCompatActivity
         srsDAO.releaseAndClose();
     }
 
+    private void displayCorrectAnswers() {
+        String correctAnswersLeft = m_ScoreLeft.getCorrectStringList();
+        String correctAnswersRight = m_ScoreRight.getCorrectStringList();
+
+        SrsLeftAnswer.setText(correctAnswersLeft);
+        SrsRightAnswer.setText(correctAnswersRight);
+    }
+
+    private void displayWrongAnswers(){
+        String wrongAnswerLeft = m_ScoreLeft.getWrongStringList();
+        String wrongAnswerRight = m_ScoreRight.getWrongStringList();
+
+        SrsLeftAnswer.setText(wrongAnswerLeft);
+        SrsRightAnswer.setText(wrongAnswerRight);
+    }
+
     private void findToggleBtnAndSetListener() {
         rightLayout = findViewById(R.id.rightLayout);
         leftLayout = findViewById(R.id.leftLayout);
@@ -218,6 +234,21 @@ public class SrsResult02Activity extends AppCompatActivity
 
         rightTotalNum = findViewById(R.id.rightTotalNum);
         leftTotalNum = findViewById(R.id.leftTotalNum);
+
+        String ResultLeft = String.format(
+                " %d %% (%d개/%d개)"
+                , m_ScoreLeft.get_iSentScore()
+                , m_ScoreLeft.get_iSentCorrect()
+                , m_ScoreLeft.get_iSentQuest() );
+        SrsLeftResult.setText(ResultLeft);
+
+        String ResultRight = String.format(
+                " %d %% (%d개/%d개)"
+                , m_ScoreRight.get_iSentScore()
+                , m_ScoreRight.get_iSentCorrect()
+                , m_ScoreRight.get_iSentQuest() );
+        SrsRightResult.setText(ResultRight);
+
     }
 
 
