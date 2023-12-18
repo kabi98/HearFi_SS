@@ -223,7 +223,7 @@ public class SrsDAO {
 
 
     private int extractNumber(String str) {
-        String numberStr = str.replaceAll("[^\\d]", ""); // 숫자가 아닌 모든 문자를 제거
+        String numberStr = str.replaceAll("[^\\d]", "");
         return numberStr.isEmpty() ? 0 : Integer.parseInt(numberStr);
     }
 
@@ -237,9 +237,9 @@ public class SrsDAO {
             int iRightSRS = extractNumber(m_TestSetRight.getTs_Result());
 
             if (iLeftSRS > iRightSRS){
-                m_strGroupResult = "왼쪽 : " + m_TestSetLeft.getTs_Comment();
+                m_strGroupResult = "왼쪽  " + m_TestSetLeft.getTs_Result() + ", " + m_TestSetLeft.getTs_Comment();
             }else {
-                m_strGroupResult = "오른쪽 : " + m_TestSetRight.getTs_Comment();
+                m_strGroupResult = "오른쪽  " + m_TestSetRight.getTs_Result() + ", " + m_TestSetRight.getTs_Comment();
             }
         } catch (Exception e) {
             Log.v(m_TAG, "calculateTestSetAndGroupResult Exception : " + e);
