@@ -207,6 +207,7 @@ public class SrsDAO {
         m_strGroupResult = "임시";
 
         
+        
     }
 
 
@@ -324,42 +325,6 @@ public class SrsDAO {
 
     }
 
-    /*
-    private SentScore tryGetUnitListFromTestSet(int ts_id) {
-        Log.v(m_TAG,"tryGetUnitListFromTestSet " + ts_id);
-        SentScore sentScore = new SentScore();
-        m_database = m_helper.getReadableDatabase();
-
-        String strSQL = "SELECT tu_id, tu_question, tu_answer, tu_iscorrect "
-                + " FROM hrtest_unit WHERE ts_id = ?; ";
-        String[] params = {Integer.toString(ts_id)};
-        Cursor cursor = m_database.rawQuery(strSQL, params);
-
-        Log.v(m_TAG,
-                String.format("tryGetUnitListFromTestSet Result = %d", cursor.getCount()));
-        if (cursor.getCount() <= 0)
-            return new SentScore();
-
-        for (int i = 0; i < cursor.getCount(); i++) {
-            cursor.moveToNext();
-            int tu_id = cursor.getInt(0);
-            String tu_question = cursor.getString(1);
-            String tu_answer = cursor.getString(2);
-            int tu_correct = cursor.getInt(3);
-
-            SentUnit unitOne = new SentUnit(tu_question, tu_answer, tu_correct);
-            sentScore.addSentUnit(unitOne);
-
-            Log.v(m_TAG, unitOne.toString());
-        }
-        cursor.close();
-
-        sentScore.scoring();
-
-        return sentScore;
-    }
-
-     */
     private SentScore tryGetUnitListFromTestSet(int ts_id) {
         Log.v(m_TAG,"tryGetUnitListFromTestSet " + ts_id);
         SentScore sentScore = new SentScore();
