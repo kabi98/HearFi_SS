@@ -1,9 +1,5 @@
 package com.example.hearfiss_01.views.SRS;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatToggleButton;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +11,17 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatToggleButton;
+
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.WRS.WordScore;
 import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.dao.SrsDAO;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
@@ -161,6 +162,11 @@ public class SrsResult02Activity extends AppCompatActivity
     }
 
     private void getSrsResultFromDatabase() {
+        Log.v(m_TAG, "getSrsResultFromDatabase");
+        SrsDAO srsDAO = new SrsDAO(m_Context);
+
+        srsDAO.setAccount(m_Account);
+        srsDAO.loadSrsResultFromTestGroupId(m_TgId);
     }
 
     private void findToggleBtnAndSetListener() {

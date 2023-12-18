@@ -305,11 +305,109 @@ public class SrsDAO {
             m_database.execSQL(strSQL, params);
         }
     }
-    /*
     public void loadSrsResultFromTestGroupId(int iTgId){
+        Log.v(m_TAG, "loadSrsResultFromTestGroupId");
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+        m_TestGroup = hrTestDAO.selectTestGroupFromTgId(iTgId);
+        selectBothSideTestSet();
+        getBothSideUnitList();
+    }
+
+    private void getBothSideUnitList() {
+        Log.v(m_TAG, "getBothSideUnitList");
+        try {
+            m_SentScoreLeft = tryGetUnitListFromTestSet(m_TestSetLeft.getTs_id());
+            m_SentScoreRight = tryGetUnitListFromTestSet(m_TestSetRight.getTs_id());
+        }catch (Exception e ){
+            Log.v(m_TAG, "getBothSideUnitList Exception : " + e);
+        }
 
     }
 
+    /*
+    private SentScore tryGetUnitListFromTestSet(int ts_id) {
+        Log.v(m_TAG,"tryGetUnitListFromTestSet " + ts_id);
+        SentScore sentScore = new SentScore();
+        m_database = m_helper.getReadableDatabase();
+
+        String strSQL = "SELECT tu_id, tu_question, tu_answer, tu_iscorrect "
+                + " FROM hrtest_unit WHERE ts_id = ?; ";
+        String[] params = {Integer.toString(ts_id)};
+        Cursor cursor = m_database.rawQuery(strSQL, params);
+
+        Log.v(m_TAG,
+                String.format("tryGetUnitListFromTestSet Result = %d", cursor.getCount()));
+        if (cursor.getCount() <= 0)
+            return new SentScore();
+
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToNext();
+            int tu_id = cursor.getInt(0);
+            String tu_question = cursor.getString(1);
+            String tu_answer = cursor.getString(2);
+            int tu_correct = cursor.getInt(3);
+
+            SentUnit unitOne = new SentUnit(tu_question, tu_answer, tu_correct);
+            sentScore.addSentUnit(unitOne);
+
+            Log.v(m_TAG, unitOne.toString());
+        }
+        cursor.close();
+
+        sentScore.scoring();
+
+        return sentScore;
+    }
+
      */
+    private SentScore tryGetUnitListFromTestSet(int ts_id) {
+        Log.v(m_TAG,"tryGetUnitListFromTestSet " + ts_id);
+        SentScore sentScore = new SentScore();
+        m_database = m_helper.getReadableDatabase();
+
+        String strSQL = "SELECT tu_id, tu_question, tu_answer, tu_iscorrect "
+                + "FROM hrtest_unit WHERE ts_id = ?;";
+        String[] params = {Integer.toString(ts_id)};
+        Cursor cursor = m_database.rawQuery(strSQL, params);
+
+        Log.v(m_TAG, String.format("tryGetUnitListFromTestSet Result = %d", cursor.getCount()));
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return sentScore;
+        }
+
+        while (cursor.moveToNext()) {
+            int tu_id = cursor.getInt(0); // You may want to use this ID in your SentUnit class
+            String tu_question = cursor.getString(1);
+            String tu_answer = cursor.getString(2);
+            int tu_correct = cursor.getInt(3);
+
+            SentUnit unitOne = new SentUnit(tu_question, tu_answer, tu_correct);
+            sentScore.addSentUnit(unitOne);
+
+            Log.v(m_TAG, "Added SentUnit: " + unitOne.toString());
+        }
+        cursor.close();
+
+        sentScore.scoring();
+
+        return sentScore;
+    }
+
+
+    private void selectBothSideTestSet() {
+        try {
+            HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+
+            m_TestSetLeft = hrTestDAO.selectTestSetFromTestGroup(m_TestGroup.getTg_id(), TConst.STR_LEFT_SIDE);
+            m_TestSetRight = hrTestDAO.selectTestSetFromTestGroup(m_TestGroup.getTg_id(), TConst.STR_RIGHT_SIDE);
+            Log.v(m_TAG,
+                    String.format("selectBothSideTestSet tg_id %d, ts_id_left %s, ts_id_right %s ",
+                            m_TestGroup.getTg_id(), m_TestSetLeft.getTs_id(), m_TestSetRight.getTs_id()));
+        }catch (Exception e){
+            Log.v(m_TAG, "selectBothSideTestSet Exception : " + e);
+        }
+    }
+
 
 }

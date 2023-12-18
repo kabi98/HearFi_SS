@@ -28,6 +28,19 @@ public class SentUnit {
 
     }
 
+    public SentUnit(String question, String answer, int correct) {
+        this._Question = question;
+        this._Answer = answer;
+        this._Correct = correct;
+        _iWordQuestion = -1;
+        _iWordCorrect = -1;
+
+        _alWordUnit = new ArrayList<>();
+        _alWordIdx = new ArrayList<>();
+    }
+
+
+
     public int get_iWordQuestion() {
         return _iWordQuestion;
     }
