@@ -88,8 +88,27 @@ public class SentScore {
         return 1;
     }
 
-    public void setM_alSentUnit(ArrayList<SentUnit> _alSentence) {
+    public void setAlSentence(ArrayList<SentUnit> _alSentence) {
         this._alSentence = _alSentence;
 
     }
+
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SentScore{");
+        sb.append("_iSentQuest=").append(_iSentQuest);
+        sb.append(", _iSentCorrect=").append(_iSentCorrect);
+        sb.append(", _iSentScore=").append(_iSentScore);
+        sb.append(", _iWordQuest=").append(_iWordQuest);
+        sb.append(", _iWordCorrect=").append(_iWordCorrect);
+        sb.append(", _iWordScore=").append(_iWordScore);
+        sb.append(", Sentences=").append(_alSentence);
+        sb.append('}');
+        return sb.toString();
+    }
+
+
 }

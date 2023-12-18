@@ -82,6 +82,14 @@ public class SrsDAO {
         return m_TestSetRight;
     }
 
+    public SentScore getLeftSrsList(){
+        return m_SentScoreLeft;
+    }
+
+    public SentScore getRightSrsList(){
+        return m_SentScoreRight;
+    }
+
     public SrsDAO(@Nullable Context _context) {
         m_Context = _context;
         m_helper = new SQLiteHelper(m_Context, TConst.DB_FILE, null, TConst.DB_VER);

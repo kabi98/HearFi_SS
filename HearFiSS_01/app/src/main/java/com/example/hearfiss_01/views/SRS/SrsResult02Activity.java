@@ -16,8 +16,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatToggleButton;
 
 import com.example.hearfiss_01.R;
-import com.example.hearfiss_01.audioTest.WRS.WordScore;
-import com.example.hearfiss_01.audioTest.WRS.WordUnit;
+import com.example.hearfiss_01.audioTest.SRS.SentScore;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
@@ -26,8 +25,6 @@ import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
 import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
-
-import java.util.ArrayList;
 
 public class SrsResult02Activity extends AppCompatActivity
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -51,11 +48,12 @@ public class SrsResult02Activity extends AppCompatActivity
     HrTestGroup m_TestGroup;
     HrTestSet m_TestSetLeft;
     HrTestSet m_TestSetRight;
-    ArrayList<WordUnit> m_alRight;
-    ArrayList<WordUnit> m_alLeft;
 
-    WordScore m_ScoreLeft = new WordScore();
-    WordScore m_ScoreRight = new WordScore();
+    SentScore m_SentLeft;
+    SentScore m_SentRight;
+
+    SentScore m_ScoreLeft = new SentScore();
+    SentScore m_ScoreRight = new SentScore();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,12 +167,30 @@ public class SrsResult02Activity extends AppCompatActivity
         srsDAO.loadSrsResultFromTestGroupId(m_TgId);
 
         m_TestGroup = srsDAO.getTestGroup();
-        Log.v(m_TAG,"getSrsResultFromDatabase getTestGroup : " + m_TestGroup);
+        Log.v(m_TAG, String.format("getSrsResultFromDatabase TestGroup id:%d, %s",
+                m_TestGroup.getTg_id(), m_TestGroup.toString() ) );
 
         m_TestSetLeft = srsDAO.getTestSetLeft();
         m_TestSetRight = srsDAO.getTestSetRight();
-        Log.v(m_TAG, "getSrsResultFromDatabase Test Set left : " + m_TestSetLeft);
-        Log.v(m_TAG, "getSrsResultFromDatabase Test Set right : " +m_TestSetRight);
+        Log.v(m_TAG, String.format("TestSet LEFT %s",
+                m_TestSetLeft.toString() ) );
+        Log.v(m_TAG, String.format("TestSet RIGHT %s",
+                m_TestSetRight.toString() ) );
+
+        m_SentLeft = srsDAO.getLeftSrsList();
+        m_SentRight = srsDAO.getRightSrsList();
+        Log.v(m_TAG, "getSrsResultFromDatabase List left : " + m_SentLeft.toString());
+        Log.v(m_TAG, "getSrsResultFromDatabase List right : " + m_SentRight.toString());
+
+        m_ScoreLeft.setAlSentence(m_SentLeft.get_alSentence());
+        m_ScoreLeft.scoring();
+        Log.v(m_TAG, "getSrsResultFromDatabase after scoring left : " +m_ScoreLeft);
+
+
+        m_ScoreRight.setAlSentence(m_SentRight.get_alSentence());
+        m_ScoreRight.scoring();
+        Log.v(m_TAG,"getSrsResultFromDatabase after scoring left : " +m_ScoreRight);
+        srsDAO.releaseAndClose();
     }
 
     private void findToggleBtnAndSetListener() {
