@@ -74,6 +74,13 @@ public class SrsDAO {
         return m_Account;
     }
 
+    public HrTestSet getTestSetLeft(){
+        return m_TestSetLeft;
+    }
+
+    public HrTestSet getTestSetRight(){
+        return m_TestSetRight;
+    }
 
     public SrsDAO(@Nullable Context _context) {
         m_Context = _context;

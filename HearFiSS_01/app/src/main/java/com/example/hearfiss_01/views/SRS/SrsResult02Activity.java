@@ -167,6 +167,14 @@ public class SrsResult02Activity extends AppCompatActivity
 
         srsDAO.setAccount(m_Account);
         srsDAO.loadSrsResultFromTestGroupId(m_TgId);
+
+        m_TestGroup = srsDAO.getTestGroup();
+        Log.v(m_TAG,"getSrsResultFromDatabase getTestGroup : " + m_TestGroup);
+
+        m_TestSetLeft = srsDAO.getTestSetLeft();
+        m_TestSetRight = srsDAO.getTestSetRight();
+        Log.v(m_TAG, "getSrsResultFromDatabase Test Set left : " + m_TestSetLeft);
+        Log.v(m_TAG, "getSrsResultFromDatabase Test Set right : " +m_TestSetRight);
     }
 
     private void findToggleBtnAndSetListener() {
