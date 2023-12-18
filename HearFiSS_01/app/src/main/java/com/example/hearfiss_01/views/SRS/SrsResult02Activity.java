@@ -192,14 +192,15 @@ public class SrsResult02Activity extends AppCompatActivity
         Log.v(m_TAG,"getSrsResultFromDatabase after scoring left : " +m_ScoreRight);
         srsDAO.releaseAndClose();
     }
-
+/*
     private void displayCorrectAnswers() {
-        String correctAnswersLeft = m_ScoreLeft.getCorrectStringList();
-        String correctAnswersRight = m_ScoreRight.getCorrectStringList();
+        String correctAnswerLeft = m_ScoreLeft.getCorrectStringList();
+        String coorectAnswerRight = m_ScoreRight.getCorrectStringList();
 
-        SrsLeftAnswer.setText(correctAnswersLeft);
-        SrsRightAnswer.setText(correctAnswersRight);
+        SrsLeftAnswer.setText(correctAnswerLeft);
+        SrsRightAnswer.setText(coorectAnswerRight);
     }
+
 
     private void displayWrongAnswers(){
         String wrongAnswerLeft = m_ScoreLeft.getWrongStringList();
@@ -207,6 +208,15 @@ public class SrsResult02Activity extends AppCompatActivity
 
         SrsLeftAnswer.setText(wrongAnswerLeft);
         SrsRightAnswer.setText(wrongAnswerRight);
+    }
+     */
+
+    private String displayCorrectAnswers(SentScore score){
+        return score.getCorrectStringList();
+    }
+
+    private String displayWrongAnswers(SentScore score){
+        return score.getWrongStringList();
     }
 
     private void findToggleBtnAndSetListener() {
@@ -267,9 +277,28 @@ public class SrsResult02Activity extends AppCompatActivity
         SrsLeftAnswer.setText(l_answerNum);
         SrsRightAnswer.setText(r_answerNum);
 
+        String l_wrongNum = String.format(
+                "문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentQuest() - m_ScoreLeft.get_iSentCorrect(), m_ScoreLeft.get_iWordQuest()-m_ScoreLeft.get_iWordCorrect());
 
+        String r_wrongNum = String.format(
+                "문장 : %d\n단어 : %d", m_ScoreRight.get_iSentQuest() - m_ScoreRight.get_iSentCorrect(), m_ScoreRight.get_iWordQuest() - m_ScoreRight.get_iWordCorrect());
+        SrsLeftWrong.setText(l_wrongNum);
+        SrsRightWrong.setText(r_wrongNum);
 
+        String totalRight = String.format("문장 : %d\n단어 : %d", m_ScoreRight.get_iSentQuest(),m_ScoreRight.get_iWordQuest());
+        String totalLeft = String.format("문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentQuest(),m_ScoreLeft.get_iWordQuest());
+        rightTotalNum.setText(totalRight);
+        leftTotalNum.setText(totalLeft);
 
+        String l_answer = displayCorrectAnswers(m_ScoreLeft);
+        SrsLeftWord.setText(l_answer);
+        String l_wrong = displayWrongAnswers(m_ScoreLeft);
+        SrsLeftWrongWord.setText(l_wrong);
+
+        String r_answer = displayCorrectAnswers(m_ScoreRight);
+        SrsRightWord.setText(r_answer);
+        String r_wrong = displayWrongAnswers(m_ScoreRight);
+        SrsRightWrongWord.setText(r_wrong);
     }
 
 
