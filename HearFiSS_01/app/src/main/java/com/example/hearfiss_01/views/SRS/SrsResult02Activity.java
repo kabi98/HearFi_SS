@@ -236,18 +236,39 @@ public class SrsResult02Activity extends AppCompatActivity
         leftTotalNum = findViewById(R.id.leftTotalNum);
 
         String ResultLeft = String.format(
-                " %d %% (%d개/%d개)"
+                "문장 기준 점수 : %d %% (%d개/%d개)" +
+                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
                 , m_ScoreLeft.get_iSentScore()
                 , m_ScoreLeft.get_iSentCorrect()
-                , m_ScoreLeft.get_iSentQuest() );
+                , m_ScoreLeft.get_iSentQuest()
+                , m_ScoreLeft.get_iWordScore()
+                , m_ScoreLeft.get_iWordCorrect()
+                , m_ScoreLeft.get_iWordQuest());
         SrsLeftResult.setText(ResultLeft);
 
         String ResultRight = String.format(
-                " %d %% (%d개/%d개)"
+                "문장 기준 점수 : %d %% (%d개/%d개)" +
+                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
                 , m_ScoreRight.get_iSentScore()
                 , m_ScoreRight.get_iSentCorrect()
-                , m_ScoreRight.get_iSentQuest() );
+                , m_ScoreRight.get_iSentQuest()
+                , m_ScoreRight.get_iWordScore()
+                , m_ScoreRight.get_iWordCorrect()
+                , m_ScoreRight.get_iWordQuest());
+
         SrsRightResult.setText(ResultRight);
+
+        String l_answerNum = String.format(
+                "문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentCorrect(), m_ScoreLeft.get_iWordCorrect()
+        );
+        String r_answerNum = String.format(
+                "문장 : %d\n단어 : %d", m_ScoreRight.get_iSentCorrect(), m_ScoreRight.get_iWordCorrect()
+        );
+        SrsLeftAnswer.setText(l_answerNum);
+        SrsRightAnswer.setText(r_answerNum);
+
+
+
 
     }
 

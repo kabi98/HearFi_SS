@@ -215,27 +215,6 @@ public class SrsDAO {
 
     }
 
-/*
-    private void calculateTestSetAndGroupResult() {
-        Log.v(m_TAG, "calculateTestSetAndGroupResult");
-        m_TestSetLeft = calculateSrsAndGetTestSet(TConst.T_LEFT);
-        m_TestSetRight = calculateSrsAndGetTestSet(TConst.T_RIGHT);
-
-        try {
-            int iLeftSRS = Integer.parseInt(m_TestSetLeft.getTs_Result());
-            int iRightSRS = Integer.parseInt(m_TestSetRight.getTs_Result());
-
-            if (iLeftSRS > iRightSRS){
-                m_strGroupResult = "왼쪽 : " + m_TestSetLeft.getTs_Comment();
-            }else {
-                m_strGroupResult = "오른쪽 : " + m_TestSetRight.getTs_Comment();
-            }
-        }catch (Exception e){
-            Log.v(m_TAG, "calculateTestSetAndGroupResult Exception : " + e);
-        }
-    }
- */
-
 
     private int extractNumber(String str) {
         String numberStr = str.replaceAll("[^\\d]", "");
