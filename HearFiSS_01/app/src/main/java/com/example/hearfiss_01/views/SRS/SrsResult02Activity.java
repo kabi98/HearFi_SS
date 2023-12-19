@@ -262,6 +262,9 @@ public class SrsResult02Activity extends AppCompatActivity
                     String.format(" SRS RESULT Left : %d, %s ",
                             i , GlobalVar.g_alSrsLeft.get(i).toString()) );
         }
+        
+        m_ScoreLeft = GlobalVar.g_SentScoreLeft;
+        m_ScoreRight = GlobalVar.g_SentScoreRight;
 
 
         String ResultLeft = String.format(
