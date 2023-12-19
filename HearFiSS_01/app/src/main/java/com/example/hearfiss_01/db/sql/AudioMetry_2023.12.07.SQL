@@ -1,5 +1,6 @@
 drop table IF EXISTS srt_unit;
 drop table IF EXISTS srs_unit;
+drop table IF EXISTS srs_word_unit;
 drop table IF EXISTS ptt_test_device;
 drop table IF EXISTS ptt_test_unit;
 drop table IF EXISTS pt_track;
@@ -99,7 +100,7 @@ CREATE TABLE IF NOT EXISTS srt_unit (
 			, FOREIGN KEY(ts_id) REFERENCES hrtest_set(ts_id)
 			);
 
-CREATE TABLE srs_unit (
+CREATE TABLE srs_word_unit (
 			su_id 			INTEGER PRIMARY KEY AUTOINCREMENT
 			, tu_id			INTEGER
 			, su_question 	TEXT
