@@ -177,39 +177,40 @@ public class SrsResult02Activity extends AppCompatActivity
         Log.v(m_TAG, String.format("TestSet RIGHT %s",
                 m_TestSetRight.toString() ) );
 
-        m_SentLeft = srsDAO.getLeftSrsList();
-        m_SentRight = srsDAO.getRightSrsList();
-        Log.v(m_TAG, "getSrsResultFromDatabase List left : " + m_SentLeft.toString());
-        Log.v(m_TAG, "getSrsResultFromDatabase List right : " + m_SentRight.toString());
+        
+        m_ScoreLeft = srsDAO.getLeftSrsList();
+        m_ScoreRight = srsDAO.getRightSrsList();
+        Log.v(m_TAG, "getSrsResultFromDatabase List left : " + m_ScoreLeft.toString());
+        Log.v(m_TAG, "getSrsResultFromDatabase List right : " + m_ScoreRight.toString());
 
-        m_ScoreLeft.setAlSentence(m_SentLeft.get_alSentence());
+        m_ScoreLeft.setAlSentence(m_ScoreLeft.get_alSentence());
         m_ScoreLeft.scoring();
         Log.v(m_TAG, "getSrsResultFromDatabase after scoring left : " +m_ScoreLeft);
 
 
-        m_ScoreRight.setAlSentence(m_SentRight.get_alSentence());
+        m_ScoreRight.setAlSentence(m_ScoreRight.get_alSentence());
         m_ScoreRight.scoring();
         Log.v(m_TAG,"getSrsResultFromDatabase after scoring left : " +m_ScoreRight);
+
+        Log.v(m_TAG,"get result Right Score : " + m_ScoreRight.toString());
+
+        for(int i=0; i< m_ScoreRight.get_alSentence().size(); i++){
+            Log.v(m_TAG,
+                    String.format(" SRS RESULT Right : %d, %s ",
+                            i ,  m_ScoreRight.get_alSentence().get(i).toString()) );
+        }
+
+        Log.v(m_TAG,"get result Left Score : " + m_ScoreLeft.toString());
+
+        for(int i=0; i< m_ScoreLeft.get_alSentence().size(); i++){
+            Log.v(m_TAG,
+                    String.format(" SRS RESULT Left : %d, %s ",
+                            i , m_ScoreLeft.get_alSentence().get(i).toString()) );
+        }
+
+
         srsDAO.releaseAndClose();
     }
-/*
-    private void displayCorrectAnswers() {
-        String correctAnswerLeft = m_ScoreLeft.getCorrectStringList();
-        String coorectAnswerRight = m_ScoreRight.getCorrectStringList();
-
-        SrsLeftAnswer.setText(correctAnswerLeft);
-        SrsRightAnswer.setText(coorectAnswerRight);
-    }
-
-
-    private void displayWrongAnswers(){
-        String wrongAnswerLeft = m_ScoreLeft.getWrongStringList();
-        String wrongAnswerRight = m_ScoreRight.getWrongStringList();
-
-        SrsLeftAnswer.setText(wrongAnswerLeft);
-        SrsRightAnswer.setText(wrongAnswerRight);
-    }
-     */
 
     private String displayCorrectAnswers(SentScore score){
         return score.getCorrectStringList();
@@ -245,26 +246,9 @@ public class SrsResult02Activity extends AppCompatActivity
         rightTotalNum = findViewById(R.id.rightTotalNum);
         leftTotalNum = findViewById(R.id.leftTotalNum);
 
-        Log.v(m_TAG,"GlobarVar Right Score : " + GlobalVar.g_SentScoreRight.toString());
-//        GlobalVar.g_alSrsRight = GlobalVar.g_SentScoreRight.get_alSentence();
 
-        for(int i=0; i< GlobalVar.g_alSrsRight.size(); i++){
-            Log.v(m_TAG,
-                    String.format(" SRS RESULT Right : %d, %s ",
-                            i , GlobalVar.g_alSrsRight.get(i).toString()) );
-        }
-
-        Log.v(m_TAG,"GlobarVar Left Score : " + GlobalVar.g_SentScoreLeft.toString());
-//        GlobalVar.g_alSrsRight = GlobalVar.g_SentScoreRight.get_alSentence();
-
-        for(int i=0; i< GlobalVar.g_alSrsLeft.size(); i++){
-            Log.v(m_TAG,
-                    String.format(" SRS RESULT Left : %d, %s ",
-                            i , GlobalVar.g_alSrsLeft.get(i).toString()) );
-        }
-        
-        m_ScoreLeft = GlobalVar.g_SentScoreLeft;
-        m_ScoreRight = GlobalVar.g_SentScoreRight;
+       // m_ScoreLeft = GlobalVar.g_SentScoreLeft;
+       // m_ScoreRight = GlobalVar.g_SentScoreRight;
 
 
         String ResultLeft = String.format(

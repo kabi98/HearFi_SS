@@ -84,6 +84,7 @@ public class SentScore {
             _iWordCorrect += sentence.get_iWordCorrect();
         }
         _iWordScore = (int)(((float)_iWordCorrect/(float)_iWordQuest) * 100);
+        Log.v(m_TAG,String.format("문장 : 질문 - %d, 정답 - %d, 점수 - %d  / 단어 : 질문 - %d, 정답 - %d, 점수 - %d", _iSentQuest,_iSentCorrect,_iSentScore,_iWordQuest,_iWordCorrect,_iWordScore));
 
         return 1;
     }

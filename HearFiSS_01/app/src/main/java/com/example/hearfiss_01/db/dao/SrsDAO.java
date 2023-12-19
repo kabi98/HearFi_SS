@@ -384,7 +384,7 @@ public class SrsDAO {
         }
         cursor.close();
 
-        sentScore.scoring();
+        //sentScore.scoring();
 
         return sentScore;
     }
