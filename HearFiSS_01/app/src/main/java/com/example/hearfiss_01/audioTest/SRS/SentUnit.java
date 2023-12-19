@@ -13,6 +13,8 @@ public class SentUnit {
     int     _iWordQuestion;
     int     _iWordCorrect;
 
+    SentScore m_SentScore = null;
+
     ArrayList<WordUnit> _alWordUnit;
     ArrayList<Integer> _alWordIdx;
 
@@ -151,6 +153,8 @@ public class SentUnit {
 
         return 1;
     }
+
+
 
     @Override
     public String toString() {
