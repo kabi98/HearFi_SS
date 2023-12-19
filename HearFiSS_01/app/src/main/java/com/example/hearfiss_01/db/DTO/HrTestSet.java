@@ -12,6 +12,7 @@ public class HrTestSet {
                 , FOREIGN KEY(tg_id) REFERENCES hrtest_group(tg_id) );
 
     */
+
     int     ts_id;
     int     tg_id;
     String  ts_side;

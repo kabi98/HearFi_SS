@@ -178,18 +178,16 @@ public class SrsResult02Activity extends AppCompatActivity
                 m_TestSetRight.toString() ) );
 
         
-        m_ScoreLeft = srsDAO.getLeftSrsList();
-        m_ScoreRight = srsDAO.getRightSrsList();
+        m_ScoreLeft.setAlSentence(srsDAO.getLeftSrsUnitList());
+        m_ScoreLeft.scoring();
+
+        m_ScoreRight.setAlSentence(srsDAO.getRightSrsUnitList());
+        m_ScoreRight.scoring();
+
         Log.v(m_TAG, "getSrsResultFromDatabase List left : " + m_ScoreLeft.toString());
         Log.v(m_TAG, "getSrsResultFromDatabase List right : " + m_ScoreRight.toString());
-
-        m_ScoreLeft.setAlSentence(m_ScoreLeft.get_alSentence());
-        m_ScoreLeft.scoring();
         Log.v(m_TAG, "getSrsResultFromDatabase after scoring left : " +m_ScoreLeft);
 
-
-        m_ScoreRight.setAlSentence(m_ScoreRight.get_alSentence());
-        m_ScoreRight.scoring();
         Log.v(m_TAG,"getSrsResultFromDatabase after scoring left : " +m_ScoreRight);
 
         Log.v(m_TAG,"get result Right Score : " + m_ScoreRight.toString());

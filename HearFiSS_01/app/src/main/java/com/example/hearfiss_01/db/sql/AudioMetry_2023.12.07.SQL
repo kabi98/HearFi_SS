@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS sentence_word (
 			, sw_idx    INTEGER
 			, at_id		INTEGER
 			, FOREIGN KEY(at_id) REFERENCES audiometry_track(at_id));
-			
+
 CREATE TABLE IF NOT EXISTS srt_unit (
 			tu_id 			INTEGER PRIMARY KEY AUTOINCREMENT
 			, ts_id			INTEGER
@@ -100,30 +100,16 @@ CREATE TABLE IF NOT EXISTS srt_unit (
 			);
 
 CREATE TABLE srs_unit (
-			tu_id 			INTEGER PRIMARY KEY AUTOINCREMENT
-			, ts_id			INTEGER
-			, tu_question 	TEXT
-			, tu_answer		TEXT
-			, tu_iscorrect	INTEGER
-			, tu_dbHL		INTEGER
-			, at_id         INTEGER
-			, FOREIGN KEY(ts_id) REFERENCES hrtest_set(ts_id)
-			, FOREIGN KEY(at_id) REFERENCES audiometry_track(at_id)
+			su_id 			INTEGER PRIMARY KEY AUTOINCREMENT
+			, tu_id			INTEGER
+			, su_question 	TEXT
+			, su_answer		TEXT
+			, su_iscorrect	INTEGER
+			, su_idx		INTEGER
+
+			, FOREIGN KEY(tu_id) REFERENCES hrtest_unit(tu_id)
 			);
 
-CREATE TABLE audiometry_track (
-			at_id 			INTEGER PRIMARY KEY AUTOINCREMENT
-			, at_file_name 	TEXT
-			, at_file_ext 	TEXT
-			, at_type		TEXT
-			, at_content	TEXT );
-
-CREATE TABLE sentence_word (
-            sw_id 			INTEGER PRIMARY KEY AUTOINCREMENT
-            , sw_word 	TEXT
-            , sw_idx    INTEGER
-            , at_id		INTEGER
-            , FOREIGN KEY(at_id) REFERENCES audiometry_track(at_id));
 
 INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_001','mp3','sl_a1','백화점에 가서 목걸이와 반지를 샀습니다');
 INSERT INTO audiometry_track (at_file_name, at_file_ext,at_type,at_content) VALUES ('ks_sl_a1_002','mp3','sl_a1','휴지를 버려 주세요');

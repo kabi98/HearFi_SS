@@ -37,8 +37,6 @@ public class SrsDAO {
 
     //ArrayList <SentUnit> m_alRight;
 
-
-
     HrTestGroup m_TestGroup;
 
     HrTestSet m_TestSetLeft;
@@ -48,6 +46,7 @@ public class SrsDAO {
     SentScore m_SentScoreLeft;
 
     SentScore m_SentScoreRight;
+
 /*
     public ArrayList<SentUnit> getRightUnitList(){
         return m_alRight;
@@ -82,12 +81,12 @@ public class SrsDAO {
         return m_TestSetRight;
     }
 
-    public SentScore getLeftSrsList(){
-        return m_SentScoreLeft;
+    public ArrayList<SentUnit> getLeftSrsUnitList(){
+        return m_SentScoreLeft.get_alSentence();
     }
 
-    public SentScore getRightSrsList(){
-        return m_SentScoreRight;
+    public ArrayList<SentUnit>  getRightSrsUnitList(){
+        return m_SentScoreRight.get_alSentence();
     }
 
     public SrsDAO(@Nullable Context _context) {
