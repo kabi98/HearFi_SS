@@ -245,6 +245,25 @@ public class SrsResult02Activity extends AppCompatActivity
         rightTotalNum = findViewById(R.id.rightTotalNum);
         leftTotalNum = findViewById(R.id.leftTotalNum);
 
+        Log.v(m_TAG,"GlobarVar Right Score : " + GlobalVar.g_SentScoreRight.toString());
+//        GlobalVar.g_alSrsRight = GlobalVar.g_SentScoreRight.get_alSentence();
+
+        for(int i=0; i< GlobalVar.g_alSrsRight.size(); i++){
+            Log.v(m_TAG,
+                    String.format(" SRS RESULT Right : %d, %s ",
+                            i , GlobalVar.g_alSrsRight.get(i).toString()) );
+        }
+
+        Log.v(m_TAG,"GlobarVar Left Score : " + GlobalVar.g_SentScoreLeft.toString());
+//        GlobalVar.g_alSrsRight = GlobalVar.g_SentScoreRight.get_alSentence();
+
+        for(int i=0; i< GlobalVar.g_alSrsLeft.size(); i++){
+            Log.v(m_TAG,
+                    String.format(" SRS RESULT Left : %d, %s ",
+                            i , GlobalVar.g_alSrsLeft.get(i).toString()) );
+        }
+
+
         String ResultLeft = String.format(
                 "문장 기준 점수 : %d %% (%d개/%d개)" +
                         "\n단어 기준 점수 : %d %% (%d개/%d개)"
