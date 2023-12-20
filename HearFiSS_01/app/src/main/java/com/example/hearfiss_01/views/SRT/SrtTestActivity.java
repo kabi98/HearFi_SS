@@ -1,9 +1,5 @@
 package com.example.hearfiss_01.views.SRT;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -26,9 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.audioTest.SRT.SRT;
-import com.example.hearfiss_01.db.dao.PttDAO;
 import com.example.hearfiss_01.db.dao.SrtDAO;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
