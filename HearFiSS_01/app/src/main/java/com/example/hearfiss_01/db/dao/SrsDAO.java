@@ -13,6 +13,7 @@ import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.AmTrack;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.db.DTO.SrsWordUnit;
 import com.example.hearfiss_01.db.DTO.StWord;
 import com.example.hearfiss_01.global.GlobalVar;
@@ -44,6 +45,9 @@ public class SrsDAO {
 
     HrTestSet m_TestSetRight;
 
+    HrTestUnit m_TestUnitLeft;
+
+    HrTestUnit m_TestUnitRigh;
     SentScore m_SentScoreLeft;
 
     SentScore m_SentScoreRight;
@@ -216,6 +220,7 @@ public class SrsDAO {
         insertAndSelectTestGroup();
         insertAndSelectTestSet();
         insertSrsTestUnitList();
+        insertAndSelectSrsWordUnit();
     }
 
 
@@ -345,9 +350,16 @@ public class SrsDAO {
 
         SrsWordUnitDAO srsWordUnitDAO = new SrsWordUnitDAO(m_helper);
 
-        m_SrsWordLeft.setTu_id(m_SrsWordLeft.getTu_id());
+        m_SrsWordLeft.setTu_id(m_TestUnitLeft.getTu_id());
+        srsWordUnitDAO.insertSrsWordUnit(m_SrsWordLeft);
+        m_SrsWordLeft = srsWordUnitDAO.selectSrsWordUnit(m_SrsWordLeft);
 
+        m_SrsWordRight.setTu_id(m_TestUnitRigh.getTu_id());
+        srsWordUnitDAO.insertSrsWordUnit(m_SrsWordRight);
+        m_SrsWordRight = srsWordUnitDAO.selectSrsWordUnit(m_SrsWordRight);
 
+        Log.v(m_TAG,"insertAndSelectSrsWordUnit Left : "+ m_SrsWordLeft);
+        Log.v(m_TAG, "insertAndSelectSrsWordUnit Right : " + m_SrsWordRight);
     }
 
 
