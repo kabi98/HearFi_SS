@@ -55,8 +55,6 @@ public class SrsDAO {
     public ArrayList<SentUnit> getLeftUnitList(){
         return m_alLeft;
     }
-
-
  */
 
     public void setResultList(SentScore scoreLeft, SentScore scoreRight) {
@@ -96,7 +94,6 @@ public class SrsDAO {
         m_Account = new Account();
 
         //m_alLeft = new ArrayList<>();
-
         //m_alRight = new ArrayList<>();
 
         m_SentScoreLeft = new SentScore();
@@ -351,7 +348,6 @@ public class SrsDAO {
         }catch (Exception e ){
             Log.v(m_TAG, "getBothSideUnitList Exception : " + e);
         }
-
     }
 
     private SentScore tryGetUnitListFromTestSet(int ts_id) {
