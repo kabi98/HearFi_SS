@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
 import com.example.hearfiss_01.db.DTO.PttTestDevice;
 import com.example.hearfiss_01.global.TConst;
 
@@ -180,6 +181,7 @@ public class HrTestDAO {
         }
     }
 
+
     public HrTestSet selectTestSetFromTestGroup(int iTgId, String strSide) {
         Log.v(m_TAG,
                 String.format("selectTestSetFromTestGroup Id %d", iTgId));
@@ -221,6 +223,91 @@ public class HrTestDAO {
         }
 
     }
+
+    public HrTestUnit selectTestUnit(HrTestUnit tuInput) {
+        try {
+            return trySelectTestUnit(tuInput);
+        } catch (Exception e) {
+            Log.v(m_TAG, "selectTestSet Exception " + e);
+            return null;
+        }
+    }
+
+    private HrTestUnit trySelectTestUnit(HrTestUnit tuInput) {
+        Log.v(m_TAG,
+                String.format("trySelectTestUnit tu_id %d, tu_question %s ",
+                        tuInput.getTu_id(), tuInput.getTu_Question()));
+
+        m_database = m_helper.getReadableDatabase();
+
+        String strSQL = "  SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect "
+                + " FROM hrtest_unit WHERE ts_id= ? and tu_question = ?; ";
+        String[] params = { Integer.toString(tuInput.getTs_id()), tuInput.getTu_Question() };
+        Cursor cursor = m_database.rawQuery(strSQL, params);
+
+        Log.v(m_TAG,
+                String.format("trySelectTestUnit Result = %d", cursor.getCount()));
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+
+            int     tu_id      = cursor.getInt(0);
+            int     ts_id      = cursor.getInt(1);
+            String  tu_question    = cursor.getString(2);
+            String  tu_answer   = cursor.getString(3);
+            int     tu_iscorrect = cursor.getInt(4);
+
+            HrTestUnit tuOne = new HrTestUnit(tu_id, ts_id, tu_question, tu_answer, tu_iscorrect);
+            Log.v(m_TAG, tuOne.toString());
+            cursor.close();
+
+            return tuOne;
+        } else {
+            return null;
+        }
+    }
+
+    public HrTestUnit selectTestUnitFromTestSet(int iTsId, String tuQuestion) {
+        Log.v(m_TAG,
+                String.format("selectTestUnitFromTestSet Id %d", iTsId));
+
+        try {
+            return trySelectTestUnitFromTestSet(iTsId, tuQuestion);
+        } catch (Exception e) {
+            Log.v(m_TAG, "selectTestUnitFromTestSet Exception " + e);
+            return null;
+        }
+    }
+
+    private HrTestUnit trySelectTestUnitFromTestSet(int iTsId, String tuQuestion) {
+        m_database = m_helper.getReadableDatabase();
+
+        String strSQL = "  SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect "
+                + " FROM hrtest_unit WHERE ts_id = ? and tu_qeusetion = ?; ";
+        String[] params = { Integer.toString(iTsId), tuQuestion };
+        Cursor cursor = m_database.rawQuery(strSQL, params);
+
+        Log.v(m_TAG,
+                String.format("trySelectTestUnitFromTestSet Result = %d", cursor.getCount()));
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+
+            int     tu_id      = cursor.getInt(0);
+            int     ts_id      = cursor.getInt(1);
+            String  tu_question    = cursor.getString(2);
+            String  tu_answer  = cursor.getString(3);
+            int  tu_iscorrect = cursor.getInt(4);
+
+            HrTestUnit tuOne = new HrTestUnit(tu_id, ts_id, tu_question, tu_answer, tu_iscorrect);
+            Log.v(m_TAG, tuOne.toString());
+            cursor.close();
+
+            return tuOne;
+        } else {
+            return null;
+        }
+
+    }
+
 
     public HrTestGroup selectTestGroupFromTgId(int iTgId) {
         Log.v(m_TAG,

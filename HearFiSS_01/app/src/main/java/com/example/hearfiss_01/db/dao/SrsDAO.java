@@ -19,7 +19,6 @@ import com.example.hearfiss_01.db.DTO.StWord;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -327,30 +326,6 @@ public class SrsDAO {
         }
     }
 
-    private void tryInsertSrsTestUnitList() {
-        Log.v(m_TAG, "tryInsertSrsTestUnitList");
-        insertTestUnitList(m_TestSetLeft.getTs_id(), m_SentScoreLeft.get_alSentence());
-        insertTestUnitList(m_TestSetRight.getTs_id(), m_SentScoreRight.get_alSentence());
-    }
-
-    private void insertTestUnitList(int iTsId, ArrayList<SentUnit> alSentUnit){
-        Log.v(m_TAG, "*****insertTestUnitList*****");
-        m_database = m_helper.getWritableDatabase();
-        HrTestUnit tuInsert = new HrTestUnit();
-        for (SentUnit unitOne : alSentUnit){
-            Log.v(m_TAG,String.format("insertTestUnitList SentUnit Q : %s, A : %s, C : %d",
-                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
-
-            tuInsert.setTs_id(iTsId);
-            tuInsert.setTu_Question(unitOne.get_Question());
-            tuInsert.setTu_Answer(unitOne.get_Answer());
-            tuInsert.setTu_IsCorrect(unitOne.get_Correct());
-            insertTestUnit(tuInsert);
-
-
-        }
-    }
-
 
     public void insertTestUnit(HrTestUnit tuInsert) {
 //        Log.v(m_TAG, " insertTestUnit ");
@@ -375,6 +350,33 @@ public class SrsDAO {
         m_database.execSQL(strSQL, params);
 
     }
+    private void tryInsertSrsTestUnitList() {
+        Log.v(m_TAG, "tryInsertSrsTestUnitList");
+        insertAndSelectTestUnitList(m_TestSetLeft.getTs_id(), m_SentScoreLeft.get_alSentence());
+        insertAndSelectTestUnitList(m_TestSetRight.getTs_id(), m_SentScoreRight.get_alSentence());
+    }
+
+    private void insertAndSelectTestUnitList(int iTsId, ArrayList<SentUnit> alSentUnit){
+        Log.v(m_TAG, "*****insertTestUnitList*****");
+        m_database = m_helper.getWritableDatabase();
+        HrTestUnit tuInsert = new HrTestUnit();
+        HrTestDAO hrTestDAO = new HrTestDAO(m_helper);
+        for (SentUnit unitOne : alSentUnit){
+            Log.v(m_TAG,String.format("insertTestUnitList SentUnit Q : %s, A : %s, C : %d",
+                    unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
+
+            tuInsert.setTs_id(iTsId);
+            tuInsert.setTu_Question(unitOne.get_Question());
+            tuInsert.setTu_Answer(unitOne.get_Answer());
+            tuInsert.setTu_IsCorrect(unitOne.get_Correct());
+            insertTestUnit(tuInsert);
+
+            tuInsert = hrTestDAO.selectTestUnit(tuInsert);
+
+        }
+    }
+
+
 
 
 
