@@ -48,7 +48,12 @@ public class SrsDAO {
 
     SentScore m_SentScoreRight;
 
-    SrsWordUnit m_SrsWordUnit;
+    SrsWordUnit m_SrsWordLeft;
+
+    SrsWordUnit m_SrsWordRight;
+
+
+    SrsWordUnitDAO m_SrsWordUnitDAO;
 
 /*
     public ArrayList<SentUnit> getRightUnitList(){
@@ -211,8 +216,6 @@ public class SrsDAO {
         insertAndSelectTestGroup();
         insertAndSelectTestSet();
         insertSrsTestUnitList();
-        insertAndSelectSrsWordUnit(m_SrsWordUnit);
-
     }
 
 
@@ -337,108 +340,15 @@ public class SrsDAO {
         }
     }
 
-    public SrsWordUnit selectSrsWordUnitFromTestUnit(int iTuId, String suQuestion){
-        Log.v(m_TAG, String.format("selectSrsWordUnitFromTestUnit %d", iTuId));
-
-        try {
-            return trySelectSrsWordUnitFromTestUnit(iTuId, suQuestion);
-        }catch (Exception e){
-            Log.v(m_TAG,"selectSrsWordUnitFromTestUnit Exception : "+e);
-            return null;
-        }
-    }
-
-    private SrsWordUnit trySelectSrsWordUnitFromTestUnit(int iTuId, String suQuestion) {
-        m_database = m_helper.getReadableDatabase();
-
-        String strSQL = "SELECT su_id, tu_id, su_question, su_answer, su_iscorrect, su_idx"
-                +"FROM srs_word_unit WHERE tu_id = ? and su_question = ?;";
-        String[] params = {Integer.toString(iTuId), suQuestion};
-        Cursor cursor = m_database.rawQuery(strSQL, params);
-
-        Log.v(m_TAG, String.format("trySelectSrsWordUnitFromTestUnit result = %d",cursor.getCount()));
-        if (cursor.getCount() > 0){
-            cursor.moveToNext();
-
-            int su_id = cursor.getInt(0);
-            int tu_id = cursor.getInt(1);
-            String su_question = cursor.getString(2);
-            String su_answer = cursor.getString(3);
-            int su_iscorrect = cursor.getInt(4);
-            int su_idx = cursor.getInt(5);
-
-            SrsWordUnit swOne = new SrsWordUnit(su_id, tu_id, su_question, su_answer, su_iscorrect, su_idx);
-            Log.v(m_TAG, swOne.toString());
-            cursor.close();
-
-            return swOne;
-        }else {
-            return null;
-        }
-    }
-
-    public SrsWordUnit insertAndSelectSrsWordUnit(SrsWordUnit swIns){
+    public void insertAndSelectSrsWordUnit(){
         Log.v(m_TAG,"insertAndSelectSrsWordUnit");
-        try {
-            tryInsertSrsWordUnit(swIns);
-            return selectSrsWordUnit(swIns);
-        }catch (Exception e){
-            Log.v(m_TAG, "insertAndSelectSrsWordUnit Exception" +e);
-            return null;
-        }
+
+        SrsWordUnitDAO srsWordUnitDAO = new SrsWordUnitDAO(m_helper);
+
+        m_SrsWordLeft.setTu_id(m_SrsWordLeft.getTu_id());
+
+
     }
-
-    private void tryInsertSrsWordUnit(SrsWordUnit swIns){
-        m_database = m_helper.getWritableDatabase();
-        String strSQL =
-                "INSERT INTO srs_word_unit(tu_id, su_question, su_answer, su_iscorrect, su_idx) "
-                    +"VALUES(?,?,?,?,?)";
-        Object[] params = {swIns.getTu_id(), swIns.getSu_question(),swIns.getSu_answer(),swIns.getSu_iscorrect(),swIns.getSu_idx()};
-
-        m_database.execSQL(strSQL, params);
-    }
-
-    public SrsWordUnit selectSrsWordUnit(SrsWordUnit swInput){
-        Log.v(m_TAG, String.format("selectSrsWordUnit tu_id : %d, su_question : %s, su_answer :%s, su_iscorrect :%d, su_idx :%d",
-                swInput.getTu_id(),swInput.getSu_question(),swInput.getSu_answer(),swInput.getSu_iscorrect(),swInput.getSu_idx()));
-        try {
-            return trySelectSrsWordUnit(swInput);
-        }catch (Exception e){
-            Log.v(m_TAG, "selectSrsWordUnit Exception :" +e);
-            return null;
-        }
-    }
-
-    private SrsWordUnit trySelectSrsWordUnit(SrsWordUnit swInput) {
-        m_database = m_helper.getReadableDatabase();
-
-        String strSQL = " SELECT su_id, tu_id, su_question, su_answer, su_iscorrect, su_idx "
-                +"FROM srs_word_unit WHERE tu_id=? and su_question =?;";
-        String []params = {Integer.toString(swInput.getTu_id()),swInput.getSu_question()};
-        Cursor cursor = m_database.rawQuery(strSQL, params);
-
-        Log.v(m_TAG,
-                String.format("trySelectSrsWordUnit result = %d", cursor.getCount()));
-        if (cursor.getCount() > 0) {
-            cursor.moveToNext();
-
-            int     su_id      = cursor.getInt(0);
-            int     tu_id      = cursor.getInt(1);
-            String  su_question = cursor.getString(2);
-            String  su_answer  = cursor.getString(3);
-            int  su_iscorrect = cursor.getInt(4);
-            int su_idx = cursor.getInt(5);
-
-            SrsWordUnit swOne = new SrsWordUnit(su_id, tu_id, su_question, su_answer, su_iscorrect, su_idx);
-            Log.v(m_TAG, swOne.toString());
-            cursor.close();
-
-            return swOne;
-        } else {
-            return null;
-        }
-    }
-
 
 
     public void loadSrsResultFromTestGroupId(int iTgId){
@@ -508,6 +418,8 @@ public class SrsDAO {
             Log.v(m_TAG, "selectBothSideTestSet Exception : " + e);
         }
     }
+
+
 
 
 }
