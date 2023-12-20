@@ -19,6 +19,7 @@ import com.example.hearfiss_01.db.DTO.StWord;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.global.TConst;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +46,7 @@ public class SrsDAO {
 
     HrTestSet m_TestSetRight;
 
-    HrTestUnit m_TestUnitLeft;
+    HrTestUnit m_TestUnitListLeft;
 
     HrTestUnit m_TestUnitRigh;
     SentScore m_SentScoreLeft;
@@ -311,6 +312,7 @@ public class SrsDAO {
         m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
         hrTestDAO.insertTestSet(m_TestSetLeft);
         m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
+
         m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
         hrTestDAO.insertTestSet(m_TestSetRight);
         m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
@@ -334,20 +336,53 @@ public class SrsDAO {
     private void insertTestUnitList(int iTsId, ArrayList<SentUnit> alSentUnit){
         Log.v(m_TAG, "*****insertTestUnitList*****");
         m_database = m_helper.getWritableDatabase();
+        HrTestUnit tuInsert = new HrTestUnit();
         for (SentUnit unitOne : alSentUnit){
             Log.v(m_TAG,String.format("insertTestUnitList SentUnit Q : %s, A : %s, C : %d",
                     unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
-            String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
-                    + " VALUES (?, ?, ?, ?); ";
-            Object[] params = { iTsId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct() };
 
-            m_database.execSQL(strSQL, params);
+            tuInsert.setTs_id(iTsId);
+            tuInsert.setTu_Question(unitOne.get_Question());
+            tuInsert.setTu_Answer(unitOne.get_Answer());
+            tuInsert.setTu_IsCorrect(unitOne.get_Correct());
+            insertTestUnit(tuInsert);
+
+
         }
     }
 
+
+    public void insertTestUnit(HrTestUnit tuInsert) {
+//        Log.v(m_TAG, " insertTestUnit ");
+        try {
+            tryInsertTestUnit(tuInsert);
+        } catch (Exception e) {
+            Log.v(m_TAG, "insertTestUnit Exception " + e);
+        }
+    }
+
+    public void tryInsertTestUnit(HrTestUnit tuInsert) {
+        m_database = m_helper.getWritableDatabase();
+
+        Log.v(m_TAG,String.format("tryInsertTestUnit ts_id : %d, Q : %s, A : %s, C : %d",
+                tuInsert.getTs_id(), tuInsert.getTu_Question(), tuInsert.getTu_Answer(), tuInsert.getTu_IsCorrect()));
+
+        String strSQL = " INSERT INTO hrtest_unit (ts_id, tu_question, tu_answer, tu_iscorrect) "
+                + " VALUES (?, ?, ?, ?); ";
+        Object[] params = { tuInsert.getTs_id(), tuInsert.getTu_Question(), tuInsert.getTu_Answer(), tuInsert.getTu_IsCorrect() };
+
+
+        m_database.execSQL(strSQL, params);
+
+    }
+
+
+
+
+
     public void insertAndSelectSrsWordUnit(){
         Log.v(m_TAG,"insertAndSelectSrsWordUnit");
-
+/*
         SrsWordUnitDAO srsWordUnitDAO = new SrsWordUnitDAO(m_helper);
 
         m_SrsWordLeft.setTu_id(m_TestUnitLeft.getTu_id());
@@ -360,6 +395,8 @@ public class SrsDAO {
 
         Log.v(m_TAG,"insertAndSelectSrsWordUnit Left : "+ m_SrsWordLeft);
         Log.v(m_TAG, "insertAndSelectSrsWordUnit Right : " + m_SrsWordRight);
+
+ */
     }
 
 
