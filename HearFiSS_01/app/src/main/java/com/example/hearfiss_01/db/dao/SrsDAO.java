@@ -24,8 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import kotlin.Unit;
-
 public class SrsDAO {
     String m_TAG = "SrsDAO";
     SQLiteDatabase m_database;
@@ -219,7 +217,6 @@ public class SrsDAO {
         insertAndSelectTestGroup();
         insertAndSelectTestSet();
         insertSrsTestUnitList();
-        insertAndSelectSrsWordUnit();
     }
 
 
@@ -387,27 +384,12 @@ public class SrsDAO {
             Log.v(m_TAG, String.format("insertSrsWordUnitList WordUnit tuid:%d, Q : %s, A : %s, C : %d, idx:%d",
                     iTuId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), i));
 
+            srsWordUnitDAO.selectSrsWordUnit(swInsert);
         }
 
     }
 
-    public void insertAndSelectSrsWordUnit(){
-        Log.v(m_TAG,"insertAndSelectSrsWordUnit");
-/*
-        SrsWordUnitDAO srsWordUnitDAO = new SrsWordUnitDAO(m_helper);
 
-        m_SrsWordLeft.setTu_id(m_TestUnitLeft.getTu_id());
-        srsWordUnitDAO.insertSrsWordUnit(m_SrsWordLeft);
-        m_SrsWordLeft = srsWordUnitDAO.selectSrsWordUnit(m_SrsWordLeft);
-
-        m_SrsWordRight.setTu_id(m_TestUnitRigh.getTu_id());
-        srsWordUnitDAO.insertSrsWordUnit(m_SrsWordRight);
-        m_SrsWordRight = srsWordUnitDAO.selectSrsWordUnit(m_SrsWordRight);
-
-        Log.v(m_TAG,"insertAndSelectSrsWordUnit Left : "+ m_SrsWordLeft);
-        Log.v(m_TAG, "insertAndSelectSrsWordUnit Right : " + m_SrsWordRight);
-*/
-    }
 
 
     public void loadSrsResultFromTestGroupId(int iTgId){

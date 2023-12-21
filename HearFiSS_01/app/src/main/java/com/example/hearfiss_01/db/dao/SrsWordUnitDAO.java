@@ -93,7 +93,7 @@ public class SrsWordUnitDAO {
 
             SrsWordUnit swOne = new SrsWordUnit(su_id, tu_id, su_question, su_answer, su_iscorrect, su_idx);
 
-            Log.v(m_TAG, swOne.toString());
+            Log.v(m_TAG,"selectSrsWordUnit List :"+ swOne.toString());
             cursor.close();
 
             return swOne;
