@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.example.hearfiss_01.audioTest.SRS.SentScore;
 import com.example.hearfiss_01.audioTest.SRS.SentUnit;
+import com.example.hearfiss_01.audioTest.WRS.WordUnit;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.AmTrack;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
@@ -22,6 +23,8 @@ import com.example.hearfiss_01.global.TConst;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import kotlin.Unit;
 
 public class SrsDAO {
     String m_TAG = "SrsDAO";
@@ -45,11 +48,7 @@ public class SrsDAO {
 
     HrTestSet m_TestSetRight;
 
-    HrTestUnit m_TestUnitListLeft;
-
-    HrTestUnit m_TestUnitRigh;
     SentScore m_SentScoreLeft;
-
     SentScore m_SentScoreRight;
 
     SrsWordUnit m_SrsWordLeft;
@@ -370,17 +369,27 @@ public class SrsDAO {
             tuInsert.setTu_Answer(unitOne.get_Answer());
             tuInsert.setTu_IsCorrect(unitOne.get_Correct());
             insertTestUnit(tuInsert);
-
             tuInsert = hrTestDAO.selectTestUnit(tuInsert);
+
+            insertSrsWordUnitList(tuInsert.getTu_id(), unitOne.get_alWordUnit());
 
         }
     }
 
+    public void insertSrsWordUnitList(int iTuId, ArrayList<WordUnit> alWordUnit){
+        Log.v(m_TAG,"insertAndSelectSrsWordUnit");
+        SrsWordUnitDAO srsWordUnitDAO = new SrsWordUnitDAO(m_helper);
 
+        int i=0;
+        for (WordUnit unitOne : alWordUnit) {
+            SrsWordUnit swInsert = new SrsWordUnit(-1, iTuId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), i++);
+            srsWordUnitDAO.insertSrsWordUnit(swInsert);
+            Log.v(m_TAG, String.format("insertSrsWordUnitList WordUnit tuid:%d, Q : %s, A : %s, C : %d, idx:%d",
+                    iTuId, unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct(), i));
 
+        }
 
-
-
+    }
 
     public void insertAndSelectSrsWordUnit(){
         Log.v(m_TAG,"insertAndSelectSrsWordUnit");
@@ -397,8 +406,7 @@ public class SrsDAO {
 
         Log.v(m_TAG,"insertAndSelectSrsWordUnit Left : "+ m_SrsWordLeft);
         Log.v(m_TAG, "insertAndSelectSrsWordUnit Right : " + m_SrsWordRight);
-
- */
+*/
     }
 
 

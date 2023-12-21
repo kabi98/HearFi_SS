@@ -50,13 +50,16 @@ public class SrsWordUnitDAO {
     }
 
     private void tryInsertSrsWordUnit(SrsWordUnit swIns) {
+
+        Log.v(m_TAG, String.format("tryInsertSrsWordUnit WordUnit tuid : %d, Q : %s, A : %s, C : %d, idx:%d",
+                swIns.getTu_id(), swIns.getSu_question(), swIns.getSu_answer(), swIns.getSu_iscorrect(), swIns.getSu_idx()));
+
         m_database = m_helper.getWritableDatabase();
         String strSQL =
                 " INSERT INTO srs_word_unit (tu_id, su_question, su_answer, su_iscorrect, su_idx)  "
                         + " VALUES (?, ?, ?, ?, ?) ";
-        Object[] params = {swIns.getTu_id(), swIns.getSu_question(),
-                swIns.getSu_question(), swIns.getSu_answer(), swIns.getSu_iscorrect(), swIns.getSu_idx()};
 
+        Object[] params = {swIns.getTu_id(), swIns.getSu_question(), swIns.getSu_answer(), swIns.getSu_iscorrect(), swIns.getSu_idx()};
         m_database.execSQL(strSQL, params);
     }
 

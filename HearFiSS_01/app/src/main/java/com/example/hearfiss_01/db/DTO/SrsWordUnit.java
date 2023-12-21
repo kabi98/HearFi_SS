@@ -36,6 +36,15 @@ public class SrsWordUnit {
         this.su_idx = su_idx;
     }
 
+    public void clearAll() {
+        this.su_id = -1;
+        this.tu_id = -1;
+        this.su_question = "";
+        this.su_answer = "";
+        this.su_iscorrect = -1;
+        this.su_idx = -1;
+    }
+
     public int getSu_id() {
         return su_id;
     }
