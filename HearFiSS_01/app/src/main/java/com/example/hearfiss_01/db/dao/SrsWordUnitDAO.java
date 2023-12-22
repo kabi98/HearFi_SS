@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import com.example.hearfiss_01.db.DTO.SrsWordUnit;
 import com.example.hearfiss_01.global.TConst;
 
+import java.util.ArrayList;
+
 public class SrsWordUnitDAO {
 
     String m_TAG = "SrsWordUnitDAO";
@@ -19,6 +21,9 @@ public class SrsWordUnitDAO {
     SQLiteHelper m_helper;
 
     SQLiteDatabase m_database;
+
+    public SrsWordUnitDAO() {
+    }
 
     public SrsWordUnitDAO(SQLiteHelper m_helper){
         this.m_helper = m_helper;
@@ -143,6 +148,59 @@ public class SrsWordUnitDAO {
             return null;
         }
     }
+/*
+    public ArrayList<SrsWordUnit> selectCorrectWord(int iTuId){
+        Log.v(m_TAG, "selectCorrectWord");
+        try {
+            return trySelectCorrectWord(iTuId);
+        }catch (Exception e){
+            Log.v(m_TAG, "selectCorrectWord Exception : "+e);
+            return null;
+        }
+    }
+
+
+ */
+    public ArrayList<SrsWordUnit> selectCorrectWord(int iTsId,int iTuId) {
+        ArrayList<SrsWordUnit> unitList = new ArrayList<>();
+        try{
+            String strSQL = " select * from srs_word_unit as s , hrtest_unit as u where s.tu_id = u.tu_id AND u.ts_id = ? AND u.tu_id=? And s.su_iscorrect = 1 ; ";
+
+            String[] params = {Integer.toString(iTsId),Integer.toString(iTuId)};
+            m_database = m_helper.getWritableDatabase();
+            Cursor cursor = m_database.rawQuery(strSQL, params);
+
+            Log.v(m_TAG,
+                    String.format("trySelectCorrectWord Result = %d", cursor.getCount()));
+            if (cursor.getCount() <= 0) {
+                Log.v(m_TAG, "trySelectCorrectWord - No Data Found");
+                return new ArrayList<SrsWordUnit>();
+            }
+
+            for (int i = 0; i <cursor.getCount(); i++){
+                cursor.moveToNext();
+                int su_id = cursor.getInt(0);
+                int tu_id = cursor.getInt(1);
+                String su_question = cursor.getString(2);
+                String su_answer = cursor.getString(3);
+                int su_iscorrect = cursor.getInt(4);
+                int su_idx = cursor.getInt(5);
+
+                SrsWordUnit unitOne = new SrsWordUnit(su_id,tu_id,su_question, su_answer, su_iscorrect, su_idx);
+                unitList.add(unitOne);
+
+                Log.v(m_TAG, "trySelectCorrectWord : " + unitOne);
+
+            }
+            cursor.close();
+            return unitList;
+        }catch (Exception e){
+            Log.v(m_TAG, "selectSrsWordUnitFromTestUnit Exception : "+e);
+            return null;
+        }
+
+    }
 
 
 }
+

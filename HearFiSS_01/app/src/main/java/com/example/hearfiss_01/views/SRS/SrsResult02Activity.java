@@ -20,11 +20,16 @@ import com.example.hearfiss_01.audioTest.SRS.SentScore;
 import com.example.hearfiss_01.db.DTO.Account;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
+import com.example.hearfiss_01.db.DTO.HrTestUnit;
+import com.example.hearfiss_01.db.DTO.SrsWordUnit;
 import com.example.hearfiss_01.db.dao.SrsDAO;
+import com.example.hearfiss_01.db.dao.SrsWordUnitDAO;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.Common.MenuActivity;
 import com.example.hearfiss_01.views.History.HistoryListActivity;
 import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
+
+import java.util.ArrayList;
 
 public class SrsResult02Activity extends AppCompatActivity
         implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -54,16 +59,50 @@ public class SrsResult02Activity extends AppCompatActivity
 
     SentScore m_ScoreLeft = new SentScore();
     SentScore m_ScoreRight = new SentScore();
+
+    SrsWordUnitDAO srsWordUnitDAO = new SrsWordUnitDAO();
+
+    ArrayList<HrTestUnit> rightUnits = new ArrayList<>();
+    ArrayList<HrTestUnit> leftUnits = new ArrayList<>();
+
+    ArrayList<SrsWordUnit> correctUnit = new ArrayList<>();
+    ArrayList<SrsWordUnit> wrongUnit = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_srs_result02);
 
         m_Context = SrsResult02Activity.this;
 
+        SrsWordUnitDAO srsWordUnitDAO = new SrsWordUnitDAO(m_Context);
         m_Account = GlobalVar.g_AccLogin;
         m_TgId = GlobalVar.g_TestGroup.getTg_id();
+//----------------------------------------------------------------------------------------------------//
+        SrsDAO srsDAO = new SrsDAO(m_Context);
+        rightUnits = srsDAO.selectTsIdFromHrTestUnit(GlobalVar.g_TestIdR);
+        leftUnits = srsDAO.selectTsIdFromHrTestUnit(GlobalVar.g_TestIdL);
+
+        for(int i=0; i<rightUnits.size(); i++){
+            ArrayList<SrsWordUnit> temp = srsWordUnitDAO.selectCorrectWord(GlobalVar.g_TestIdR,rightUnits.get(i).getTu_id());
+            for(SrsWordUnit unitOne: temp){
+                Log.v("TEST LOG" ,"unit ONe : " + unitOne.toString());
+
+                correctUnit.add(unitOne);
+            }
+        }
+
+
+//----------------------------------------------------------------------------------------------------//
+        Log.v("TEST LOG" ,"VALUE : " + rightUnits.toString());
+        Log.v("TEST LOG" ,"VALUE : " +leftUnits.toString());
+        if(correctUnit!= null){
+            Log.v("TEST LOG" ,"Size VALUE : " + correctUnit.size());
+            for(int i=0; i<correctUnit.size(); i++){
+                Log.v("TEST LOG" ,"Correct VALUE : " + correctUnit.get(i).toString());
+            }
+        }
+
         getSrsResultFromDatabase();
 
         settingUserText();
@@ -248,8 +287,8 @@ public class SrsResult02Activity extends AppCompatActivity
        // m_ScoreLeft = GlobalVar.g_SentScoreLeft;
        // m_ScoreRight = GlobalVar.g_SentScoreRight;
 
-        Log.v("TEST log" ,"right" +GlobalVar.g_SentScoreRight.toString());
-        Log.v("TEST log" ,"left" +GlobalVar.g_SentScoreLeft.toString());
+//        Log.v("TEST log" ,"right" +GlobalVar.g_SentScoreRight.toString());
+//        Log.v("TEST log" ,"left" +GlobalVar.g_SentScoreLeft.toString());
 
         SrsRightResult.setText(m_TestSetRight.getTs_Result()+"\n"+m_TestSetRight.getTs_Comment());
         SrsLeftResult.setText(m_TestSetLeft.getTs_Result()+"\n"+m_TestSetLeft.getTs_Comment());

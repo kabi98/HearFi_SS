@@ -20,13 +20,13 @@ public class GlobalVar {
     public static int g_PttRightDBHL = 0;
     public static int g_PttLeftDBHL = 0;
 
+    public static int g_TestIdR = 0;
+    public static int g_TestIdL = 0;
 
     public static ArrayList<PttThreshold> g_alPttRightThreshold = new ArrayList<>();
     public static ArrayList<PttThreshold> g_alPttLeftThreshold = new ArrayList<>();
 
     public static HrTestGroup g_TestGroup = new HrTestGroup();
-
-
     public static ArrayList<WordUnit> g_alWrsRight = new ArrayList<>();
     public static ArrayList<WordUnit> g_alWrsLeft = new ArrayList<>();
 

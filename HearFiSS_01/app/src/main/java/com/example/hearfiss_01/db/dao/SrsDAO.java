@@ -307,10 +307,12 @@ public class SrsDAO {
         m_TestSetLeft.setTg_id(m_TestGroup.getTg_id());
         hrTestDAO.insertTestSet(m_TestSetLeft);
         m_TestSetLeft = hrTestDAO.selectTestSet(m_TestSetLeft);
+        GlobalVar.g_TestIdL = m_TestSetLeft.getTs_id();
 
         m_TestSetRight.setTg_id(m_TestGroup.getTg_id());
         hrTestDAO.insertTestSet(m_TestSetRight);
         m_TestSetRight = hrTestDAO.selectTestSet(m_TestSetRight);
+        GlobalVar.g_TestIdR = m_TestSetRight.getTs_id();
 
     }
     public void insertSrsTestUnitList(){
@@ -457,6 +459,44 @@ public class SrsDAO {
                             m_TestGroup.getTg_id(), m_TestSetLeft.getTs_id(), m_TestSetRight.getTs_id()));
         }catch (Exception e){
             Log.v(m_TAG, "selectBothSideTestSet Exception : " + e);
+        }
+    }
+
+    public ArrayList<HrTestUnit> selectTsIdFromHrTestUnit(int _r_ts_id) {
+        ArrayList<HrTestUnit> units = new ArrayList<>();
+        try {
+            m_database = m_helper.getReadableDatabase();
+
+            String strSQL = "SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect "
+                    + "FROM hrtest_unit WHERE ts_id = ? ;";
+            String[] params = {Integer.toString(_r_ts_id)};
+            Cursor cursor = m_database.rawQuery(strSQL, params);
+
+            Log.v(m_TAG, String.format("selectTsIdFromHrTestUnit Result = %d", cursor.getCount()));
+            if (cursor.getCount() <= 0) {
+                cursor.close();
+                return null;
+            }
+            while (cursor.moveToNext()) {
+                int tu_id = cursor.getInt(0); // You may want to use this ID in your SentUnit class
+                int ts_id = cursor.getInt(1);
+                String tu_question = cursor.getString(2);
+                String tu_answer = cursor.getString(3);
+                int tu_iscorrect = cursor.getInt(4);
+
+                HrTestUnit unitOne = new HrTestUnit(tu_id,ts_id,tu_question,tu_answer,tu_iscorrect);
+                units.add((unitOne));
+
+                Log.v(m_TAG, "Added SentUnit: " + unitOne.toString());
+            }
+            cursor.close();
+
+            //sentScore.scoring();
+
+            return units;
+        } catch (Exception e) {
+            Log.v(m_TAG, "selectTsIdFromHrTestUnit Exception : " + e);
+            return null;
         }
     }
 
