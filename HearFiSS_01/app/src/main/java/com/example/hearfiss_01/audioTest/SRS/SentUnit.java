@@ -18,6 +18,8 @@ public class SentUnit {
     ArrayList<WordUnit> _alWordUnit;
     ArrayList<Integer> _alWordIdx;
 
+
+
     public SentUnit() {
         _Question = "";
         _Answer = "";

@@ -248,61 +248,66 @@ public class SrsResult02Activity extends AppCompatActivity
        // m_ScoreLeft = GlobalVar.g_SentScoreLeft;
        // m_ScoreRight = GlobalVar.g_SentScoreRight;
 
+        Log.v("TEST log" ,"right" +GlobalVar.g_SentScoreRight.toString());
+        Log.v("TEST log" ,"left" +GlobalVar.g_SentScoreLeft.toString());
 
-        String ResultLeft = String.format(
-                "문장 기준 점수 : %d %% (%d개/%d개)" +
-                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
-                , m_ScoreLeft.get_iSentScore()
-                , m_ScoreLeft.get_iSentCorrect()
-                , m_ScoreLeft.get_iSentQuest()
-                , m_ScoreLeft.get_iWordScore()
-                , m_ScoreLeft.get_iWordCorrect()
-                , m_ScoreLeft.get_iWordQuest());
-        SrsLeftResult.setText(ResultLeft);
+        SrsRightResult.setText(m_TestSetRight.getTs_Result()+"\n"+m_TestSetRight.getTs_Comment());
+        SrsLeftResult.setText(m_TestSetLeft.getTs_Result()+"\n"+m_TestSetLeft.getTs_Comment());
 
-        String ResultRight = String.format(
-                "문장 기준 점수 : %d %% (%d개/%d개)" +
-                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
-                , m_ScoreRight.get_iSentScore()
-                , m_ScoreRight.get_iSentCorrect()
-                , m_ScoreRight.get_iSentQuest()
-                , m_ScoreRight.get_iWordScore()
-                , m_ScoreRight.get_iWordCorrect()
-                , m_ScoreRight.get_iWordQuest());
-
-        SrsRightResult.setText(ResultRight);
-
-        String l_answerNum = String.format(
-                "문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentCorrect(), m_ScoreLeft.get_iWordCorrect()
-        );
-        String r_answerNum = String.format(
-                "문장 : %d\n단어 : %d", m_ScoreRight.get_iSentCorrect(), m_ScoreRight.get_iWordCorrect()
-        );
-        SrsLeftAnswer.setText(l_answerNum);
-        SrsRightAnswer.setText(r_answerNum);
-
-        String l_wrongNum = String.format(
-                "문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentQuest() - m_ScoreLeft.get_iSentCorrect(), m_ScoreLeft.get_iWordQuest()-m_ScoreLeft.get_iWordCorrect());
-
-        String r_wrongNum = String.format(
-                "문장 : %d\n단어 : %d", m_ScoreRight.get_iSentQuest() - m_ScoreRight.get_iSentCorrect(), m_ScoreRight.get_iWordQuest() - m_ScoreRight.get_iWordCorrect());
-        SrsLeftWrong.setText(l_wrongNum);
-        SrsRightWrong.setText(r_wrongNum);
-
-        String totalRight = String.format("문장 : %d\n단어 : %d", m_ScoreRight.get_iSentQuest(),m_ScoreRight.get_iWordQuest());
-        String totalLeft = String.format("문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentQuest(),m_ScoreLeft.get_iWordQuest());
-        rightTotalNum.setText(totalRight);
-        leftTotalNum.setText(totalLeft);
-
-        String l_answer = displayCorrectAnswers(m_ScoreLeft);
-        SrsLeftWord.setText(l_answer);
-        String l_wrong = displayWrongAnswers(m_ScoreLeft);
-        SrsLeftWrongWord.setText(l_wrong);
-
-        String r_answer = displayCorrectAnswers(m_ScoreRight);
-        SrsRightWord.setText(r_answer);
-        String r_wrong = displayWrongAnswers(m_ScoreRight);
-        SrsRightWrongWord.setText(r_wrong);
+//        String ResultLeft = String.format(
+//                "문장 기준 점수 : %d %% (%d개/%d개)" +
+//                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
+//                , m_ScoreLeft.get_iSentScore()
+//                , m_ScoreLeft.get_iSentCorrect()
+//                , m_ScoreLeft.get_iSentQuest()
+//                , m_ScoreLeft.get_iWordScore()
+//                , m_ScoreLeft.get_iWordCorrect()
+//                , m_ScoreLeft.get_iWordQuest());
+//        SrsLeftResult.setText(ResultLeft);
+//
+//        String ResultRight = String.format(
+//                "문장 기준 점수 : %d %% (%d개/%d개)" +
+//                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
+//                , m_ScoreRight.get_iSentScore()
+//                , m_ScoreRight.get_iSentCorrect()
+//                , m_ScoreRight.get_iSentQuest()
+//                , m_ScoreRight.get_iWordScore()
+//                , m_ScoreRight.get_iWordCorrect()
+//                , m_ScoreRight.get_iWordQuest());
+//
+//        SrsRightResult.setText(ResultRight);
+//
+//        String l_answerNum = String.format(
+//                "문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentCorrect(), m_ScoreLeft.get_iWordCorrect()
+//        );
+//        String r_answerNum = String.format(
+//                "문장 : %d\n단어 : %d", m_ScoreRight.get_iSentCorrect(), m_ScoreRight.get_iWordCorrect()
+//        );
+//        SrsLeftAnswer.setText(l_answerNum);
+//        SrsRightAnswer.setText(r_answerNum);
+//
+//        String l_wrongNum = String.format(
+//                "문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentQuest() - m_ScoreLeft.get_iSentCorrect(), m_ScoreLeft.get_iWordQuest()-m_ScoreLeft.get_iWordCorrect());
+//
+//        String r_wrongNum = String.format(
+//                "문장 : %d\n단어 : %d", m_ScoreRight.get_iSentQuest() - m_ScoreRight.get_iSentCorrect(), m_ScoreRight.get_iWordQuest() - m_ScoreRight.get_iWordCorrect());
+//        SrsLeftWrong.setText(l_wrongNum);
+//        SrsRightWrong.setText(r_wrongNum);
+//
+//        String totalRight = String.format("문장 : %d\n단어 : %d", m_ScoreRight.get_iSentQuest(),m_ScoreRight.get_iWordQuest());
+//        String totalLeft = String.format("문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentQuest(),m_ScoreLeft.get_iWordQuest());
+//        rightTotalNum.setText(totalRight);
+//        leftTotalNum.setText(totalLeft);
+//
+//        String l_answer = displayCorrectAnswers(m_ScoreLeft);
+//        SrsLeftWord.setText(l_answer);
+//        String l_wrong = displayWrongAnswers(m_ScoreLeft);
+//        SrsLeftWrongWord.setText(l_wrong);
+//
+//        String r_answer = displayCorrectAnswers(m_ScoreRight);
+//        SrsRightWord.setText(r_answer);
+//        String r_wrong = displayWrongAnswers(m_ScoreRight);
+//        SrsRightWrongWord.setText(r_wrong);
     }
 
 

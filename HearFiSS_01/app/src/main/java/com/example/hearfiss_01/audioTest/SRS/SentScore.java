@@ -79,6 +79,7 @@ public class SentScore {
         _iWordQuest     = 0;
         _iWordCorrect   = 0;
         _iWordScore     = 0;
+
         for(SentUnit sentence :_alSentence ){
             _iWordQuest += sentence.get_iWordQuestion();
             _iWordCorrect += sentence.get_iWordCorrect();
@@ -91,6 +92,9 @@ public class SentScore {
 
     public void setAlSentence(ArrayList<SentUnit> _alSentence) {
         this._alSentence = _alSentence;
+        for(int i=0; i<_alSentence.size(); i++){
+            Log.v("Test log" , i + "value : " + _alSentence.get(i).toString());
+        }
 
     }
     public String getCorrectStringList() {
