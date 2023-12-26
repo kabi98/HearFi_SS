@@ -98,7 +98,7 @@ public class SentScore {
 
     }
 
-
+    /*
     public String getCorrectStringList() {
         StringBuilder correctStringBuilder = new StringBuilder();
         for (SentUnit unit : _alSentence) {
@@ -108,12 +108,24 @@ public class SentScore {
         }
         return correctStringBuilder.toString().trim();
     }
+    */
+
+    public String getCorrectStringList() {
+        StringBuilder correctStringBuilder = new StringBuilder();
+        for (SentUnit unit : _alSentence) {
+            if (unit.get_Correct() > 0) {
+                correctStringBuilder.append(unit.get_Question()).append("\n"); // 줄바꿈 추가
+            }
+        }
+        return correctStringBuilder.toString().trim();
+    }
+
 
     public String getWrongStringList() {
         StringBuilder wrongStringBuilder = new StringBuilder();
         for (SentUnit unit : _alSentence) {
             if (unit.get_Correct() <= 0) {
-                wrongStringBuilder.append(unit.get_Question()).append(" ");
+                wrongStringBuilder.append(unit.get_Question()).append("\n");
             }
         }
         return wrongStringBuilder.toString().trim();

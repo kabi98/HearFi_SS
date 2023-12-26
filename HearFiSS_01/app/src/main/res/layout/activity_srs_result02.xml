@@ -325,7 +325,7 @@
                                     android:layout_marginTop="10dp"
                                     android:text="사과 배 바나나 땅콩 옥수수"
                                     android:layout_marginBottom="30dp"
-                                    android:textColor="@color/blue"
+                                    android:textColor="#E60C0C"
                                     android:fontFamily="@font/pretendardextrabold"
                                     android:textSize="17dp"></TextView>
                             </LinearLayout>
@@ -537,7 +537,7 @@
                                     android:layout_marginTop="10dp"
                                     android:text="사과 배 바나나 땅콩 옥수수"
                                     android:layout_marginBottom="30dp"
-                                    android:textColor="@color/blue"
+                                    android:textColor="#E60C0C"
                                     android:fontFamily="@font/pretendardextrabold"
                                     android:textSize="17dp"></TextView>
                             </LinearLayout>
