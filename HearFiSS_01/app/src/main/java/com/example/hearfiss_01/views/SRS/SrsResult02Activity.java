@@ -86,7 +86,7 @@ public class SrsResult02Activity extends AppCompatActivity
         for(int i=0; i<rightUnits.size(); i++){
             ArrayList<SrsWordUnit> temp = srsWordUnitDAO.selectCorrectWord(GlobalVar.g_TestIdR,rightUnits.get(i).getTu_id());
             for(SrsWordUnit unitOne: temp){
-                Log.v("TEST LOG" ,"unit ONe : " + unitOne.toString());
+                Log.v(m_TAG ,"unit ONe : " + unitOne.toString());
 
                 correctUnit.add(unitOne);
             }
@@ -94,12 +94,12 @@ public class SrsResult02Activity extends AppCompatActivity
 
 
 //----------------------------------------------------------------------------------------------------//
-        Log.v("TEST LOG" ,"VALUE : " + rightUnits.toString());
-        Log.v("TEST LOG" ,"VALUE : " +leftUnits.toString());
+        Log.v(m_TAG ,"VALUE : " + rightUnits.toString());
+        Log.v(m_TAG ,"VALUE : " +leftUnits.toString());
         if(correctUnit!= null){
-            Log.v("TEST LOG" ,"Size VALUE : " + correctUnit.size());
+            Log.v(m_TAG ,"Size VALUE : " + correctUnit.size());
             for(int i=0; i<correctUnit.size(); i++){
-                Log.v("TEST LOG" ,"Correct VALUE : " + correctUnit.get(i).toString());
+                Log.v(m_TAG ,"Correct VALUE : " + correctUnit.get(i).toString());
             }
         }
 
