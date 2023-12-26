@@ -241,9 +241,21 @@ public class SrtDAO {
                 Log.v(m_TAG, String.format("inserted TestUnitList HrTestUnit Q: %s, A: %s, C: %d ",
                         unitOne.get_Question(), unitOne.get_Answer(), unitOne.get_Correct()));
 
+                String query = " SELECT tu_id, ts_id, tu_question, tu_answer, tu_iscorrect " +
+                        " FROM hrtest_unit " +
+                        " WHERE ts_id = ? " +
+                        " AND tu_question = ? ; ";
+                Cursor cursor = m_database.rawQuery(query, new String[]{String.valueOf(iTsId), unitOne.get_Question()});
+                int iTuId = 0;
+                if (cursor != null && cursor.moveToFirst()){
+                    iTuId = cursor.getInt(0);
+                }
+                cursor.close();
+                Log.v( m_TAG, String.format("inserted TestUnitList SrtUnit tu_id : %d, tu_question %s ", iTuId, unitOne.get_Question() ));
+
                 // srtunit table
-                String strSQLSrtUnit = "INSERT INTO srt_unit (ts_id, tu_dBHL) VALUES (?, ?);";
-                Object[] paramsSrtUnit = {iTsId, unitOne.get_CurDb()};
+                String strSQLSrtUnit = "INSERT INTO srt_unit (ts_id, tu_id, tu_dBHL) VALUES (?, ?, ?);";
+                Object[] paramsSrtUnit = {iTsId, iTuId, unitOne.get_CurDb()};
                 m_database.execSQL(strSQLSrtUnit, paramsSrtUnit);
                 Log.v(m_TAG, String.format("inserted TestUnitList SrtUnit dB : %d ", unitOne.get_CurDb()));
             }

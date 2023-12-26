@@ -174,6 +174,7 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         m_TestSetLeft = srtDAO.getTestSetLeft();
         m_TestSetRight = srtDAO.getTestSetRight();
 
+
         m_alRight = srtDAO.get_alRightList();
         m_alLeft = srtDAO.get_alLeftList();
 
@@ -205,6 +206,9 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
                     String.format(" SRT RESULT Left : %d, %s ",
                             i , m_alLeft.get(i).toString() ) );
         }
+
+
+
     }
 
     private String getCorrectStringList(ArrayList<SrtUnit> _alUnitList){
