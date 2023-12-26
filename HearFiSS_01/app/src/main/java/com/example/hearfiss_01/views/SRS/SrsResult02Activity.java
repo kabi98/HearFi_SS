@@ -68,6 +68,9 @@ public class SrsResult02Activity extends AppCompatActivity
     ArrayList<SrsWordUnit> correctUnit = new ArrayList<>();
     ArrayList<SrsWordUnit> wrongUnit = new ArrayList<>();
 
+    ArrayList<SrsWordUnit> rightWordList = new ArrayList<>();
+    ArrayList<SrsWordUnit> leftWordList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,18 +83,27 @@ public class SrsResult02Activity extends AppCompatActivity
         m_TgId = GlobalVar.g_TestGroup.getTg_id();
 //----------------------------------------------------------------------------------------------------//
         SrsDAO srsDAO = new SrsDAO(m_Context);
-        rightUnits = srsDAO.selectTsIdFromHrTestUnit(GlobalVar.g_TestIdR);
-        leftUnits = srsDAO.selectTsIdFromHrTestUnit(GlobalVar.g_TestIdL);
+        rightUnits = srsDAO.selectUnitListFromTsId(GlobalVar.g_TestIdR);
+        leftUnits = srsDAO.selectUnitListFromTsId(GlobalVar.g_TestIdL);
 
+/*
+        getSrsResultFromDatabase();
+        Log.v(m_TAG, String.format("Right Word result :  %d, %d" ,  m_SentRight.get_iWordScore(), m_SentRight.get_iWordCorrect()));
+        Log.v(m_TAG, String.format("Left Word result :  %d, %d" ,  m_SentLeft.get_iWordScore(), m_SentLeft.get_iWordCorrect()));
+*/
+
+
+        Log.v(m_TAG, String.format("*** UnitList Size Left:%d, Rigth:%d" ,  leftUnits.size(), rightUnits.size() ));
         for(int i=0; i<rightUnits.size(); i++){
-            ArrayList<SrsWordUnit> temp = srsWordUnitDAO.selectCorrectWord(GlobalVar.g_TestIdR,rightUnits.get(i).getTu_id());
-            for(SrsWordUnit unitOne: temp){
-                Log.v(m_TAG ,"unit ONe : " + unitOne.toString());
-
-                correctUnit.add(unitOne);
-            }
+            ArrayList<SrsWordUnit> selectWordList = srsWordUnitDAO.selectWordListFromTuId(rightUnits.get(i).getTu_id());
+            rightWordList.addAll(selectWordList);
         }
 
+        for(int i=0; i<leftUnits.size(); i++){
+            ArrayList<SrsWordUnit> selectWordList = srsWordUnitDAO.selectWordListFromTuId(leftUnits.get(i).getTu_id());
+            leftWordList.addAll(selectWordList);
+        }
+        Log.v(m_TAG, String.format("*** WordList Size Left:%d, Right : %d",  leftWordList.size(), rightWordList.size() ));
 
 //----------------------------------------------------------------------------------------------------//
         Log.v(m_TAG ,"VALUE : " + rightUnits.toString());
@@ -216,7 +228,7 @@ public class SrsResult02Activity extends AppCompatActivity
         Log.v(m_TAG, String.format("TestSet RIGHT %s",
                 m_TestSetRight.toString() ) );
 
-        
+
         m_ScoreLeft.setAlSentence(srsDAO.getLeftSrsUnitList());
         m_ScoreLeft.scoring();
 
@@ -244,6 +256,56 @@ public class SrsResult02Activity extends AppCompatActivity
                     String.format(" SRS RESULT Left : %d, %s ",
                             i , m_ScoreLeft.get_alSentence().get(i).toString()) );
         }
+
+        Log.v(m_TAG, String.format("*** getSrsResultFromDatabase Word List Size Left:%d, Right : %d",  leftWordList.size(), rightWordList.size() ));
+        int iRightAll = 0, iRightCorrect = 0, iRightWrong = 0;
+        iRightAll = rightWordList.size();
+        for(SrsWordUnit wordUnit : rightWordList) {
+            if(wordUnit.getSu_iscorrect() == 1){
+                iRightCorrect++;
+            } else {
+                iRightWrong++;
+            }
+            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Right Q:%s A:%s C:%d ",
+                    wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
+        }
+        Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Rigth All %d: C:%d W:%d ",
+                iRightAll, iRightCorrect, iRightWrong));
+
+/*
+        int iRightAll = 0, iRightCorrect = 0, iRightWrong = 0;
+        SrsWordUnit wordUnit = new SrsWordUnit();
+
+        iRightAll = rightWordList.size();
+        for(int i=0; i<rightWordList.size(); i++){
+            wordUnit = rightWordList.get(i);
+            if(wordUnit.getSu_iscorrect() == 1){
+                iRightCorrect++;
+            } else {
+                iRightWrong++;
+            }
+            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Right%d: Q:%s A:%s C:%d ",
+                    i, wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
+        }
+        Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Rigth All %d: C:%d W:%d ",
+                iRightAll, iRightCorrect, iRightWrong));
+*/
+        int iLeftAll = 0, iLeftCorrect = 0, iLeftWrong = 0;
+        SrsWordUnit wordUnit = new SrsWordUnit();
+
+        iLeftAll = leftWordList.size();
+        for(int i=0; i<leftWordList.size(); i++){
+            wordUnit = leftWordList.get(i);
+            if(wordUnit.getSu_iscorrect() == 1){
+                iLeftCorrect++;
+            } else {
+                iLeftWrong++;
+            }
+            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left %d: Q:%s A:%s C:%d ",
+                    i, wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
+        }
+        Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left All %d: C:%d W:%d ",
+                iLeftAll, iLeftCorrect, iLeftWrong));
 
 
         srsDAO.releaseAndClose();

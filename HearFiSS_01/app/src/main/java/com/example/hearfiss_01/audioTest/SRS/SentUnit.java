@@ -84,6 +84,13 @@ public class SentUnit {
         return _alWordIdx;
     }
 
+    public void set_alWordUnit(ArrayList<WordUnit> _alWordUnit) {
+        this._alWordUnit = _alWordUnit;
+    }
+
+    public void set_alWordIdx(ArrayList<Integer> _alWordIdx) {
+        this._alWordIdx = _alWordIdx;
+    }
 
     public void printWordList(){
         for(int i = 0; i< _alWordUnit.size(); i++){

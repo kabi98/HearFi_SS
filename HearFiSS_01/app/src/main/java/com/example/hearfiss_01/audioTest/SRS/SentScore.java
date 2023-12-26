@@ -97,6 +97,8 @@ public class SentScore {
         }
 
     }
+
+
     public String getCorrectStringList() {
         StringBuilder correctStringBuilder = new StringBuilder();
         for (SentUnit unit : _alSentence) {

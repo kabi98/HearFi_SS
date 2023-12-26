@@ -462,7 +462,7 @@ public class SrsDAO {
         }
     }
 
-    public ArrayList<HrTestUnit> selectTsIdFromHrTestUnit(int _r_ts_id) {
+    public ArrayList<HrTestUnit> selectUnitListFromTsId(int _r_ts_id) {
         ArrayList<HrTestUnit> units = new ArrayList<>();
         try {
             m_database = m_helper.getReadableDatabase();
@@ -472,7 +472,7 @@ public class SrsDAO {
             String[] params = {Integer.toString(_r_ts_id)};
             Cursor cursor = m_database.rawQuery(strSQL, params);
 
-            Log.v(m_TAG, String.format("selectTsIdFromHrTestUnit Result = %d", cursor.getCount()));
+            Log.v(m_TAG, String.format("selectUnitListFromTsId Result = %d", cursor.getCount()));
             if (cursor.getCount() <= 0) {
                 cursor.close();
                 return null;
@@ -495,7 +495,7 @@ public class SrsDAO {
 
             return units;
         } catch (Exception e) {
-            Log.v(m_TAG, "selectTsIdFromHrTestUnit Exception : " + e);
+            Log.v(m_TAG, "selectUnitListFromTsId Exception : " + e);
             return null;
         }
     }
