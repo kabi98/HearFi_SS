@@ -272,37 +272,17 @@ public class SrsResult02Activity extends AppCompatActivity
         Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Rigth All %d: C:%d W:%d ",
                 iRightAll, iRightCorrect, iRightWrong));
 
-/*
-        int iRightAll = 0, iRightCorrect = 0, iRightWrong = 0;
-        SrsWordUnit wordUnit = new SrsWordUnit();
 
-        iRightAll = rightWordList.size();
-        for(int i=0; i<rightWordList.size(); i++){
-            wordUnit = rightWordList.get(i);
-            if(wordUnit.getSu_iscorrect() == 1){
-                iRightCorrect++;
-            } else {
-                iRightWrong++;
-            }
-            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Right%d: Q:%s A:%s C:%d ",
-                    i, wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
-        }
-        Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Rigth All %d: C:%d W:%d ",
-                iRightAll, iRightCorrect, iRightWrong));
-*/
         int iLeftAll = 0, iLeftCorrect = 0, iLeftWrong = 0;
-        SrsWordUnit wordUnit = new SrsWordUnit();
-
         iLeftAll = leftWordList.size();
-        for(int i=0; i<leftWordList.size(); i++){
-            wordUnit = leftWordList.get(i);
+        for(SrsWordUnit wordUnit : leftWordList) {
             if(wordUnit.getSu_iscorrect() == 1){
                 iLeftCorrect++;
             } else {
                 iLeftWrong++;
             }
-            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left %d: Q:%s A:%s C:%d ",
-                    i, wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
+            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left Q:%s A:%s C:%d ",
+                    wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
         }
         Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left All %d: C:%d W:%d ",
                 iLeftAll, iLeftCorrect, iLeftWrong));
@@ -355,28 +335,62 @@ public class SrsResult02Activity extends AppCompatActivity
         SrsRightResult.setText(m_TestSetRight.getTs_Result()+"\n"+m_TestSetRight.getTs_Comment());
         SrsLeftResult.setText(m_TestSetLeft.getTs_Result()+"\n"+m_TestSetLeft.getTs_Comment());
 
-//        String ResultLeft = String.format(
-//                "문장 기준 점수 : %d %% (%d개/%d개)" +
-//                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
-//                , m_ScoreLeft.get_iSentScore()
-//                , m_ScoreLeft.get_iSentCorrect()
-//                , m_ScoreLeft.get_iSentQuest()
-//                , m_ScoreLeft.get_iWordScore()
-//                , m_ScoreLeft.get_iWordCorrect()
-//                , m_ScoreLeft.get_iWordQuest());
-//        SrsLeftResult.setText(ResultLeft);
-//
-//        String ResultRight = String.format(
-//                "문장 기준 점수 : %d %% (%d개/%d개)" +
-//                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
-//                , m_ScoreRight.get_iSentScore()
-//                , m_ScoreRight.get_iSentCorrect()
-//                , m_ScoreRight.get_iSentQuest()
-//                , m_ScoreRight.get_iWordScore()
-//                , m_ScoreRight.get_iWordCorrect()
-//                , m_ScoreRight.get_iWordQuest());
-//
-//        SrsRightResult.setText(ResultRight);
+
+        int iLeftAll = 0, iLeftCorrect = 0, iLeftWrong = 0;
+        iLeftAll = leftWordList.size();
+        for(SrsWordUnit wordUnit : leftWordList) {
+            if(wordUnit.getSu_iscorrect() == 1){
+                iLeftCorrect++;
+            } else {
+                iLeftWrong++;
+            }
+            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left Q:%s A:%s C:%d ",
+                    wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
+        }
+        Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left All %d: C:%d W:%d ",
+                iLeftAll, iLeftCorrect, iLeftWrong));
+
+        int iLeftScore = (int)(((float)iLeftCorrect/(float)iLeftWrong) * 100);
+
+
+        String ResultLeft = String.format(
+                "문장 기준 점수 : %d %% (%d개/%d개)" +
+                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
+                , m_ScoreLeft.get_iSentScore()
+                , m_ScoreLeft.get_iSentCorrect()
+                , m_ScoreLeft.get_iSentQuest()
+                , iLeftScore
+                , iLeftCorrect
+                , iLeftAll);
+        SrsLeftResult.setText(ResultLeft);
+
+        int iRightAll = 0, iRightCorrect = 0, iRightWrong = 0;
+        iRightAll = rightWordList.size();
+        for(SrsWordUnit wordUnit : rightWordList) {
+            if(wordUnit.getSu_iscorrect() == 1){
+                iRightCorrect++;
+            } else {
+                iRightWrong++;
+            }
+            Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Right Q:%s A:%s C:%d ",
+                    wordUnit.getSu_question(), wordUnit.getSu_answer(), wordUnit.getSu_iscorrect()));
+        }
+        Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Rigth All %d: C:%d W:%d ",
+                iRightAll, iRightCorrect, iRightWrong));
+
+        int iRightScore = (int)(((float)iRightCorrect/(float)iRightWrong) * 100);
+
+        String ResultRight = String.format(
+                "문장 기준 점수 : %d %% (%d개/%d개)" +
+                        "\n단어 기준 점수 : %d %% (%d개/%d개)"
+                , m_ScoreRight.get_iSentScore()
+                , m_ScoreRight.get_iSentCorrect()
+                , m_ScoreRight.get_iSentQuest()
+                , iRightScore
+                , iRightCorrect
+                , iRightAll);
+
+        SrsRightResult.setText(ResultRight);
 //
 //        String l_answerNum = String.format(
 //                "문장 : %d\n단어 : %d", m_ScoreLeft.get_iSentCorrect(), m_ScoreLeft.get_iWordCorrect()
