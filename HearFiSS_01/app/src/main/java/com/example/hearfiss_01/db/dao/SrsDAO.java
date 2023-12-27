@@ -420,6 +420,9 @@ public class SrsDAO {
         String strSQL = "SELECT tu_id, tu_question, tu_answer, tu_iscorrect "
                 + "FROM hrtest_unit WHERE ts_id = ?;";
         String[] params = {Integer.toString(ts_id)};
+
+        Log.v(m_TAG, String.format(" ### tryGetUnitListFromTestSet SQL =  %s, ", strSQL));
+
         Cursor cursor = m_database.rawQuery(strSQL, params);
 
         Log.v(m_TAG, String.format("tryGetUnitListFromTestSet Result = %d", cursor.getCount()));

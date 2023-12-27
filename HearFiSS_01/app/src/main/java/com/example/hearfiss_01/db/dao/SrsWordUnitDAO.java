@@ -202,21 +202,28 @@ public class SrsWordUnitDAO {
     }
 
     public ArrayList<SrsWordUnit> selectWordListFromTuId(int iTuId) {
+        Log.v(m_TAG, String.format(" **** selectWordListFromTuId Start ****"));
+
         ArrayList<SrsWordUnit> unitList = new ArrayList<>();
         try{
             String strSQL =
-                    " select s.su_id, s.tu_id, s.su_question, s.su_answer, s.su_iscorrect, s.su_idx "
-                    + " from srs_word_unit s, hrtest_unit u "
-                    + " where s.tu_id = u.tu_id AND u.tu_id = ?; ";
+                    " SELECT s.su_id, s.tu_id, s.su_question, s.su_answer, s.su_iscorrect, s.su_idx "
+                    + " FROM srs_word_unit s, hrtest_unit u "
+                    + " WHERE s.tu_id = u.tu_id AND u.tu_id = ?; ";
             String[] params = { Integer.toString(iTuId) };
 
-            m_database = m_helper.getWritableDatabase();
-            Cursor cursor = m_database.rawQuery(strSQL, params);
+            Log.v(m_TAG, String.format(" selectWordListFromTuId SQL =  %s %n tu_id=%d", strSQL, iTuId ));
 
+            m_database = m_helper.getReadableDatabase();
+            Log.v(m_TAG, String.format("selectWordListFromTuId getReadableDatabase"));
+
+            Cursor cursor = m_database.rawQuery(strSQL, params);
             Log.v(m_TAG,
                     String.format("selectWordListFromTuId Result = %d", cursor.getCount()));
+
             if (cursor.getCount() <= 0) {
-                Log.v(m_TAG, "selectWordListFromTuId - No Data Found");
+                Log.v(m_TAG, " *** selectWordListFromTuId - No Data Found *** ");
+
                 return new ArrayList<SrsWordUnit>();
             }
 
@@ -237,9 +244,10 @@ public class SrsWordUnitDAO {
             }
             cursor.close();
             return unitList;
+
         }catch (Exception e){
             Log.v(m_TAG, "selectWordListFromTuId Exception : "+e);
-            return null;
+            return new ArrayList<SrsWordUnit>();
         }
 
     }
