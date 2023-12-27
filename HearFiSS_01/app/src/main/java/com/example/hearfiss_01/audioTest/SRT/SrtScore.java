@@ -57,12 +57,27 @@ public class SrtScore {
         return m_alSrtUnit;
     }
 
-    public void setM_alSrtUnit(ArrayList<SrtUnit> m_alSrtUnit){
+
+    public void setM_alSrtUnit(ArrayList<SrtUnit> m_alSrtUnit) {
         this.m_alSrtUnit = m_alSrtUnit;
 
-        int iLast = m_alSrtUnit.size() - 1;
-        this.m_iPassTrsd = m_alSrtUnit.get(iLast).get_CurDb();
+        m_iCorrect = 0;
+        m_iQuestion = m_alSrtUnit.size();
+
+        for (SrtUnit unit : m_alSrtUnit) {
+            if (unit.get_Correct() == 1) {
+                m_iCorrect++;
+            }
+        }
+
+        if (!m_alSrtUnit.isEmpty()) {
+            int iLast = m_alSrtUnit.size() - 1;
+            this.m_iPassTrsd = m_alSrtUnit.get(iLast).get_CurDb();
+        }
+
+        Log.d("SrtScore", "setM_alSrtUnit: Total questions = " + m_iQuestion + ", Correct answers = " + m_iCorrect);
     }
+
 
     public int addTestUnit(SrtUnit tuAdd){
         m_alSrtUnit.add(tuAdd);

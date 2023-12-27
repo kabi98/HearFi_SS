@@ -181,6 +181,8 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         m_ScoreLeft.setM_alSrtUnit(m_alLeft);
         m_ScoreRight.setM_alSrtUnit(m_alRight);
 
+        Log.d(m_TAG, "getSrtResultFromDatabase: Left Correct Answers = " + m_ScoreLeft.getM_iCorrect());
+        Log.d(m_TAG, "getSrtResultFromDatabase: Right Correct Answers = " + m_ScoreRight.getM_iCorrect());
 
         srtDAO.releaseAndClose();
 
@@ -207,38 +209,45 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
                             i , m_alLeft.get(i).toString() ) );
         }
 
+        for (SrtUnit unit : m_alRight) {
+            Log.d(m_TAG, "Right Unit: Question = " + unit.get_Question() + ", Correct = " + unit.get_Correct());
+        }
+
+        for (SrtUnit unit : m_alLeft) {
+            Log.d(m_TAG, "Left Unit: Question = " + unit.get_Question() + ", Correct = " + unit.get_Correct());
+        }
 
 
     }
 
     private String getCorrectStringList(ArrayList<SrtUnit> _alUnitList){
         Log.v(m_TAG, "getCorrectStringList - size : " +  _alUnitList.size());
-        String strCorrect = "";
+        StringBuilder strCorrect = new StringBuilder();
         for (SrtUnit unit : _alUnitList){
             Log.v(m_TAG, "processing CorrectSrtUnit : " + unit.toString());
 
             if (1 == unit.get_Correct()){
-                strCorrect += unit.get_Question() + " ";
+                strCorrect.append(unit.get_Question()).append("\n");
                 Log.v(m_TAG, " Discover CorrectSrtUnit : " + unit.get_Question());
             }
         }
         Log.v(m_TAG, " getCorrectStringList - end : "+ strCorrect);
-        return strCorrect;
+        return strCorrect.toString().trim();
     }
 
     private String getWrongStringList(ArrayList<SrtUnit> _alUnitList){
         Log.v(m_TAG, "getWrongStringList - size : " + _alUnitList.size());
-        String strWrong = " ";
+        StringBuilder strWrong = new StringBuilder();
         for (SrtUnit unit : _alUnitList){
             Log.v(m_TAG, "processing WrongSrtUnit : " + unit.toString());
 
             if (1 != unit.get_Correct()){
-                strWrong += unit.get_Question() + " ";
+                strWrong.append(unit.get_Question()).append("\n");
                 Log.v(m_TAG,"Discover WrongSrtUnit : "+ unit.get_Question());
             }
         }
         Log.v(m_TAG, "getWrongStringList - end : " + strWrong);
-        return strWrong;
+        return strWrong.toString().trim();
     }
 
 
@@ -300,8 +309,6 @@ public class SrtResult02Activity extends AppCompatActivity  implements View.OnCl
         String l_wrongNum = Integer.toString(m_ScoreLeft.getM_iQuestion() - m_ScoreLeft.getM_iCorrect());
         String r_wrongNum = Integer.toString(m_ScoreRight.getM_iQuestion() - m_ScoreRight.getM_iCorrect());
 
-//        rightTotalNum.setText(Integer.toString(m_ScoreRight.getM_iQuestion()));
-//        leftTotalNum.setText(Integer.toString(m_ScoreLeft.getM_iQuestion()));
         SrtLeftWrong.setText(l_wrongNum);
         SrtRightWrong.setText(r_wrongNum);
 
