@@ -93,7 +93,6 @@ public class SrsResult02Activity extends AppCompatActivity
 */
 
 
-        Log.v(m_TAG, String.format("*** UnitList Size Left:%d, Rigth:%d" ,  leftUnits.size(), rightUnits.size() ));
         for(int i=0; i<rightUnits.size(); i++){
             ArrayList<SrsWordUnit> selectWordList = srsWordUnitDAO.selectWordListFromTuId(rightUnits.get(i).getTu_id());
             rightWordList.addAll(selectWordList);
@@ -103,7 +102,6 @@ public class SrsResult02Activity extends AppCompatActivity
             ArrayList<SrsWordUnit> selectWordList = srsWordUnitDAO.selectWordListFromTuId(leftUnits.get(i).getTu_id());
             leftWordList.addAll(selectWordList);
         }
-        Log.v(m_TAG, String.format("*** WordList Size Left:%d, Right : %d",  leftWordList.size(), rightWordList.size() ));
 
 //----------------------------------------------------------------------------------------------------//
         Log.v(m_TAG ,"VALUE : " + rightUnits.toString());

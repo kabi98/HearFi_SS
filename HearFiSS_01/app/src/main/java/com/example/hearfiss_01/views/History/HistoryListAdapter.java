@@ -13,11 +13,11 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hearfiss_01.R;
-import com.example.hearfiss_01.db.dao.HrTestDAO;
 import com.example.hearfiss_01.db.DTO.ResultDTO;
+import com.example.hearfiss_01.db.dao.HrTestDAO;
 import com.example.hearfiss_01.global.GlobalVar;
-import com.example.hearfiss_01.views.PTT.PttResult02Activity;
-import com.example.hearfiss_01.views.WRS.WrsResult02Activity;
+import com.example.hearfiss_01.views.SRS.SrsResult02Activity;
+import com.example.hearfiss_01.views.SRT.SrtResult02Activity;
 
 import java.util.ArrayList;
 
@@ -81,13 +81,13 @@ public class HistoryListAdapter extends RecyclerView.Adapter <HistoryListAdapter
                 HrTestDAO dao = new HrTestDAO(context);
                 GlobalVar.g_TestGroup = dao.selectTestGroupFromTgId(iPositionTgid);
 
-                if(dataList.get(mPosition).getTg_type().contains("PTA")){
-                    Intent intent = new Intent(context, PttResult02Activity.class);
+                if(dataList.get(mPosition).getTg_type().contains("SRT")){
+                    Intent intent = new Intent(context, SrtResult02Activity.class);
                     (context).startActivity(intent);
                 }
 
-                if(dataList.get(mPosition).getTg_type().contains("WRS")){
-                    Intent intent = new Intent(context, WrsResult02Activity.class);
+                if(dataList.get(mPosition).getTg_type().contains("SRS")){
+                    Intent intent = new Intent(context, SrsResult02Activity.class);
                     (context).startActivity(intent);
                 }
 

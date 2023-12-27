@@ -14,16 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hearfiss_01.R;
-import com.example.hearfiss_01.db.dao.MyTest;
 import com.example.hearfiss_01.db.DTO.HrTestGroup;
 import com.example.hearfiss_01.db.DTO.HrTestSet;
 import com.example.hearfiss_01.db.DTO.ResultDTO;
+import com.example.hearfiss_01.db.dao.MyTest;
 import com.example.hearfiss_01.global.GlobalVar;
 import com.example.hearfiss_01.views.Common.MenuActivity;
-import com.example.hearfiss_01.views.PTT.PttDesc01Activity;
 import com.example.hearfiss_01.views.SRS.SrsDesc01Activity;
 import com.example.hearfiss_01.views.SRT.SrtDesc01Activity;
-import com.example.hearfiss_01.views.WRS.WrsDesc01Activity;
 
 import java.util.ArrayList;
 
@@ -36,7 +34,7 @@ public class HistoryListActivity extends AppCompatActivity implements View.OnCli
     TextView m_TextUser;
     ArrayList<HrTestGroup> groups = new ArrayList<>();
     ArrayList<HrTestSet> sets = new ArrayList<>();
-    LinearLayout HomeLayout,PtaLayout,WrsLayout,TestLayout;
+    LinearLayout HomeLayout,SrtLayout,SrsLayout,TestLayout;
     ArrayList<ResultDTO> dataList = new ArrayList<>();
     private HistoryListAdapter mAdapter;
 
@@ -64,13 +62,13 @@ public class HistoryListActivity extends AppCompatActivity implements View.OnCli
 
 
         HomeLayout = findViewById(R.id.HomeLayout);
-        PtaLayout = findViewById(R.id.PtaLayout);
-        WrsLayout = findViewById(R.id.WrsLayout);
+        SrtLayout = findViewById(R.id.SrtLayout);
+        SrsLayout = findViewById(R.id.SrsLayout);
         TestLayout = findViewById(R.id.TestLayout);
 
         HomeLayout.setOnClickListener(this);
-        PtaLayout.setOnClickListener(this);
-        WrsLayout.setOnClickListener(this);
+        SrtLayout.setOnClickListener(this);
+        SrsLayout.setOnClickListener(this);
         TestLayout.setOnClickListener(this);
 
         getDataListFromDatabase();
@@ -109,10 +107,10 @@ public class HistoryListActivity extends AppCompatActivity implements View.OnCli
             result.setAcc_id(groups.get(i).getAcc_id());
             result.setResult(groups.get(i).getTg_result());
             result.setTg_Date(groups.get(i).getTg_Date());
-            if(groups.get(i).getTg_type().equals("PTA")){
-                result.setTg_type("순음 청력 검사(PTA)");
-            }else{
-                result.setTg_type("단어 인지도 검사(WRS)");
+            if(groups.get(i).getTg_type().equals("SRT")){
+                result.setTg_type("어음 청취 역치 테스트(SRT)");
+            }else if (groups.get(i).getTg_type().equals("SRS")){
+                result.setTg_type("문장 인지도 테스트(SRS)");
             }
 
             dataList.add(result);
@@ -149,10 +147,10 @@ public class HistoryListActivity extends AppCompatActivity implements View.OnCli
         if (view.getId() == R.id.HomeLayout) {
             startActivityAndFinish(MenuActivity.class);
 
-        }else if (view.getId() == R.id.WrsLayout) {
+        }else if (view.getId() == R.id.SrsLayout) {
             startActivityAndFinish(SrsDesc01Activity.class);
 
-        }else if (view.getId() == R.id.PtaLayout) {
+        }else if (view.getId() == R.id.SrtLayout) {
             startActivityAndFinish(SrtDesc01Activity.class);
         }
 
