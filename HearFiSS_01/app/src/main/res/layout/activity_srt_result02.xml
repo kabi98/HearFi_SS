@@ -112,7 +112,7 @@
                             android:fontFamily="@font/pretendardextrabold"
                             android:textColor="@color/blue"
                             android:textSize="17dp"
-                            android:text="나의 어음 청취 역치 테스트 결과"></TextView>
+                            android:text="어음 청취 역치 테스트 결과"></TextView>
                         <View
                             android:layout_gravity="center"
                             android:layout_width="match_parent"
