@@ -63,7 +63,6 @@ public class SrtTestActivity extends AppCompatActivity
 
     SRT m_SRT = null;
 
-    final int PERMISSION = 1;
 
 
     InputMethodManager imm = null;
@@ -76,9 +75,6 @@ public class SrtTestActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_srt_test);
 
-        if ( Build.VERSION.SDK_INT >= 23 ){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET,Manifest.permission.RECORD_AUDIO}, PERMISSION);
-        }
 
         m_Context = SrtTestActivity.this;
 
