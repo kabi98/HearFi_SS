@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:text="HearFi"
+                    android:text="HearFi SS"
                     android:textSize="25sp"
                     android:fontFamily="@font/pretendardbold"
                     android:textColor="@color/white"></TextView>

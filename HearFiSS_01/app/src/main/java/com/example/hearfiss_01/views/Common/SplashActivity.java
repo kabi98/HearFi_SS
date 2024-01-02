@@ -2,10 +2,8 @@ package com.example.hearfiss_01.views.Common;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -13,7 +11,6 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.hearfiss_01.R;
 import com.example.hearfiss_01.global.TConst;
@@ -30,6 +27,7 @@ import java.util.Calendar;
 
 public class SplashActivity extends AppCompatActivity {
     String m_TAG = "SplashActivity";
+
     Context m_Context;
 
     @Override

@@ -111,8 +111,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textAlignment="viewStart"
-                                    android:text="
-어음 청취 역치 검사(Speech Reception Threshold, SRT)는 순음 청력 검사(Pure Tone Audiometry, PTA) \n결과의 신빙성을 확인할 수 있는 테스트 입니다. SRT와 PTA 결과 간의 차이가 10 dB HL(데시벨 청력 수준) 이하일 경우, 신뢰할 수 있는 평가로 간주됩니다. "
+                                    android:text=" 어음 청취 역치 검사(Speech Reception Threshold, SRT)는 순음 청력 검사(Pure Tone Audiometry, PTA) 결과의 신빙성을 확인할 수 있는 테스트 입니다. "
                                     android:textSize="15dp"
                                     android:fontFamily="@font/pretendardmedium"
                                     android:textStyle="bold" />
@@ -129,7 +128,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textAlignment="viewStart"
-                                    android:text="향후,의료 기관 및 청력 진단 전문 기관을 통하여\n청력 상태의 종합적인 평가를 받을 수 있고, 청력 손실의 종류 및 정도, 형태에 따라 보청기 또는 인공 와우 착용 여부를 알아보는 목적으로 사용할 수 있습니다."
+                                    android:text=" 향후,의료 기관 및 청력 진단 전문 기관을 통하여\n청력 상태의 종합적인 평가를 받을 수 있고, 청력 손실의 종류 및 정도, 형태에 따라 보청기 또는 인공 와우 착용 여부를 알아보는 목적으로 사용할 수 있습니다."
                                     android:fontFamily="@font/pretendardmedium"
                                     android:textSize="15dp"
                                     android:textStyle="bold" />
@@ -180,7 +179,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textAlignment="viewStart"
-                                    android:text="어음 청취 역치 테스트(Speech Reception Threshold, SRT)는 조용한 공간에서 이어폰 또는 헤드폰을 착용하고 \n소리가 공기를 통해서 대상자의 귀로 전달되는 \n테스트 방법입니다."
+                                    android:text=" 어음 청취 역치 테스트(Speech Reception Threshold, SRT)는 조용한 공간에서 이어폰 또는 헤드폰을 착용하고 \n소리가 공기를 통해서 대상자의 귀로 전달되는 \n테스트 방법입니다."
                                     android:fontFamily="@font/pretendardmedium"
                                     android:textSize="15dp"
                                     android:textStyle="bold" />
@@ -197,7 +196,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textAlignment="viewStart"
-                                    android:text=" 오른쪽 귀에서 왼쪽 귀 순서로 테스트를 실시합니다. \n사용자가 설정한 dB 수준에서 시작하며, \n제시된 2음절 단어를 사용자가 정확히 인식할 경우, \n음량은 10 dB씩 감소하고, 더 이상 인식하지 못할 때까지 \n진행됩니다. 사용자가 50%의 단어를 인식할 수 있는 최소 음량 수준이 SRT로 결정되며, 테스트가 종료 됩니다. "
+                                    android:text=" 테스트는 오른쪽 귀에서 왼쪽 귀 순서로 실시합니다. \n사용자가 설정한 dB 수준에서 시작하며, 제시된 2음절 단어를 사용자가 정확히 인식할 경우, 음량은 10 dB씩 감소하고, 더 이상 인식하지 못할 때까지 진행됩니다. \n사용자가 50%의 단어를 인식할 수 있는 최소 음량 수준이 SRT로 결정되며, 테스트가 종료 됩니다. "
                                     android:fontFamily="@font/pretendardmedium"
                                     android:textSize="15dp"
                                     android:textStyle="bold" />

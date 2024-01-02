@@ -124,7 +124,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="· 들리는 문장을 하단의 입력칸에 입력"
+                        android:text="· 테스트 준비가 되면 '시작 하기' 버튼 터치"
                         android:fontFamily="@font/pretendardsemibold"
                         android:textColor="@color/black"
                         android:textSize="16dp"
@@ -132,7 +132,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="· 안 들리는 경우, '다시듣기' 버튼 터치"
+                        android:fontFamily="@font/pretendardsemibold"
+                        android:text="· 들리는 문장을 하단의 입력칸에 입력"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="· 음성으로 응답할 경우 '음성으로 답하기' 버튼 터치"
                         android:fontFamily="@font/pretendardsemibold"
                         android:textColor="@color/black"
                         android:textSize="16dp"
