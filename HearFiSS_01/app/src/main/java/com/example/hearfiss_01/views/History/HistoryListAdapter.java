@@ -6,10 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hearfiss_01.R;
@@ -41,9 +41,6 @@ public class HistoryListAdapter extends RecyclerView.Adapter <HistoryListAdapter
         ResultDTO data = dataList.get(position);
         holder.date.setText(data.getTg_Date());
         holder.type.setText(data.getTg_type());
-        holder.leftResult.setText(data.getLeft_Result());
-        holder.rightResult.setText(data.getRight_Result());
-        holder.Result.setText(data.getResult());
     }
 
     @Override
@@ -54,18 +51,12 @@ public class HistoryListAdapter extends RecyclerView.Adapter <HistoryListAdapter
     public class HistoryListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView date;
         private TextView type;
-        private TextView leftResult;
-        private TextView rightResult;
-        private TextView Result;
-        private AppCompatButton detail_button;
+        private ImageView detail_button;
 
         public HistoryListViewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.item_board_date);
             type = itemView.findViewById(R.id.item_board_type);
-            Result = itemView.findViewById(R.id.item_result);
-            leftResult = itemView.findViewById(R.id.item_left_result);
-            rightResult = itemView.findViewById(R.id.item_right_result);
             detail_button = itemView.findViewById(R.id.detailBtn);
             detail_button.setOnClickListener(this);
         }

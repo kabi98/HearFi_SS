@@ -1,130 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="15dp"
-    android:background="@drawable/result_blue_background">
-    <LinearLayout
+    android:layout_marginBottom="8dp">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_weight="0.35"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/item_board_type"
-            android:text="순음 청력 검사 테스트(PTA)"
-            android:fontFamily="@font/pretendardextrabold"
-            android:textColor="@color/blue"
-            android:textSize="20dp"></TextView>
-        <TextView
-            android:layout_weight="0.65"
-            android:id="@+id/item_board_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="viewEnd"
-            android:text="2023.10.12"
-            android:fontFamily="@font/pretendardextrabold"
-            android:textColor="@color/gray"
-            android:textSize="17dp"></TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/item_result"
-            android:layout_weight="0.65"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendardextrabold"
-            android:text="중도난청"
-            android:textSize="25dp"
-            android:textColor="@color/blue"></TextView>
+        android:layout_marginBottom="8dp">
+
         <LinearLayout
-            android:layout_weight="0.35"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
+            android:orientation="vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/item_left"
-                    android:layout_weight="0.7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="왼쪽 : "
-                    android:textAlignment="viewEnd"
-                    android:fontFamily="@font/pretendardextrabold"
-                    android:textColor="@color/gray"
-                    android:textSize="16dp"></TextView>
-                <TextView
-                    android:layout_weight="0.3"
-                    android:id="@+id/item_left_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="41dB HL (중도난청)"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/pretendardextrabold"
-                    android:textColor="@color/gray"
-                    android:textSize="16dp"></TextView>
-            </LinearLayout>
-            <LinearLayout
+                android:id="@+id/item_board_type"
+                android:text="순음 청력 검사 테스트(PTA)"
+                android:fontFamily="@font/pretendardextrabold"
+                android:textColor="@color/black"
+                android:textSize="20dp"/>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/item_right"
-                    android:layout_weight="0.7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="오른쪽 : "
-                    android:textAlignment="viewEnd"
-                    android:fontFamily="@font/pretendardextrabold"
-                    android:textColor="@color/gray"
-                    android:textSize="16dp"></TextView>
-                <TextView
-                    android:id="@+id/item_right_result"
-                    android:layout_weight="0.3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="41dB HL"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/pretendardextrabold"
-                    android:textColor="@color/gray"
-                    android:textSize="16dp"></TextView>
-            </LinearLayout>
+                android:id="@+id/item_board_date"
+                android:text="2023.10.12"
+                android:fontFamily="@font/pretendardextrabold"
+                android:textColor="#757575"
+                android:textSize="15dp"
+                android:padding="8dp"/>
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-        <androidx.appcompat.widget.AppCompatButton
+
+        <ImageView
             android:id="@+id/detailBtn"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/blue_button"
-            android:text="자세히 보기"
-            android:textColor="@color/white"
-            android:textSize="17dp"
-            android:textStyle="bold">
-        </androidx.appcompat.widget.AppCompatButton>
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_icon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            />
 
 
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        />
 </LinearLayout>

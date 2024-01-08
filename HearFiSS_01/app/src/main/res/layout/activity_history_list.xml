@@ -64,12 +64,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/result_gray_background"
             android:layout_height="wrap_content">
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="0.4"
                 android:layout_marginStart="16dp"
@@ -92,21 +91,26 @@
                     android:textSize="19dp"
                     android:textAlignment="viewStart"
                     android:fontFamily="@font/pretendardextrabold"></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="각 항목을 터치해 자세히 볼 수 있습니다."
+                    android:textSize="13dp"
+                    android:textColor="#757575"
+                    android:layout_marginTop="8dp"/>
+                <View
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
             </LinearLayout>
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_marginEnd="16dp"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/mytest_icon">
-            </ImageView>
 
         </LinearLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ScrollView
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="80dp"
