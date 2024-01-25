@@ -336,7 +336,7 @@ public class SrsResult02Activity extends AppCompatActivity
         Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Left All %d: C:%d W:%d ",
                 iLeftAll, iLeftCorrect, iLeftWrong));
 
-        int iLeftScore = (int)(((float)iLeftCorrect/(float)iLeftWrong) * 100);
+        int iLeftScore = (int)(((float)iLeftCorrect/(float)iLeftAll) * 100);
 
 
         String ResultLeft = String.format(
@@ -364,7 +364,7 @@ public class SrsResult02Activity extends AppCompatActivity
         Log.v(m_TAG, String.format("*** getSrsResultFromDatabase WordUnit Rigth All %d: C:%d W:%d ",
                 iRightAll, iRightCorrect, iRightWrong));
 
-        int iRightScore = (int)(((float)iRightCorrect/(float)iRightWrong) * 100);
+        int iRightScore = (int)(((float)iRightCorrect /(float)iRightAll) * 100);
 
         String ResultRight = String.format(
                 "문장 기준 점수 : %d %% (%d개/%d개)" +
